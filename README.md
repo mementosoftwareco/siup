@@ -1,2 +1,4 @@
-# siup
-aplicacion de inscripcion de estudiantes
+# SIUP - Sistema de registro de estudiantes
+
+
+Ejecute los siguientes comandos
