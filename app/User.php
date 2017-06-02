@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Task;
+use App\Rol;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -13,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'state'
     ];
 
     /**
@@ -32,4 +34,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+	
+	
+	public function roles()
+	{
+		return $this->hasMany(Rol::class);
+	}
+	
+	public function getPerfil()
+	{
+		$rol = Rol::where( 'id_usuario' , '=' , Auth::user()->id )->get();
+		$perfil = Perfil::where('id', '=' , $rol->id_perfil)->get();		
+		return $perfil -> nombre;
+	}
+	
 }
