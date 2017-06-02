@@ -39,19 +39,26 @@ php artisan make:migration create_preguntas_table --create=preguntas
 
 --Borrado de tablas
 
-drop table tipos_documento;
-drop table tipos_identificacion;
-drop table tipos_proceso;
-drop table estados_civil;
-drop table entrevistas;
-drop table convenios;
-drop table estados_validacion;
-drop table grupos_etnicos;
-drop table inscripciones;
-drop table migrations;
-drop table modalidades;
-drop table password_resets;
-drop table personas;
+drop table procesos_admision cascade constraints;
+drop table personas cascade constraints;
+drop table tipos_documento cascade constraints;
+drop table tipos_identificacion cascade constraints;
+drop table tipos_proceso cascade constraints;
+drop table estados_civil cascade constraints;
+drop table entrevistas cascade constraints;
+drop table convenios cascade constraints;
+drop table estados_validacion cascade constraints;
+drop table grupos_etnicos cascade constraints;
+drop table inscripciones cascade constraints;
+drop table migrations cascade constraints;
+drop table modalidades cascade constraints;
+drop table password_resets cascade constraints;
+drop table detalle_entrevistas cascade constraints;
+drop table documentos cascade constraints;
+drop table preguntas cascade constraints;
+drop table respuestas cascade constraints;
+drop table validaciones cascade constraints;
+
 drop table tasks;
 drop table users;
 
@@ -67,3 +74,23 @@ drop sequence "SIUP"."TIPOS_DOCUMENTO_ID_TIPO_DOCUME";
 drop sequence "SIUP"."TIPOS_IDENTIFICACION_ID_TIPO_I";
 drop sequence "SIUP"."TIPOS_PROCESO_ID_TIPO_PROCESO_";
 drop sequence "SIUP"."USERS_ID_SEQ";
+drop sequence "SIUP"."DETALLE_ENTREVISTAS_ID_DETALLE";
+drop sequence "SIUP"."DOCUMENTOS_ID_DOCUMENTO_SEQ";
+drop sequence "SIUP"."PREGUNTAS_ID_PREGUNTA_SEQ";
+drop sequence "SIUP"."PROCESOS_ADMISION_ID_PROCESO_A";
+drop sequence "SIUP"."RESPUESTAS_ID_RESPUESTA_SEQ";
+drop sequence "SIUP"."VALIDACIONES_ID_VALIDACION_SEQ";
+
+--Agregando los datos a las tablas de referencia
+
+insert into modalidades (nombre, descripcion) values ('Presencial','Presencial');
+insert into modalidades (nombre, descripcion) values ('Virtual','Virtual');
+
+insert into tipos_proceso (nombre, descripcion) values ('Pregrado','Pregrado');
+insert into tipos_proceso (nombre, descripcion) values ('Postgrado','Postgrado');
+insert into tipos_proceso (nombre, descripcion) values ('Educación continuada','Educación continuada');
+
+insert into TIPOS_identificacion (nombre, descripcion) values ('Cédula de ciudadnía','Cédula de ciudadnía');
+insert into TIPOS_identificacion (nombre, descripcion) values ('Cédula de extranjería','Cédula de extranjería');
+insert into TIPOS_identificacion (nombre, descripcion) values ('Pasaporte','Pasaporte');
+insert into TIPOS_identificacion (nombre, descripcion) values ('Tarjeta de identidad','Tarjeta de identidad');
