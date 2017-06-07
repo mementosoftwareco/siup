@@ -70,16 +70,6 @@
 						
 						
 
-						<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-							<label class="col-md-4 control-label">Perfil
-								<select name="perfil" id="perfil" class="form-control">
-									<option value=""></option>
-									@foreach($perfiles as $perfil)
-									   {{ $perfil->nombre}}
-									@endforeach
-								   </select>
-							</label>
-						</div>
 						
 						
 

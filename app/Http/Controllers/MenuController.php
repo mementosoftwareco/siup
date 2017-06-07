@@ -19,14 +19,25 @@ class MenuController extends Controller
 
 {
 	
-	protected $redirectTo = '/perfiles';
+	
     public function menu()
 	{
-		$perfil = Auth::user()->getPerfil();
+		//$this->middleware('auth');
+		
+		$perfil = Auth::user()->getNombrePerfil();
 
 		
 		if ( $perfil === 'Administrador' )
-        return $redirect_to;
+         return View::make('menus.administrador');
+	 
+	    if ( $perfil === 'Operador' )
+         return View::make('menus.inscripcion');
+	 
+		if ( $perfil === 'Call Center' )
+		 return View::make('menus.inscripcion');
+	 
+		if ( $perfil === 'Comercial' )
+         return View::make('menus.inscripcion');
 	}
 
 	

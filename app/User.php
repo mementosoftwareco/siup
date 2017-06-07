@@ -9,6 +9,8 @@ use Auth;
 
 class User extends Authenticatable
 {
+	
+	protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
      *
@@ -41,10 +43,11 @@ class User extends Authenticatable
 		return $this->hasMany(Rol::class);
 	}
 	
-	public function getPerfil()
+	public function getNombrePerfil()
 	{
-		$rol = Rol::where( 'id_usuario' , '=' , Auth::user()->id )->get();
-		$perfil = Perfil::where('id', '=' , $rol->id_perfil)->get();		
+		
+		$rol = Rol::where( 'id_usuario' , '=' , Auth::user()->id )->get()->first();
+		$perfil = Perfil::where('id', '=' , $rol->id_perfil)->get()->first();		
 		return $perfil -> nombre;
 	}
 	
