@@ -1,6 +1,8 @@
+
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
@@ -11,12 +13,13 @@
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
                     @include('common.errors')
-
+					
                     <!-- New inscripcion Form -->
                     <form action="{{ url('inscripcion') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 
 						<input type="hidden" name="idInscripcion" id="inscripcion-idInscripcion" class="form-control" value="{{ old('idInscripcion') }}">
+						<input type="hidden" name="idProcesoAdmon" id="inscripcion-idProcesoAdmon" class="form-control" value="{{ old('idProcesoAdmon') }}">
 						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
@@ -64,7 +67,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Telefono</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="telefono" id="inscripcion-telefono" class="form-control" value="{{ old('telefono') }}">
+                                <input type="text" name="telefono" id="inscripcion-telefono" class="form-control" value="{{  old('telefono') }}">
                             </div>
                         </div>
 						
@@ -126,7 +129,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Tipo de educación</label>
 
                             <div class="col-sm-6">
-							<select name="genero" id="inscripcion-genero" class="form-control">
+							<select name="tipoEdu" id="inscripcion-tipoEdu" class="form-control">
 								<option value="1">Pregrado</option>
 								<option value="2">Postgrado</option>
 								<option value="3">Educación continuada</option>
@@ -139,7 +142,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Estado civil</label>
 
                             <div class="col-sm-6">
-							<select name="genero" id="inscripcion-genero" class="form-control">
+							<select name="estCivil" id="inscripcion-estCivil" class="form-control">
 								<option value="1">Soltero</option>
 								<option value="2">Casado</option>
 							</select>
