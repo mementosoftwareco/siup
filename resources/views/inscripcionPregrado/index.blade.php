@@ -15,11 +15,11 @@
                     @include('common.errors')
 					
                     <!-- New inscripcion Form -->
-                    <form action="{{ url('inscripcion') }}" method="POST" class="form-horizontal">
+                    <form action="{{ url('inscripcion-pregrado') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 
-						<input type="hidden" name="idInscripcion" id="inscripcion-idInscripcion" class="form-control" value="{{ old('idInscripcion') }}">
-						<input type="hidden" name="idProcesoAdmon" id="inscripcion-idProcesoAdmon" class="form-control" value="{{ old('idProcesoAdmon') }}">
+						<input type="text" name="idInscripcion" id="inscripcion-idInscripcion" class="form-control" value="{{ old('idInscripcion') }}">
+						
 						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
@@ -41,6 +41,24 @@
 
                             <div class="col-sm-6">
                                 <input type="text" name="numeroIdentificacion" id="inscripcion-numeroId" class="form-control" value="{{ old('numeroIdentificacion') }}">
+                            </div>
+                        </div>
+						
+						<!-- fecha expedicion documento -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Fecha expedición documento</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="fechaExpDocumento" id="inscripcion-fechaExpDoc" class="form-control" value="{{ old('fechaExpDocumento') }}">
+                            </div>
+                        </div>
+						
+						<!-- Lugar expedicion documento -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Lugar expedición documento</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="lugarExpDocumento" id="inscripcion-lugarExpDoc" class="form-control" value="{{ old('lugarExpDocumento') }}">
                             </div>
                         </div>
 						
@@ -104,8 +122,8 @@
 
                             <div class="col-sm-6">
 							<select name="genero" id="inscripcion-genero" class="form-control">
-								<option value="1">Femenino</option>
-								<option value="2">Masculino</option>
+								<option value="FEMENINO">Femenino</option>
+								<option value="MASCULINO">Masculino</option>
 							</select>
                             </div>
                         </div>
@@ -116,6 +134,7 @@
 
                             <div class="col-sm-6">
 							<select name="grupoEtnico" id="inscripcion-grupoEtnico" class="form-control">
+								<option value="5">No aplica</option>
 								<option value="1">Afrocolombiano o Afrodescendiente</option>
 								<option value="2">Pueblos indígenas</option>
 								<option value="3">Raizales</option>
@@ -164,8 +183,9 @@
 
                             <div class="col-sm-6">
 							<select name="convenio" id="inscripcion-convenio" class="form-control">
-								<option value="1">Ser pilo paga</option>
-								<option value="2">icetex..otro</option>
+								<option value="1">No aplica</option>
+								<option value="2">Ser pilo paga</option>
+								<option value="3">icetex..otro</option>
 							</select>
 							</div>
                         </div>
@@ -213,9 +233,12 @@
 							  <input type="radio" name="termYCond" value="0"> No acepto <br/>
 							</div>
                         </div>
-						
+					
 <!-- Inicio Subseccion ubicacion ----------------------------------------------------------------------  -->
-						
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							¿Donde vives?
+						</div>
 						<!-- Direccion -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Dirección</label>
@@ -285,12 +308,16 @@
 							</select>
 							</div>
                         </div>
-						
+					</div>	
 <!-- Fin Subseccion ubicacion ----------------------------------------------------------------------  -->
 						
 						
 						
 <!-- Inicio subsección referencia personal o familiar ----------------------------------------------------------------------  -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Alguien que te conozca
+						</div>
 
 						<!-- Nombres -->
                         <div class="form-group">
@@ -357,10 +384,15 @@
 							</select>
 							</div>
                         </div>
-						
+					</div>	
 <!-- Fin subsección referencia personal o familiar ----------------------------------------------------------------------  -->
 
 <!-- Inicio subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
+					<div class="panel panel-default">	
+						<div class="panel-heading">
+							¿Donde estudiaste la secundaria?
+						</div>
+						
 						<!-- Tipo de Colegio -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Tipo de colegio</label>
@@ -409,8 +441,8 @@
 
                             <div class="col-sm-6">
 							<select name="jornadaColegio" id="inscripcion-jornadaColegio" class="form-control">
-									<option value="11001">Mañana</option>
-									<option value="11002">Tarde</option>
+									<option value="AM">Mañana</option>
+									<option value="PM">Tarde</option>
 							</select>
 							</div>
                         </div>
@@ -432,10 +464,15 @@
                                 <input type="text" name="anioIcfesColegio" id="inscripcion-anioIcfesColegio" class="form-control" value="{{ old('anioIcfesColegio') }}">
                             </div>
                         </div>
-						
+					</div>	
 <!-- Inicio subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
 
 <!-- Inicio subsección homologación desde otra institución ----------------------------------------------------------------------  -->
+					<div class="panel panel-default">	
+						<div class="panel-heading">
+							¿Vienes de otra U?
+						</div>
+						
 						<!-- Homologado -->
 						<div class="form-group">
                             <div class="col-sm-6">
@@ -449,8 +486,8 @@
 
                             <div class="col-sm-6">
 							<select name="tituloHomologacion" id="inscripcion-tituloHomologacion" class="form-control">
-									<option value="1">Ingeniero de Sistemas</option>
-									<option value="2">Ingeniero Industrial</option>
+									<option value="Ingeniero de Sistemas">Ingeniero de Sistemas</option>
+									<option value="Ingeniero Industrial">Ingeniero Industrial</option>
 							</select>
 							</div>
                         </div>
@@ -484,7 +521,7 @@
                                 <input type="text" name="fechaFinHomologacion" id="inscripcion-fechaFinHomologacion" class="form-control" value="{{ old('fechaFinHomologacion') }}">
                             </div>
                         </div>
-						
+					</div>	
 <!-- Final subsección homologación desde otra institución ----------------------------------------------------------------------  -->						
 
                         <!-- inscripcion Button -->
