@@ -13,6 +13,7 @@ use App\UbicacionesGeograficas;
 use App\RefsPersonalFamiliar;
 use App\Educaciones;
 use App\Homologacion;
+use Illuminate\Support\Facades\View;
 
 class InscripcionPregradoController extends Controller
 {
@@ -23,10 +24,10 @@ class InscripcionPregradoController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function index(Request $request, Inscripcion $inscripcion)
+    public function index(Request $request, ProcesoAdmision $procesoAdmon)
     {
-		//return View::make('inscripcionPregrado.index')->with(compact('inscripcion'));
-        return view('inscripcionPregrado.index', ['telefono' => 'James']);
+		return View::make('inscripcionPregrado.index')->with(compact('procesoAdmon'));
+        //return view('inscripcionPregrado.index', ['telefono' => 'James']);
     }
 	
 	/**
@@ -35,13 +36,13 @@ class InscripcionPregradoController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, ProcesoAdmision $procesoAdmon)
     {
-        $this->validate($request, [
-			'idInscripcion' => 'required|max:10',
+        
+		$this->validate($request, [
             'tipoIdentificacion' => 'required|max:10',
 			'numeroIdentificacion' => 'required|max:50',
-			//'fechaExpDocumento' => 'required|max:10',
+			'fechaExpDocumento' => 'required|max:10',
 			'lugarExpDocumento' => 'required|max:100',
 			'nombres' => 'required|max:100',
 			'apellidos' => 'required|max:100',
@@ -57,7 +58,7 @@ class InscripcionPregradoController extends Controller
 			'estCivil' => 'required|max:10',
 			'procedencia' => 'required|max:50',
 			'convenio' => 'required|max:10',
-			'termYCond' => 'required|max:10',
+			'termYCond' => 'accepted',
 			//Campos ubicacion
 			'direccion' => 'required|max:300',
 			'departamento' => 'required|max:50',
@@ -89,6 +90,8 @@ class InscripcionPregradoController extends Controller
 			//'fechaFinHomologacion' => 'required|max:10',
         ]);
 
+		$idInscripcion = $procesoAdmon -> id_inscripcion;
+		
 		//Guardando la información de la persona
 		$persona = Persona::findOrFail($request->numeroIdentificacion);
 		
@@ -103,7 +106,7 @@ class InscripcionPregradoController extends Controller
 		$persona->save();
 
 		//Guardando la información de la inscripción
-		$inscripcion =Inscripcion::findOrFail($request->idInscripcion);
+		$inscripcion =Inscripcion::findOrFail($idInscripcion);
 		$inscripcion->telefono = $request->telefono;
 		$inscripcion->celular = $request->celular;
 		$inscripcion->email = $request->email;
@@ -125,7 +128,7 @@ class InscripcionPregradoController extends Controller
 		$ubicacionGeografica->municipio = $request->municipio;
 		$ubicacionGeografica->barrio = $request->barrio;
 		$ubicacionGeografica->estrato = $request->estrato;
-		$ubicacionGeografica->id_inscripcion = $request->idInscripcion;
+		$ubicacionGeografica->id_inscripcion = $idInscripcion;
 		
 		$ubicacionGeografica->save();
 		
@@ -138,7 +141,7 @@ class InscripcionPregradoController extends Controller
 		$refsPersonalFamiliar->celular = $request->celularReferencia;
 		$refsPersonalFamiliar->email = $request->emailReferencia;
 		$refsPersonalFamiliar->parentesco = $request->parentescoRef;
-		$refsPersonalFamiliar->id_inscripcion = $request->idInscripcion;
+		$refsPersonalFamiliar->id_inscripcion = $idInscripcion;
 		
 		$refsPersonalFamiliar->save();
 		
@@ -154,19 +157,21 @@ class InscripcionPregradoController extends Controller
 		$estudios->cod_icfes_inst = $request->codigoIcfesColegio;
 		$estudios->anio_icfes_inst = $request->anioIcfesColegio;
 		//$estudios->fecha_graduacion = $request->programa;
-		$estudios->id_inscripcion = $request->idInscripcion;
+		$estudios->id_inscripcion = $idInscripcion;
 		
 		$estudios->save();
 		
 		//Guardando la información de la referencia personal
-		$homologacion = new Homologacion;
-		$homologacion->titulo = $request->tituloHomologacion;
-		$homologacion->institucion = $request->instHomologacion;
-		$homologacion->id_ciudad = $request->ciudadHomologacion;
-		$homologacion->fecha_finalizacion = $request->fechaFinHomologacion;
-		$homologacion->id_inscripcion = $request->idInscripcion;
-		
-		$homologacion->save();
+		if($request->homologacion == 1){
+			$homologacion = new Homologacion;
+			$homologacion->titulo = $request->tituloHomologacion;
+			$homologacion->institucion = $request->instHomologacion;
+			$homologacion->id_ciudad = $request->ciudadHomologacion;
+			$homologacion->fecha_finalizacion = $request->fechaFinHomologacion;
+			$homologacion->id_inscripcion = $idInscripcion;
+			
+			$homologacion->save();
+		}
 		
 		//Guardando la información del proceso de admision
 		/*

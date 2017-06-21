@@ -15,32 +15,32 @@
                     @include('common.errors')
 					
                     <!-- New inscripcion Form -->
-                    <form action="{{ url('inscripcion-pregrado') }}" method="POST" class="form-horizontal">
-                        {{ csrf_field() }}
+                    {{ Form::model($procesoAdmon, array('route' => ['inscripcion-pregrado',$procesoAdmon], 'method' => 'post', 'class' => 'form-horizontal') ) }}
 
-						<input type="text" name="idInscripcion" id="inscripcion-idInscripcion" class="form-control" value="{{ old('idInscripcion') }}">
-						
-						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Tipo de identificación</label>
+                             {{ Form::label('Tipo de identificación', null, ['class' => 'col-sm-3 control-label']) }}
+							
 
                             <div class="col-sm-6">
-								<select name="tipoIdentificacion" id="inscripcion-tipoId" class="form-control">
-									<option value="1">Cédula de ciudadanía</option>
-									<option value="2">Cédula de extranjería</option>
-									<option value="3">Pasaporte</option>
-									<option value="4">Tarjeta de identidad</option>
-								</select>
+							{{Form::select('tipoIdentificacion', ['1' => 'Cédula de ciudadanía',
+																  '2' => 'Cédula de extranjería',
+																  '3' => 'Pasaporte',
+																  '4' => 'Tarjeta de identidad'
+																  ], null, ['class'=>'form-control'])}}
+							
+							
                             </div>
                         </div>
 						
 						<!-- Numero de identificacion -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Número de identificación</label>
+                            
+							{{ Form::label('Número de identificación', null, ['class' => 'col-sm-3 control-label']) }}
 
                             <div class="col-sm-6">
-                                <input type="text" name="numeroIdentificacion" id="inscripcion-numeroId" class="form-control" value="{{ old('numeroIdentificacion') }}">
+                                
+							{{ 	Form::text('numeroIdentificacion',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -49,7 +49,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha expedición documento</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="fechaExpDocumento" id="inscripcion-fechaExpDoc" class="form-control" value="{{ old('fechaExpDocumento') }}">
+								{{ Form::date('fechaExpDocumento', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -58,7 +58,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Lugar expedición documento</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="lugarExpDocumento" id="inscripcion-lugarExpDoc" class="form-control" value="{{ old('lugarExpDocumento') }}">
+								{{ 	Form::text('lugarExpDocumento',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -67,7 +67,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Nombres</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="nombres" id="inscripcion-nombres" class="form-control" value="{{ old('nombres') }}">
+								{{ 	Form::text('nombres',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -76,7 +76,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Apellidos</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="apellidos" id="inscripcion-apellidos" class="form-control" value="{{ old('apellidos') }}">
+								{{ 	Form::text('apellidos',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -85,7 +85,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Telefono</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="telefono" id="inscripcion-telefono" class="form-control" value="{{  old('telefono') }}">
+								{{ 	Form::text('telefono',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -94,7 +94,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Celular</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="celular" id="inscripcion-celular" class="form-control" value="{{ old('celular') }}">
+								{{ 	Form::text('celular',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -103,7 +103,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Email</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="email" id="inscripcion-email" class="form-control" value="{{ old('email') }}">
+								{{ 	Form::text('email',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -112,7 +112,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha nacimiento</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="fechaNacimiento" id="inscripcion-fechaNac" class="form-control" value="{{ old('fechaNacimiento') }}">
+								{{ Form::date('fechaNacimiento', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -121,10 +121,9 @@
                             <label for="task-name" class="col-sm-3 control-label">Género</label>
 
                             <div class="col-sm-6">
-							<select name="genero" id="inscripcion-genero" class="form-control">
-								<option value="FEMENINO">Femenino</option>
-								<option value="MASCULINO">Masculino</option>
-							</select>
+							{{Form::select('genero', ['FEMENINO' => 'Femenino',
+													'MASCULINO' => 'Masculino'
+													], null, ['class'=>'form-control'])}}
                             </div>
                         </div>
 						
@@ -133,13 +132,13 @@
                             <label for="task-name" class="col-sm-3 control-label">Grupo étnico</label>
 
                             <div class="col-sm-6">
-							<select name="grupoEtnico" id="inscripcion-grupoEtnico" class="form-control">
-								<option value="5">No aplica</option>
-								<option value="1">Afrocolombiano o Afrodescendiente</option>
-								<option value="2">Pueblos indígenas</option>
-								<option value="3">Raizales</option>
-								<option value="4">Rom</option>
-							</select>
+							{{Form::select('grupoEtnico', ['5' => 'No aplica',
+														  '1' => 'Afrocolombiano o Afrodescendiente',
+														  '2' => 'Pueblos indígenas',
+														  '3' => 'Raizales',
+														  '4' => 'Rom'
+														  ], null, ['class'=>'form-control'])}}
+							
 							</div>
                         </div>
 						
@@ -148,11 +147,10 @@
                             <label for="task-name" class="col-sm-3 control-label">Tipo de educación</label>
 
                             <div class="col-sm-6">
-							<select name="tipoEdu" id="inscripcion-tipoEdu" class="form-control">
-								<option value="1">Pregrado</option>
-								<option value="2">Postgrado</option>
-								<option value="3">Educación continuada</option>
-							</select>
+							{{Form::select('tipoEdu', ['1' => 'Pregrado',
+														  '2' => 'Postgrado',
+														  '3' => 'Educación continuada'
+														  ], null, ['class'=>'form-control'])}}
                             </div>
                         </div>
 						
@@ -161,10 +159,10 @@
                             <label for="task-name" class="col-sm-3 control-label">Estado civil</label>
 
                             <div class="col-sm-6">
-							<select name="estCivil" id="inscripcion-estCivil" class="form-control">
-								<option value="1">Soltero</option>
-								<option value="2">Casado</option>
-							</select>
+							{{Form::select('estCivil', ['1' => 'Soltero',
+														  '2' => 'Casado'
+														  ], null, ['class'=>'form-control'])}}
+							
                             </div>
                         </div>
 						
@@ -173,7 +171,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Procedencia</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="procedencia" id="inscripcion-procedencia" class="form-control" value="{{ old('procedencia') }}">
+								{{ 	Form::text('procedencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -182,11 +180,10 @@
                             <label for="task-name" class="col-sm-3 control-label">Convenio</label>
 
                             <div class="col-sm-6">
-							<select name="convenio" id="inscripcion-convenio" class="form-control">
-								<option value="1">No aplica</option>
-								<option value="2">Ser pilo paga</option>
-								<option value="3">icetex..otro</option>
-							</select>
+							{{Form::select('convenio', ['1' => 'No aplica',
+														  '2' => 'Ser pilo paga',
+														  '3' => 'icetex..otro'
+														  ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -195,8 +192,8 @@
                             <label for="task-name" class="col-sm-3 control-label">Modalidad</label>
 
                             <div class="col-sm-6">
-							  <input type="radio" name="modalidad" value="1" > Presencial <br/>
-							  <input type="radio" name="modalidad" value="2"> Virtual <br/>
+							  {{ Form::radio('modalidad', '1', null) }} Presencial <br/>
+							  {{ Form::radio('modalidad', '2', null) }} Virtual <br/>
 							</div>
                         </div>
 						
@@ -205,22 +202,21 @@
                             <label for="task-name" class="col-sm-3 control-label">Programa</label>
 
                             <div class="col-sm-6">
-								<select name="programa" id="inscripcion-programa" class="form-control">
-									<option value="11001">Administración Logística</option>
-									<option value="11002">Administración y Finanzas</option>
-									<option value="11003">Contaduría Pública Virtual</option>
-									<option value="11004">Contaduría Pública</option>
-									<option value="11004">Fisioterapia</option>
-									<option value="11005">Fonoaudiología</option>
-									<option value="11006">Licenciatura en Educación Especial Virtual</option>
-									<option value="11007">Licenciatura en Educación Especial</option>
-									<option value="11008">Licenciatura en Pedagogía Infantil</option>
-									<option value="11009">Marketing y Negocios Internacionales</option>
-									<option value="11010">Psicología Virtual</option>
-									<option value="11011">Psicología</option>
-									<option value="11012">Técnico Profesional en Logística</option>
-									<option value="11013">Tecnología en Logística</option>
-								</select>
+								{{Form::select('programa', ['11001' => 'Administración Logística',
+														  '11002' => 'Administración y Finanzas',
+														  '11003' => 'Contaduría Pública Virtual',
+														  '11004' => 'Contaduría Pública',
+														  '11005' => 'Fisioterapia',
+														  '11006' => 'Fonoaudiología',
+														  '11007' => 'Licenciatura en Educación Especial Virtual',
+														  '11008' => 'Licenciatura en Educación Especial',
+														  '11009' => 'Licenciatura en Pedagogía Infantil',
+														  '11010' => 'Marketing y Negocios Internacionales',
+														  '11011' => 'Psicología Virtual',
+														  '11012' => 'Psicología',
+														  '11013' => 'Técnico Profesional en Logística',
+														  '11014' => 'Tecnología en Logística'
+														  ], null, ['class'=>'form-control'])}}
                             </div>
                         </div>
 						
@@ -229,8 +225,8 @@
                             <label for="task-name" class="col-sm-3 control-label">Terminos y Condiciones</label>
 
                             <div class="col-sm-6">
-							  <input type="radio" name="termYCond" value="1" > Acepto <br/>
-							  <input type="radio" name="termYCond" value="0"> No acepto <br/>
+							  {{ Form::radio('termYCond', '1', null) }} Acepto <br/>
+							  {{ Form::radio('termYCond', '0', null) }} No acepto  <br/>
 							</div>
                         </div>
 					
@@ -244,7 +240,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Dirección</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="direccion" id="inscripcion-direccion" class="form-control" value="{{ old('direccion') }}">
+								{{ 	Form::text('direccion',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -253,10 +249,10 @@
                             <label for="task-name" class="col-sm-3 control-label">Departamento</label>
 
                             <div class="col-sm-6">
-							<select name="departamento" id="inscripcion-departamento" class="form-control">
-									<option value="11001">Atlantico</option>
-									<option value="11002">Cundinamarca</option>
-							</select>
+							{{Form::select('departamento', ['11001' => 'Atlantico',
+														'11002' => 'Cundinamarca'
+													   ], null, ['class'=>'form-control'])}}
+							
 							</div>
                         </div>
 						
@@ -265,10 +261,9 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							<select name="ciudad" id="inscripcion-ciudad" class="form-control">
-									<option value="11001">Bogotá</option>
-									<option value="11002">Barranquilla</option>
-							</select>
+							{{Form::select('ciudad', ['11001' => 'Bogotá',
+														'11002' => 'Barranquilla'
+													   ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -277,10 +272,9 @@
                             <label for="task-name" class="col-sm-3 control-label">Municipio</label>
 
                             <div class="col-sm-6">
-							<select name="municipio" id="inscripcion-municipio" class="form-control">
-									<option value="11001">Chía</option>
-									<option value="11002">Cota</option>
-							</select>
+							{{Form::select('municipio', ['11001' => 'Chía',
+														'11002' => 'Cota'
+													   ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -289,7 +283,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Barrio</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="barrio" id="inscripcion-barrio" class="form-control" value="{{ old('barrio') }}">
+								{{ 	Form::text('barrio',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -298,14 +292,14 @@
                             <label for="task-name" class="col-sm-3 control-label">Estrato</label>
 
                             <div class="col-sm-6">
-							<select name="estrato" id="inscripcion-estrato" class="form-control">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-							</select>
+							{{Form::select('estrato', ['1' => '1',
+														'2' => '2',
+														'3' => '3',
+														'4' => '4',
+														'5' => '5',
+														'6' => '6'
+													   ], null, ['class'=>'form-control'])}}
+							
 							</div>
                         </div>
 					</div>	
@@ -324,7 +318,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Nombres</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="nombresReferencia" id="inscripcion-NomReferencia" class="form-control" value="{{ old('nombresReferencia') }}">
+								{{ 	Form::text('nombresReferencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -333,7 +327,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Apellidos</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="apellidosReferencia" id="inscripcion-apellReferencia" class="form-control" value="{{ old('apellidosReferencia') }}">
+								{{ 	Form::text('apellidosReferencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -342,7 +336,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Dirección</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="direccionReferencia" id="inscripcion-direccionReferencia" class="form-control" value="{{ old('direccionReferencia') }}">
+								{{ 	Form::text('direccionReferencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -351,7 +345,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Telefono</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="telefonoReferencia" id="inscripcion-telefonoRef" class="form-control" value="{{ old('telefonoReferencia') }}">
+								{{ 	Form::text('telefonoReferencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -360,7 +354,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Celular</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="celularReferencia" id="inscripcion-celularRef" class="form-control" value="{{ old('celularReferencia') }}">
+								{{ 	Form::text('celularReferencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -369,7 +363,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Email</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="emailReferencia" id="inscripcion-emailRef" class="form-control" value="{{ old('emailReferencia') }}">
+								{{ 	Form::text('emailReferencia',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -378,10 +372,10 @@
                             <label for="task-name" class="col-sm-3 control-label">Parentesco</label>
 
                             <div class="col-sm-6">
-							 <select name="parentescoRef" id="inscripcion-parentescoRef" class="form-control">
-									<option value="1">Familiar</option>
-									<option value="2">Amigo</option>
-							</select>
+							{{Form::select('parentescoRef', ['1' => 'Familiar',
+														     '2' => 'Amigo'
+													   ], null, ['class'=>'form-control'])}}
+							
 							</div>
                         </div>
 					</div>	
@@ -398,10 +392,9 @@
                             <label for="task-name" class="col-sm-3 control-label">Tipo de colegio</label>
 
                             <div class="col-sm-6">
-							 <select name="tipoDeColegio" id="inscripcion-tipoDeColegio" class="form-control">
-									<option value="1">Privado</option>
-									<option value="2">Público</option>
-							</select>
+							{{Form::select('tipoDeColegio', ['1' => 'Privado',
+														     '2' => 'Público'
+													   ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -410,7 +403,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Colegio</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="colegio" id="inscripcion-colegio" class="form-control" value="{{ old('colegio') }}">
+								{{ 	Form::text('colegio',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -423,6 +416,9 @@
 									<option value="11001">Bogotá</option>
 									<option value="11002">Barranquilla</option>
 							</select>
+							{{Form::select('ciudadColegio', ['11001' => 'Bogotá',
+														     '11002' => 'Barranquilla'
+													   ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -431,7 +427,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Barrio</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="barrioColegio" id="inscripcion-barrioColegio" class="form-control" value="{{ old('barrioColegio') }}">
+								{{ 	Form::text('barrioColegio',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -440,10 +436,10 @@
                             <label for="task-name" class="col-sm-3 control-label">Jornada</label>
 
                             <div class="col-sm-6">
-							<select name="jornadaColegio" id="inscripcion-jornadaColegio" class="form-control">
-									<option value="AM">Mañana</option>
-									<option value="PM">Tarde</option>
-							</select>
+							{{Form::select('jornadaColegio', ['AM' => 'Mañana',
+														     'PM' => 'Tarde'
+													   ], null, ['class'=>'form-control'])}}
+							
 							</div>
                         </div>
 						
@@ -452,7 +448,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Código ICFES</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="codigoIcfesColegio" id="inscripcion-codigoIcfesColegio" class="form-control" value="{{ old('codigoIcfesColegio') }}">
+								{{ 	Form::text('codigoIcfesColegio',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -461,7 +457,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Año ICFES</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="anioIcfesColegio" id="inscripcion-anioIcfesColegio" class="form-control" value="{{ old('anioIcfesColegio') }}">
+								{{  Form::number('anioIcfesColegio', 2000, ['class'=>'form-control']) }}
                             </div>
                         </div>
 					</div>	
@@ -475,8 +471,10 @@
 						
 						<!-- Homologado -->
 						<div class="form-group">
-                            <div class="col-sm-6">
-                                <input type="checkbox" name="homologacion" value="homologacion"> Homologación<br>
+                            
+							<label for="task-name" class="col-sm-3 control-label">Homologación</label>
+							<div class="col-sm-6">	  
+								  {{ Form::checkbox('homologacion', '1', null) }}
                             </div>
                         </div>
 						
@@ -485,10 +483,9 @@
                             <label for="task-name" class="col-sm-3 control-label">Título</label>
 
                             <div class="col-sm-6">
-							<select name="tituloHomologacion" id="inscripcion-tituloHomologacion" class="form-control">
-									<option value="Ingeniero de Sistemas">Ingeniero de Sistemas</option>
-									<option value="Ingeniero Industrial">Ingeniero Industrial</option>
-							</select>
+							{{Form::select('tituloHomologacion', ['Ingeniero de Sistemas' => 'Ingeniero de Sistemas',
+														     'Ingeniero Industrial' => 'Ingeniero Industrial'
+													   ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -497,7 +494,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Institución</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="instHomologacion" id="inscripcion-instHomologacion" class="form-control" value="{{ old('instHomologacion') }}">
+								{{ 	Form::text('instHomologacion',null,['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -506,10 +503,9 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							<select name="ciudadHomologacion" id="inscripcion-ciudadHomologacion" class="form-control">
-									<option value="11001">Bogotá</option>
-									<option value="11002">Barranquilla</option>
-							</select>
+							{{Form::select('ciudadHomologacion', ['11001' => 'Bogotá',
+														     '11002' => 'Barranquilla'
+													   ], null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -518,7 +514,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha finalización</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="fechaFinHomologacion" id="inscripcion-fechaFinHomologacion" class="form-control" value="{{ old('fechaFinHomologacion') }}">
+								{{ Form::date('fechaFinHomologacion', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
                             </div>
                         </div>
 					</div>	
@@ -532,7 +528,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    {{ Form::close() }}
                 </div>
             </div>
             
