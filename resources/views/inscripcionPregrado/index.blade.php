@@ -15,8 +15,13 @@
                     @include('common.errors')
 					
                     <!-- New inscripcion Form -->
-                    {{ Form::model($procesoAdmon, array('route' => ['inscripcion-pregrado',$procesoAdmon], 'method' => 'post', 'class' => 'form-horizontal') ) }}
+                    {{ Form::model($inscripcionPregrado, array('route' => ['inscripcion-pregrado',$inscripcionPregrado->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
 
+						{{ Form::hidden('idUbicacion') }}
+						{{ Form::hidden('idReferencia') }}
+						{{ Form::hidden('idEducacion') }}
+						{{ Form::hidden('idHomologacion') }}
+						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
                              {{ Form::label('Tipo de identificación', null, ['class' => 'col-sm-3 control-label']) }}
@@ -412,10 +417,6 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							<select name="ciudadColegio" id="inscripcion-ciudadColegio" class="form-control">
-									<option value="11001">Bogotá</option>
-									<option value="11002">Barranquilla</option>
-							</select>
 							{{Form::select('ciudadColegio', ['11001' => 'Bogotá',
 														     '11002' => 'Barranquilla'
 													   ], null, ['class'=>'form-control'])}}

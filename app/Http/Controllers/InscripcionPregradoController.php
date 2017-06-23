@@ -13,6 +13,7 @@ use App\UbicacionesGeograficas;
 use App\RefsPersonalFamiliar;
 use App\Educaciones;
 use App\Homologacion;
+use App\InscripcionPregrado;
 use Illuminate\Support\Facades\View;
 
 class InscripcionPregradoController extends Controller
@@ -26,7 +27,79 @@ class InscripcionPregradoController extends Controller
      */
     public function index(Request $request, ProcesoAdmision $procesoAdmon)
     {
-		return View::make('inscripcionPregrado.index')->with(compact('procesoAdmon'));
+		$inscripcionPregrado = new InscripcionPregrado;
+		$idInscripcion = $procesoAdmon -> id_inscripcion;
+		$inscripcion =Inscripcion::findOrFail($idInscripcion);
+		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
+		
+		$inscripcionPregrado->idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		$inscripcionPregrado->nombres = $persona->nombres;
+		$inscripcionPregrado->apellidos = $persona->apellidos;
+		$inscripcionPregrado->tipoIdentificacion = $persona->id_tipo_identificacion;
+		$inscripcionPregrado->numeroIdentificacion = $persona->id_persona;
+		$inscripcionPregrado->fechaExpDocumento = $persona->fecha_expedicion_doc;
+		$inscripcionPregrado->lugarExpDocumento = $persona->lugar_exped_doc;
+		$inscripcionPregrado->fechaNacimiento = $persona->fecha_nacimiento;
+		$inscripcionPregrado->genero = $persona->genero;
+		
+		$inscripcion =Inscripcion::findOrFail($idInscripcion);
+		$inscripcionPregrado->telefono = $inscripcion->telefono;
+		$inscripcionPregrado->celular = $inscripcion->celular;
+		$inscripcionPregrado->email = $inscripcion->email;
+		$inscripcionPregrado->modalidad = $inscripcion->id_modalidad;
+		$inscripcionPregrado->programa = $inscripcion->id_programa;
+		$inscripcionPregrado->programa = $inscripcion->nombre_programa;
+		$inscripcionPregrado->termYCond = $inscripcion->acepta_terms_cond;
+		$inscripcionPregrado->procedencia = $inscripcion->procedencia;
+		$inscripcionPregrado->estCivil = $inscripcion->id_estado_civil;
+		$inscripcionPregrado->grupoEtnico = $inscripcion->id_grupo_etnico;
+		$inscripcionPregrado->convenio = $inscripcion->id_convenio;
+		
+		$ubicacionGeografica = UbicacionesGeograficas::where('id_inscripcion', '=', $idInscripcion)->first();
+		if($ubicacionGeografica != null){
+			$inscripcionPregrado->idUbicacion = $ubicacionGeografica->id_ubicacion;
+			$inscripcionPregrado->direccion = $ubicacionGeografica->direccion;
+			$inscripcionPregrado->departamento = $ubicacionGeografica->id_departamento;
+			$inscripcionPregrado->ciudad = $ubicacionGeografica->id_ciudad;
+			$inscripcionPregrado->municipio = $ubicacionGeografica->municipio;
+			$inscripcionPregrado->barrio = $ubicacionGeografica->barrio;
+			$inscripcionPregrado->estrato = $ubicacionGeografica->estrato;
+		}
+		
+		$refsPersonalFamiliar = RefsPersonalFamiliar::where('id_inscripcion', '=', $idInscripcion)->first();
+		if($refsPersonalFamiliar != null){
+			$inscripcionPregrado->idReferencia = $refsPersonalFamiliar->id_referencia;
+			$inscripcionPregrado->nombresReferencia = $refsPersonalFamiliar->nombres;
+			$inscripcionPregrado->apellidosReferencia = $refsPersonalFamiliar->apellidos;
+			$inscripcionPregrado->direccionReferencia = $refsPersonalFamiliar->direccion;
+			$inscripcionPregrado->telefonoReferencia = $refsPersonalFamiliar->telefono;
+			$inscripcionPregrado->celularReferencia = $refsPersonalFamiliar->celular;
+			$inscripcionPregrado->emailReferencia = $refsPersonalFamiliar->email;
+			$inscripcionPregrado->parentescoRef = $refsPersonalFamiliar->parentesco;
+		}
+		
+		$estudios = Educaciones::where('id_inscripcion', '=', $idInscripcion)->first();
+		if($estudios != null){
+			$inscripcionPregrado->idEducacion = $estudios->id_educacion;
+			$inscripcionPregrado->tipoDeColegio = $estudios->tipo_educacion;
+			$inscripcionPregrado->colegio = $estudios->nombre_inst;
+			$inscripcionPregrado->ciudadColegio = $estudios->id_ciudad_inst;
+			$inscripcionPregrado->barrioColegio = $estudios->barrio_inst;
+			$inscripcionPregrado->jornadaColegio = $estudios->jornada;
+			$inscripcionPregrado->codigoIcfesColegio = $estudios->cod_icfes_inst;
+			$inscripcionPregrado->anioIcfesColegio = $estudios->anio_icfes_inst;
+		}
+		
+		$homologacion = Homologacion::where('id_inscripcion', '=', $idInscripcion)->first();
+		if($homologacion != null){
+			$inscripcionPregrado->homologacion = 1;
+			$inscripcionPregrado->idHomologacion = $homologacion->id_homologacion;
+			$inscripcionPregrado->tituloHomologacion = $homologacion->titulo;
+			$inscripcionPregrado->instHomologacion = $homologacion->institucion;
+			$inscripcionPregrado->ciudadHomologacion = $homologacion->id_ciudad;
+			$inscripcionPregrado->fechaFinHomologacion = $homologacion->fecha_finalizacion;
+		}
+		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado'));
         //return view('inscripcionPregrado.index', ['telefono' => 'James']);
     }
 	
@@ -84,9 +157,9 @@ class InscripcionPregradoController extends Controller
 			'anioIcfesColegio' => 'required|max:4',
 			//Homologacion desde otra institucion
 			//'homologacion' => 'required|max:200',
-			'tituloHomologacion' => 'required|max:200',
-			'instHomologacion' => 'required|max:200',
-			'ciudadHomologacion' => 'required|max:10',
+			//'tituloHomologacion' => 'required|max:200',
+			//'instHomologacion' => 'required|max:200',
+			//'ciudadHomologacion' => 'required|max:10',
 			//'fechaFinHomologacion' => 'required|max:10',
         ]);
 
@@ -121,7 +194,10 @@ class InscripcionPregradoController extends Controller
 		$inscripcion->save();
 		
 		//Guardando la información de la ubicacion geografica
-		$ubicacionGeografica = new UbicacionesGeograficas;
+		$ubicacionGeografica = UbicacionesGeograficas::find($request -> idUbicacion);
+		if($ubicacionGeografica == null){
+			$ubicacionGeografica = new UbicacionesGeograficas;
+		}
 		$ubicacionGeografica->direccion = $request->direccion;
 		$ubicacionGeografica->id_departamento = $request->departamento;
 		$ubicacionGeografica->id_ciudad = $request->ciudad;
@@ -133,7 +209,10 @@ class InscripcionPregradoController extends Controller
 		$ubicacionGeografica->save();
 		
 		//Guardando la información de la referencia personal
-		$refsPersonalFamiliar = new RefsPersonalFamiliar;
+		$refsPersonalFamiliar = RefsPersonalFamiliar::find($request -> idReferencia);
+		if($refsPersonalFamiliar == null){
+			$refsPersonalFamiliar = new RefsPersonalFamiliar;
+		}
 		$refsPersonalFamiliar->nombres = $request->nombresReferencia;
 		$refsPersonalFamiliar->apellidos = $request->apellidosReferencia;
 		$refsPersonalFamiliar->direccion = $request->direccionReferencia;
@@ -146,7 +225,11 @@ class InscripcionPregradoController extends Controller
 		$refsPersonalFamiliar->save();
 		
 		//Guardando la información de los estudios de secundaria
-		$estudios = new Educaciones;
+		$estudios =Educaciones::find($request -> idEducacion);
+		if($estudios == null){
+			$estudios = new Educaciones;
+		}
+		
 		$estudios->tipo_educacion = $request->tipoDeColegio;
 		$estudios->nombre_inst = $request->colegio;
 		//$estudios->grado_obtenido = $request->email;
@@ -163,7 +246,10 @@ class InscripcionPregradoController extends Controller
 		
 		//Guardando la información de la referencia personal
 		if($request->homologacion == 1){
-			$homologacion = new Homologacion;
+			$homologacion =Homologacion::find($request -> idHomologacion);
+			if($homologacion == null){
+				$homologacion = new Homologacion;
+			}
 			$homologacion->titulo = $request->tituloHomologacion;
 			$homologacion->institucion = $request->instHomologacion;
 			$homologacion->id_ciudad = $request->ciudadHomologacion;
@@ -173,14 +259,7 @@ class InscripcionPregradoController extends Controller
 			$homologacion->save();
 		}
 		
-		//Guardando la información del proceso de admision
-		/*
-		$proceso = ProcesoAdmision::findOrFail($request->idProcesoAdmon);
-		$proceso->id_tipo_proceso = $request->tipoEdu;
-		$proceso->id_persona = $persona->id_persona;
-		$proceso->id_inscripcion = $inscripcion->id_inscripcion;
-        $proceso->save();
-		*/
+		
         return redirect('/');
     }
 }
