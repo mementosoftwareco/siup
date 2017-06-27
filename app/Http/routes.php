@@ -40,10 +40,16 @@ Route::group(['middleware' => ['web']], function () {
 	
 	*/
 	
-	Route::get('/menu', 'MenuController@menu');
+	Route::get('/menu', 'MenuController@menu') ->name('menu');
 	
-	Route::get('/perfiles', 'PerfilController@index');
-    Route::post('/perfil', 'PerfilController@store');
+	
+	//Rutas para administración de perfiles
+	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil');
+    Route::post('/guardarPerfil', 'PerfilController@guardarPerfil');
+	Route::get('/editarPerfil/{id}', ['uses' =>'PerfilController@editarPerfil'])->name('editarPerfil');
+	Route::post('/actualizarPerfil/{id}', ['uses' =>'PerfilController@actualizarPerfil'])->name('actualizarPerfil');
+    Route::get('/prepararEliminarPerfil/{id}', ['uses' =>'PerfilController@prepararEliminarPerfil']) ->name('prepararEliminarPerfil');
+	Route::post('/eliminarPerfil/{id}', ['uses' =>'PerfilController@eliminarPerfil']) ->name('eliminarPerfil');
 
 	
    /* Route::get('/tasks', 'TaskController@index');
@@ -54,8 +60,23 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
+	//rutas para administración de registros
+	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro');
+	Route::post('/guardarRegistro', 'RegistroController@guardarRegistro');	
+	Route::get('/editarRegistro/{id}', ['uses' =>'RegistroController@editarRegistro']) ->name('editarRegistro');
+	Route::post('/actualizarRegistro/{id}', ['uses' =>'RegistroController@actualizarRegistro'])->name('actualizarRegistro');
+	Route::get('/prepararEliminarRegistro/{id}', ['uses' =>'RegistroController@prepararEliminarRegistro'])->name('prepararEliminarRegistro');
+	Route::post('/eliminarRegistro', 'RegistroController@eliminarRegistro') ->name('eliminarRegistro');
+	
+	
 
 	
     Route::auth();
 
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
 });
