@@ -13,7 +13,7 @@
                     @include('common.errors')
 
                     <!-- New Task Form -->
-                    <form action="{{ url('perfil') }}" method="POST" class="form-horizontal">
+                    <form action="{{ url('/guardarPerfil') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 
                         <!-- Task Name -->
@@ -40,7 +40,12 @@
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Crear
                                 </button>
+								
+								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
                             </div>
+							
+                                
+                           
                         </div>
                     </form>
                 </div>
@@ -65,6 +70,13 @@
                                         <td class="table-text"><div>{{ $perfil->nombre }}</div></td>
 										
 										<td class="table-text"><div>{{ $perfil->descripcion }}</div></td>
+										
+										<td class="table-text"><div><a href="{{route('editarPerfil' , ['id' =>$perfil->id ]) }}">Editar</a></div></td>
+										
+										
+										
+										<td class="table-text"><div><a href="{{route('prepararEliminarPerfil' , ['id' =>$perfil->id ]) }}">Eliminar</a></div></td>										
+								
                                 
                                     </tr>
                                 @endforeach

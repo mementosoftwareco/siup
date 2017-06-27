@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Perfil;
+use App\Usuario;
+use App\User;
 use View;
 use Validator;
 use Session;
@@ -23,8 +25,8 @@ class MenuController extends Controller
     public function menu()
 	{
 		//$this->middleware('auth');
-		
-		$perfil = Auth::user()->getNombrePerfil();
+		$user = new User;
+		$perfil = $user->obtenerNombrePerfil();
 
 		
 		if ( $perfil === 'Administrador' )
