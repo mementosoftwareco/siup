@@ -14,11 +14,25 @@ use App\RefsPersonalFamiliar;
 use App\Educaciones;
 use App\Homologacion;
 use App\InscripcionPregrado;
+use App\EstadosProcesoAdmisionEnum;
 use Illuminate\Support\Facades\View;
 
 class InscripcionPregradoController extends Controller
 {
-    //
+    
+	
+	public function listProcesos(Request $request)
+    {
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
+		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
+		
+        return view('inscripcionPregrado.list', [
+            'procesosAdmon' => $procesosAdmon,
+        ]);
+		
+    }
+	
+	//
 	/**
      * Display the inscripcion pregrado page
      *
@@ -100,7 +114,7 @@ class InscripcionPregradoController extends Controller
 			$inscripcionPregrado->fechaFinHomologacion = $homologacion->fecha_finalizacion;
 		}
 		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado'));
-        //return view('inscripcionPregrado.index', ['telefono' => 'James']);
+        
     }
 	
 	/**

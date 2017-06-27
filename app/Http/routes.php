@@ -35,6 +35,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/preinscripcion', 'PreinscripcionController@index');
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
+	Route::get('/inscripcion-pregrado.list/', 'InscripcionPregradoController@listProcesos');
 	Route::get('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@index');
 	Route::post('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@store')->name('inscripcion-pregrado');
 	

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Persona;
 use App\Inscripcion;
 use App\ProcesoAdmision;
+use App\EstadosProcesoAdmisionEnum;
 
 
 class PreinscripcionController extends Controller
@@ -80,6 +81,7 @@ class PreinscripcionController extends Controller
 		$proceso->id_tipo_proceso = $request->tipoEdu;
 		$proceso->id_persona = $persona->id_persona;
 		$proceso->id_inscripcion = $inscripcion->id_inscripcion;
+		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
         $proceso->save();
 		
         return redirect('/');

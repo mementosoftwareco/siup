@@ -115,16 +115,16 @@
 									<option value="11002">Administración y Finanzas</option>
 									<option value="11003">Contaduría Pública Virtual</option>
 									<option value="11004">Contaduría Pública</option>
-									<option value="11004">Fisioterapia</option>
-									<option value="11005">Fonoaudiología</option>
-									<option value="11006">Licenciatura en Educación Especial Virtual</option>
-									<option value="11007">Licenciatura en Educación Especial</option>
-									<option value="11008">Licenciatura en Pedagogía Infantil</option>
-									<option value="11009">Marketing y Negocios Internacionales</option>
-									<option value="11010">Psicología Virtual</option>
-									<option value="11011">Psicología</option>
-									<option value="11012">Técnico Profesional en Logística</option>
-									<option value="11013">Tecnología en Logística</option>
+									<option value="11005">Fisioterapia</option>
+									<option value="11006">Fonoaudiología</option>
+									<option value="11007">Licenciatura en Educación Especial Virtual</option>
+									<option value="11008">Licenciatura en Educación Especial</option>
+									<option value="11009">Licenciatura en Pedagogía Infantil</option>
+									<option value="11010">Marketing y Negocios Internacionales</option>
+									<option value="11011">Psicología Virtual</option>
+									<option value="11012">Psicología</option>
+									<option value="11013">Técnico Profesional en Logística</option>
+									<option value="11014">Tecnología en Logística</option>
 								</select>
                             </div>
                         </div>

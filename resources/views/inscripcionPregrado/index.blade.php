@@ -28,7 +28,7 @@
 							
 
                             <div class="col-sm-6">
-							{{Form::select('tipoIdentificacion', ['1' => 'Cédula de ciudadanía',
+							{{ Form::select('tipoIdentificacion', ['1' => 'Cédula de ciudadanía',
 																  '2' => 'Cédula de extranjería',
 																  '3' => 'Pasaporte',
 																  '4' => 'Tarjeta de identidad'
@@ -108,7 +108,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Email</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('email',null,['class'=>'form-control']) }}
+								{{  Form::email('email', null, ['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -368,7 +368,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Email</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('emailReferencia',null,['class'=>'form-control']) }}
+								{{  Form::email('emailReferencia', null, ['class'=>'form-control']) }}
                             </div>
                         </div>
 						
