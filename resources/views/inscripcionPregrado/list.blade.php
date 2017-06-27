@@ -17,9 +17,9 @@
                             <thead>
                                 <th>Proceso</th>
 								<th>Documento aspirante</th>
-								<th>Nombres aspirante</th>
-								<th>Apellidos aspirante</th>
+								<th>Aspirante</th>
 								<th>Estado</th>
+								<th>Fecha inscripción</th>
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody>
@@ -29,11 +29,11 @@
 										
 										<td class="table-text"><div>{{ $procesoAdmon->persona == null ? 'viene nulo' : $procesoAdmon->persona->id_persona }}</div></td>
 										
-										<td class="table-text"><div>{{ $procesoAdmon->persona == null ? 'viene nulo' : $procesoAdmon->persona->nombres }}</div></td>
-										
-										<td class="table-text"><div>{{ $procesoAdmon->persona == null ? 'viene nulo' : $procesoAdmon->persona->apellidos }}</div></td>
+										<td class="table-text"><div>{{ $procesoAdmon->persona == null ? 'viene nulo' : $procesoAdmon->persona->nombres . ' ' . $procesoAdmon->persona->apellidos }}</div></td>
 										
 										<td class="table-text"><div>{{ $procesoAdmon->estadoProceso == null ? 'viene nulo' : $procesoAdmon->estadoProceso->nombre }}</div></td>
+										
+										<td class="table-text"><div>{{ $procesoAdmon->created_at }}</div></td>
 
                                         <!-- Continuar inscripción Button -->
                                         <td>
@@ -51,7 +51,7 @@
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-                                                    <i class="fa fa-btn fa-upload"></i>Cargar documentos
+                                                    <i class="fa fa-btn fa-upload"></i>Documentos
                                                 </button>
                                             </form>
                                         </td>
