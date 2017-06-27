@@ -145,6 +145,7 @@
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Pre inscribirme
                                 </button>
+								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
                             </div>
                         </div>
                     </form>

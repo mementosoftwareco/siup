@@ -41,9 +41,7 @@
 						<div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">						
 								{!! Form::submit('Eliminar', ['class' => 'btn btn-default']) !!}
-								<button type="submit" class="btn btn-default" onClick="javascript:window.history.back();">
-                                    <i></i>Cancelar
-                                </button>
+								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
 							</div>	
 						</div>
 

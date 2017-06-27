@@ -13,25 +13,19 @@
                     @include('common.errors')
 
                     <!-- New Task Form -->
-                    <form action="{{ url('task') }}" method="POST" class="form-horizontal">
-                        {{ csrf_field() }}
-
+                
                         <!-- Task Name -->
-                        <div class="form-group">
+                        
                              <a href="{{ url('/preinscripcion') }}">Preinscribir Estudiante</a>							
-                        </div>
+                        
 						
-						<div class="form-group">                             
-							 <a href="{{ url('/preinscripcion') }}">Inscribir Estudiante</a>
-                        </div>
-						
-						
-						<div class="form-group">                             
-							 <a href="{{ url('/preinscripcion') }}">Asociar Perfil a Usuario</a>
-                        </div>
-
+						                           
+							 <br><a href="{{ url('/inscripcion-pregrado.list') }}">Inscribir Estudiante</a>
                       
-                    </form>
+						
+					
+
+                 
                 </div>
             </div>
 

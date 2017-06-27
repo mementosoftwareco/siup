@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Sistema de Inscripción Estudiantil Universidad Panamericana
+                    Sistema de Inscripción Estudiantil Universidad Iberoamericana
                 </a>
             </div>
 
@@ -54,6 +54,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
+						<li><a href="{{ url('/preinscripcion') }}">Preinscripción</a></li>
 						<li><a href="{{ url('/home') }}">Home</a></li>
                         <li><a href="{{ url('/login') }}">Login</a></li>
                        <!-- <li><a href="{{ url('/register') }}">Register</a></li>-->

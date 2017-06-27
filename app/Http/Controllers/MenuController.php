@@ -33,13 +33,13 @@ class MenuController extends Controller
          return View::make('menus.administrador');
 	 
 	    if ( $perfil === 'Operador' )
-         return View::make('menus.inscripcion');
+         return View::make('menus.operador');
 	 
 		if ( $perfil === 'Call Center' )
-		 return View::make('menus.inscripcion');
+		 return View::make('menus.callcenter');
 	 
 		if ( $perfil === 'Comercial' )
-         return View::make('menus.inscripcion');
+         return View::make('menus.comercial');
 	}
 
 	

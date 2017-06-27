@@ -527,6 +527,7 @@
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
                                 </button>
+								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
                             </div>
                         </div>
                     {{ Form::close() }}

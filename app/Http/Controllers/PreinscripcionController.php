@@ -84,6 +84,6 @@ class PreinscripcionController extends Controller
 		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
         $proceso->save();
 		
-        return redirect('/');
+        return redirect('/menu');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateValidacionesTable extends Migration
+class CreateHistoricosProcesoAdmisionTable extends Migration
 {
     /**
      * Run the migrations.

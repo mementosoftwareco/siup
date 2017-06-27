@@ -274,6 +274,6 @@ class InscripcionPregradoController extends Controller
 		}
 		
 		
-        return redirect('/');
+        return redirect('/menu');
     }
 }
