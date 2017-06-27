@@ -41,7 +41,7 @@
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-                                                    <i class="fa fa-btn fa-edit"></i>inscripción
+                                                    <i class="fa fa-btn fa-edit"></i>Inscripción
                                                 </button>
                                             </form>
                                         </td>
