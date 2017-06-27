@@ -49,6 +49,10 @@ drop table entrevistas cascade constraints;
 drop table convenios cascade constraints;
 drop table estados_validacion cascade constraints;
 drop table grupos_etnicos cascade constraints;
+drop table refs_personal_familiar cascade constraints;
+drop table homologaciones cascade constraints;
+drop table ubicaciones_geograficas cascade constraints;
+drop table educaciones cascade constraints;
 drop table inscripciones cascade constraints;
 drop table migrations cascade constraints;
 drop table modalidades cascade constraints;
@@ -80,6 +84,10 @@ drop sequence "SIUP"."PREGUNTAS_ID_PREGUNTA_SEQ";
 drop sequence "SIUP"."PROCESOS_ADMISION_ID_PROCESO_A";
 drop sequence "SIUP"."RESPUESTAS_ID_RESPUESTA_SEQ";
 drop sequence "SIUP"."VALIDACIONES_ID_VALIDACION_SEQ";
+drop sequence "SIUP"."HOMOLOGACIONES_ID_HOMOLOGACION";
+drop sequence "SIUP"."EDUCACIONES_ID_EDUCACION_SEQ";
+drop sequence "SIUP"."UBICACIONES_GEOGRAFICAS_ID_UBI";
+drop sequence "SIUP"."REFS_PERSONAL_FAMILIAR_ID_REFE";
 
 --Agregando los datos a las tablas de referencia
 
@@ -94,3 +102,20 @@ insert into TIPOS_identificacion (nombre, descripcion) values ('Cédula de ciuda
 insert into TIPOS_identificacion (nombre, descripcion) values ('Cédula de extranjería','Cédula de extranjería');
 insert into TIPOS_identificacion (nombre, descripcion) values ('Pasaporte','Pasaporte');
 insert into TIPOS_identificacion (nombre, descripcion) values ('Tarjeta de identidad','Tarjeta de identidad');
+
+--Grupo Etnico
+insert into grupos_etnicos(nombre, descripcion) values ('Afrocolombiano o Afrodescendiente','Afrocolombiano o Afrodescendiente');
+insert into grupos_etnicos(nombre, descripcion) values ('Pueblos indígenas','Pueblos indígenas');
+insert into grupos_etnicos(nombre, descripcion) values ('Raizales','Raizales');
+insert into grupos_etnicos(nombre, descripcion) values ('Rom','Rom');
+insert into grupos_etnicos(nombre, descripcion) values ('No aplica','No Aplica');
+
+--Estado civil
+insert into estados_civil (nombre, descripcion) values ('Soltero/a','Soltero/a');
+insert into estados_civil (nombre, descripcion) values ('Casado/a','Casado/a');
+
+--Convenio
+insert into convenios (nombre, descripcion) values ('No Aplica','No Aplica');
+insert into convenios (nombre, descripcion) values ('Ser pilo paga','Ser pilo paga');
+insert into convenios (nombre, descripcion) values ('icetex..otro','icetex..otro');
+

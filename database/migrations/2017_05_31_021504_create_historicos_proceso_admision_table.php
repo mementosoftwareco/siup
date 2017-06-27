@@ -12,15 +12,17 @@ class CreateValidacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('validaciones', function (Blueprint $table) {
-            $table->increments('id_validacion');
+        Schema::create('historicos_proceso_admision', function (Blueprint $table) {
+            $table->increments('id_historico_proceso');
 			$table->integer('id_usuario');
 			$table->integer('id_estado');
+			$table->integer('id_proceso_admon');
 			$table->string('comentarios', 400);
 			$table->date('fecha');
             $table->timestamps();
 			$table->foreign('id_usuario')->references('id')->on('users');
-			$table->foreign('id_estado')->references('id_estado')->on('estados_validacion');
+			$table->foreign('id_estado')->references('id_estado')->on('estados_proceso_admision');
+			$table->foreign('id_proceso_admon')->references('id_proceso_admon')->on('procesos_admision');
         });
     }
 

@@ -43,7 +43,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/menu', 'MenuController@menu') ->name('menu');
 	
 	
-	//Rutas para administraciÃ³n de perfiles
+	//Rutas para administración de perfiles
 	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil');
     Route::post('/guardarPerfil', 'PerfilController@guardarPerfil');
 	Route::get('/editarPerfil/{id}', ['uses' =>'PerfilController@editarPerfil'])->name('editarPerfil');
@@ -60,9 +60,13 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
-	//rutas para administraciÃ³n de registros
+	Route::get('/inscripcion-pregrado.list/', 'InscripcionPregradoController@listProcesos');
+	//rutas para administración de registros
+	Route::get('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@index');
 	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro');
+	Route::post('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@store')->name('inscripcion-pregrado');
 	Route::post('/guardarRegistro', 'RegistroController@guardarRegistro');	
+	
 	Route::get('/editarRegistro/{id}', ['uses' =>'RegistroController@editarRegistro']) ->name('editarRegistro');
 	Route::post('/actualizarRegistro/{id}', ['uses' =>'RegistroController@actualizarRegistro'])->name('actualizarRegistro');
 	Route::get('/prepararEliminarRegistro/{id}', ['uses' =>'RegistroController@prepararEliminarRegistro'])->name('prepararEliminarRegistro');

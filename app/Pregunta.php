@@ -8,4 +8,5 @@ class Pregunta extends Model
 {
     //
 	protected $table = 'preguntas';
+	
 }

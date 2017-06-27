@@ -12,7 +12,7 @@ class CreateEstadosValidacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('estados_validacion', function (Blueprint $table) {
+        Schema::create('estados_proceso_admision', function (Blueprint $table) {
             $table->increments('id_estado');
 			$table->string('nombre', 100);
 			$table->string('descripcion', 100);
@@ -27,6 +27,6 @@ class CreateEstadosValidacionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('estados_validacion');
+        Schema::drop('estados_proceso_admision');
     }
 }
