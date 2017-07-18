@@ -16,6 +16,8 @@ class CreateEntrevistasTable extends Migration
             $table->increments('id_entrevista');
 			$table->date('fecha_entrevista');
 			$table->integer('id_proceso_admon');
+			$table->string('acepta_comunicacion', 1);
+			$table->string('acepta_politicas_priv', 1);
 			$table->foreign('id_proceso_admon')->references('id_proceso_admon')->on('procesos_admision');
             $table->timestamps();
         });

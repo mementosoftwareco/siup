@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'camilo590@gmail.com', 'name' => 'Administrador'],
+    'from' => ['address' => 'iberoamericanamail@gmail.com', 'name' => 'Administrador'],
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'password' => env('MAIL_PASSWORD', 'Veloster2012'),
+    'password' => env('MAIL_PASSWORD', '1b3r04m3r1c4n4'),
 
     /*
     |--------------------------------------------------------------------------

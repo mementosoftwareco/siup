@@ -16,11 +16,15 @@ use App\Homologacion;
 use App\InscripcionPregrado;
 use App\EstadosProcesoAdmisionEnum;
 use App\HistoricosProcesoAdmision;
+use App\Entrevista;
+use App\EntrevistaViewModel;
+use App\DetalleEntrevista;
+use App\Pregunta;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
 
-class InscripcionPregradoController extends Controller
+class EntrevistaController extends Controller
 {
 	
 	/**
@@ -31,11 +35,11 @@ class InscripcionPregradoController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     
 	
-	public function listProcesos(Request $request)
+	public function listEntrevistas(Request $request)
     {
 		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
@@ -48,86 +52,41 @@ class InscripcionPregradoController extends Controller
 	
 	//
 	/**
-     * Display the inscripcion pregrado page
+     * Display the Entrevista page
      *
      * @param  Request  $request
      * @return Response
      */
     public function index(Request $request, ProcesoAdmision $procesoAdmon)
     {
-		$inscripcionPregrado = new InscripcionPregrado;
+		$idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		$entrevistaViewModel = new EntrevistaViewModel;
 		$idInscripcion = $procesoAdmon -> id_inscripcion;
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
 		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
 		
-		$inscripcionPregrado->idProcesoAdmision = $procesoAdmon->id_proceso_admon;
-		$inscripcionPregrado->nombres = $persona->nombres;
-		$inscripcionPregrado->apellidos = $persona->apellidos;
-		$inscripcionPregrado->tipoIdentificacion = $persona->id_tipo_identificacion;
-		$inscripcionPregrado->numeroIdentificacion = $persona->id_persona;
-		$inscripcionPregrado->fechaExpDocumento = $persona->fecha_expedicion_doc;
-		$inscripcionPregrado->lugarExpDocumento = $persona->lugar_exped_doc;
-		$inscripcionPregrado->fechaNacimiento = $persona->fecha_nacimiento;
-		$inscripcionPregrado->genero = $persona->genero;
+		$entrevistaViewModel->idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		$entrevistaViewModel->nombres = $persona->nombres;
+		$entrevistaViewModel->apellidos = $persona->apellidos;
+		$entrevistaViewModel->tipoIdentificacion = $persona->id_tipo_identificacion;
+		$entrevistaViewModel->numeroIdentificacion = $persona->id_persona;
+		
 		
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
-		$inscripcionPregrado->telefono = $inscripcion->telefono;
-		$inscripcionPregrado->celular = $inscripcion->celular;
-		$inscripcionPregrado->email = $inscripcion->email;
-		$inscripcionPregrado->modalidad = $inscripcion->id_modalidad;
-		$inscripcionPregrado->programa = $inscripcion->id_programa;
-		$inscripcionPregrado->programa = $inscripcion->nombre_programa;
-		$inscripcionPregrado->termYCond = $inscripcion->acepta_terms_cond;
-		$inscripcionPregrado->procedencia = $inscripcion->procedencia;
-		$inscripcionPregrado->estCivil = $inscripcion->id_estado_civil;
-		$inscripcionPregrado->grupoEtnico = $inscripcion->id_grupo_etnico;
-		$inscripcionPregrado->convenio = $inscripcion->id_convenio;
+		$entrevistaViewModel->modalidad = $inscripcion->id_modalidad;
+		$entrevistaViewModel->programa = $inscripcion->nombre_programa;
+						
+		$entrevista = Entrevista::where('id_proceso_admon', '=', $idProcesoAdmision)->first();
 		
-		$ubicacionGeografica = UbicacionesGeograficas::where('id_inscripcion', '=', $idInscripcion)->first();
-		if($ubicacionGeografica != null){
-			$inscripcionPregrado->idUbicacion = $ubicacionGeografica->id_ubicacion;
-			$inscripcionPregrado->direccion = $ubicacionGeografica->direccion;
-			$inscripcionPregrado->departamento = $ubicacionGeografica->id_departamento;
-			$inscripcionPregrado->ciudad = $ubicacionGeografica->id_ciudad;
-			$inscripcionPregrado->municipio = $ubicacionGeografica->municipio;
-			$inscripcionPregrado->barrio = $ubicacionGeografica->barrio;
-			$inscripcionPregrado->estrato = $ubicacionGeografica->estrato;
+		if($entrevista != null){
+			$entrevistaViewModel->idEntrevista = $entrevista->id_entrevista;
+			$entrevistaViewModel->fechaEntrevista = $entrevista->fecha_entrevista;
+			$entrevistaViewModel->aceptaComunicacion = $entrevista->acepta_comunicacion;
+			$entrevistaViewModel->aceptaPoliticasPriv = $entrevista->acepta_politicas_priv;
 		}
 		
-		$refsPersonalFamiliar = RefsPersonalFamiliar::where('id_inscripcion', '=', $idInscripcion)->first();
-		if($refsPersonalFamiliar != null){
-			$inscripcionPregrado->idReferencia = $refsPersonalFamiliar->id_referencia;
-			$inscripcionPregrado->nombresReferencia = $refsPersonalFamiliar->nombres;
-			$inscripcionPregrado->apellidosReferencia = $refsPersonalFamiliar->apellidos;
-			$inscripcionPregrado->direccionReferencia = $refsPersonalFamiliar->direccion;
-			$inscripcionPregrado->telefonoReferencia = $refsPersonalFamiliar->telefono;
-			$inscripcionPregrado->celularReferencia = $refsPersonalFamiliar->celular;
-			$inscripcionPregrado->emailReferencia = $refsPersonalFamiliar->email;
-			$inscripcionPregrado->parentescoRef = $refsPersonalFamiliar->parentesco;
-		}
 		
-		$estudios = Educaciones::where('id_inscripcion', '=', $idInscripcion)->first();
-		if($estudios != null){
-			$inscripcionPregrado->idEducacion = $estudios->id_educacion;
-			$inscripcionPregrado->tipoDeColegio = $estudios->tipo_educacion;
-			$inscripcionPregrado->colegio = $estudios->nombre_inst;
-			$inscripcionPregrado->ciudadColegio = $estudios->id_ciudad_inst;
-			$inscripcionPregrado->barrioColegio = $estudios->barrio_inst;
-			$inscripcionPregrado->jornadaColegio = $estudios->jornada;
-			$inscripcionPregrado->codigoIcfesColegio = $estudios->cod_icfes_inst;
-			$inscripcionPregrado->anioIcfesColegio = $estudios->anio_icfes_inst;
-		}
-		
-		$homologacion = Homologacion::where('id_inscripcion', '=', $idInscripcion)->first();
-		if($homologacion != null){
-			$inscripcionPregrado->homologacion = 1;
-			$inscripcionPregrado->idHomologacion = $homologacion->id_homologacion;
-			$inscripcionPregrado->tituloHomologacion = $homologacion->titulo;
-			$inscripcionPregrado->instHomologacion = $homologacion->institucion;
-			$inscripcionPregrado->ciudadHomologacion = $homologacion->id_ciudad;
-			$inscripcionPregrado->fechaFinHomologacion = $homologacion->fecha_finalizacion;
-		}
-		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado'));
+		return View::make('entrevista.index')->with(compact('entrevistaViewModel'));
         
     }
 	

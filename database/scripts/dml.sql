@@ -43,3 +43,9 @@ insert into estados_proceso_admision (nombre, descripcion) values ('Rechazado po
 insert into estados_proceso_admision (nombre, descripcion) values ('Validado lider comercial','Validado lider comercial');
 insert into estados_proceso_admision (nombre, descripcion) values ('Validado facultad','Validado facultad');
 insert into estados_proceso_admision (nombre, descripcion) values ('Admitido','Admitido');
+
+--perfiles
+insert into perfiles (id, nombre, descripcion) values (1, 'Administrador', 'administrador');
+insert into perfiles (id, nombre, descripcion) values (2, 'Operador', 'Operador');
+insert into perfiles (id, nombre, descripcion) values (3, 'Call Center', 'Call Center');
+insert into perfiles (id, nombre, descripcion) values (4, 'Comercial', 'Comercial');
