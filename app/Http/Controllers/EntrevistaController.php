@@ -83,7 +83,18 @@ class EntrevistaController extends Controller
 			$entrevistaViewModel->fechaEntrevista = $entrevista->fecha_entrevista;
 			$entrevistaViewModel->aceptaComunicacion = $entrevista->acepta_comunicacion;
 			$entrevistaViewModel->aceptaPoliticasPriv = $entrevista->acepta_politicas_priv;
+		
+			for ($i = 1; $i <= 36; $i++) {			
+				$detalleEntrevista = DetalleEntrevista::where('id_entrevista', '=', $entrevista->id_entrevista)->where('id_pregunta', $i)->first();
+				if($detalleEntrevista != null){
+					$nombreCampo = 'pregunta'.(string)$i;
+					$entrevistaViewModel->$nombreCampo = $detalleEntrevista->texto_respuesta;
+				}
+			}
+		
 		}
+		
+		
 		
 		
 		return View::make('entrevista.index')->with(compact('entrevistaViewModel'));
@@ -100,153 +111,66 @@ class EntrevistaController extends Controller
     {
         
 		$this->validate($request, [
-            'tipoIdentificacion' => 'required|max:10',
-			'numeroIdentificacion' => 'required|max:50',
-			'fechaExpDocumento' => 'required|max:10',
-			'lugarExpDocumento' => 'required|max:100',
-			'nombres' => 'required|max:100',
-			'apellidos' => 'required|max:100',
-			'telefono' => 'required|max:50',
-			'celular' => 'required|max:50',
-			'email' => 'required|max:100',
-			//'fechaNacimiento' => 'required|max:10',
-			'genero' => 'required|max:10',
-			'grupoEtnico' => 'required|max:10',
-			'tipoEdu' => 'required|max:10',
-			'modalidad' => 'required|max:10',
-			'programa' => 'required|max:10',
-			'estCivil' => 'required|max:10',
-			'procedencia' => 'required|max:50',
-			'convenio' => 'required|max:10',
-			'termYCond' => 'accepted',
-			//Campos ubicacion
-			'direccion' => 'required|max:300',
-			'departamento' => 'required|max:50',
-			'ciudad' => 'required|max:10',
-			'municipio' => 'required|max:10',
-			'barrio' => 'required|max:200',
-			'estrato' => 'required|max:10',
-			//Campos referencia personal
-			'nombresReferencia' => 'required|max:200',
-			'apellidosReferencia' => 'required|max:200',
-			'direccionReferencia' => 'required|max:300',
-			'telefonoReferencia' => 'required|max:50',
-			'celularReferencia' => 'required|max:50',
-			'emailReferencia' => 'required|max:50',
-			'parentescoRef' => 'required|max:50',
-			//informacion estudios de secundaria
-			'tipoDeColegio' => 'required|max:10',
-			'colegio' => 'required|max:200',
-			'ciudadColegio' => 'required|max:10',
-			'barrioColegio' => 'required|max:100',
-			'jornadaColegio' => 'required|max:10',
-			'codigoIcfesColegio' => 'required|max:20',
-			'anioIcfesColegio' => 'required|max:4',
-			//Homologacion desde otra institucion
-			//'homologacion' => 'required|max:200',
-			//'tituloHomologacion' => 'required|max:200',
-			//'instHomologacion' => 'required|max:200',
-			//'ciudadHomologacion' => 'required|max:10',
-			//'fechaFinHomologacion' => 'required|max:10',
+            'aceptaComunicacion' => 'required|max:10',
+			'aceptaPoliticasPriv' => 'required|max:50',
+			'pregunta1' => 'required|max:10',
+			'pregunta2' => 'required|max:10',
+			'pregunta3' => 'required|max:10',
+			'pregunta4' => 'required|max:10',
+			'pregunta5' => 'required|max:10',
+			'pregunta6' => 'required|max:10',
+			'pregunta7' => 'required|max:10',
+			'pregunta8' => 'required|max:10',
+			'pregunta9' => 'required|max:10',
+			'pregunta10' => 'required|max:10',
+			'pregunta11' => 'required|max:10',
+			'pregunta12' => 'required|max:10',
+			'pregunta13' => 'required|max:10',
+			'pregunta14' => 'required|max:10',
+			'pregunta15' => 'required|max:10',
+			'pregunta16' => 'required|max:10',
+			'pregunta17' => 'required|max:10',
+			'pregunta18' => 'required|max:10',
+			'pregunta19' => 'required|max:10',
+			'pregunta20' => 'required|max:10',
+			'pregunta21' => 'required|max:10',
+			'pregunta22' => 'required|max:10',
+			'pregunta23' => 'required|max:10',
+			'pregunta24' => 'required|max:10',
+			'pregunta25' => 'required|max:10',
+			'pregunta26' => 'required|max:10',
+			'pregunta27' => 'required|max:10',
+			'pregunta28' => 'required|max:10',
+			'pregunta29' => 'required|max:10',
+			'pregunta30' => 'required|max:10',
+			'pregunta31' => 'required|max:10',
+			'pregunta32' => 'required|max:10',
+			'pregunta33' => 'required|max:10',
+			'pregunta34' => 'required|max:10',
+			'pregunta35' => 'required|max:10',
+			'pregunta36' => 'required|max:10',
         ]);
 
-		$idInscripcion = $procesoAdmon -> id_inscripcion;
+		$idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		$entrevista = Entrevista::where('id_proceso_admon', '=', $idProcesoAdmision)->first();
 		
-		//Guardando la información de la persona
-		$persona = Persona::findOrFail($request->numeroIdentificacion);
-		
-		$persona->nombres = $request->nombres;
-		$persona->apellidos = $request->apellidos;
-		$persona->id_tipo_identificacion = $request->tipoIdentificacion;
-		$persona->id_persona = $request->numeroIdentificacion;
-		$persona->fecha_expedicion_doc = $request->fechaExpDocumento;
-		$persona->lugar_exped_doc = $request->lugarExpDocumento;
-		$persona->fecha_nacimiento = $request->fechaNacimiento;
-		$persona->genero = $request->genero;
-		$persona->save();
-
-		//Guardando la información de la inscripción
-		$inscripcion =Inscripcion::findOrFail($idInscripcion);
-		$inscripcion->telefono = $request->telefono;
-		$inscripcion->celular = $request->celular;
-		$inscripcion->email = $request->email;
-		$inscripcion->id_modalidad = $request->modalidad;
-		$inscripcion->id_programa = $request->programa;
-		$inscripcion->nombre_programa = $request->programa;
-		$inscripcion->acepta_terms_cond = $request->termYCond;
-		$inscripcion->procedencia = $request->procedencia;
-		$inscripcion->id_estado_civil = $request->estCivil;
-		$inscripcion->id_grupo_etnico = $request->grupoEtnico;
-		$inscripcion->id_convenio = $request->convenio;
-		$inscripcion->save();
-		
-		//Guardando la información de la ubicacion geografica
-		$ubicacionGeografica = UbicacionesGeograficas::find($request -> idUbicacion);
-		if($ubicacionGeografica == null){
-			$ubicacionGeografica = new UbicacionesGeograficas;
+		if($entrevista == null){
+			$entrevista = new Entrevista;
+			$entrevista->fecha_entrevista = Carbon::now();	
+			$entrevista->id_proceso_admon = $idProcesoAdmision;		
 		}
-		$ubicacionGeografica->direccion = $request->direccion;
-		$ubicacionGeografica->id_departamento = $request->departamento;
-		$ubicacionGeografica->id_ciudad = $request->ciudad;
-		$ubicacionGeografica->municipio = $request->municipio;
-		$ubicacionGeografica->barrio = $request->barrio;
-		$ubicacionGeografica->estrato = $request->estrato;
-		$ubicacionGeografica->id_inscripcion = $idInscripcion;
+		$entrevista->acepta_comunicacion = $request->aceptaComunicacion;
+		$entrevista->acepta_politicas_priv = $request->aceptaPoliticasPriv;
 		
-		$ubicacionGeografica->save();
+		$entrevista->save();
 		
-		//Guardando la información de la referencia personal
-		$refsPersonalFamiliar = RefsPersonalFamiliar::find($request -> idReferencia);
-		if($refsPersonalFamiliar == null){
-			$refsPersonalFamiliar = new RefsPersonalFamiliar;
-		}
-		$refsPersonalFamiliar->nombres = $request->nombresReferencia;
-		$refsPersonalFamiliar->apellidos = $request->apellidosReferencia;
-		$refsPersonalFamiliar->direccion = $request->direccionReferencia;
-		$refsPersonalFamiliar->telefono = $request->telefonoReferencia;
-		$refsPersonalFamiliar->celular = $request->celularReferencia;
-		$refsPersonalFamiliar->email = $request->emailReferencia;
-		$refsPersonalFamiliar->parentesco = $request->parentescoRef;
-		$refsPersonalFamiliar->id_inscripcion = $idInscripcion;
+		$idEntrevista = $entrevista->id_entrevista;
 		
-		$refsPersonalFamiliar->save();
-		
-		//Guardando la información de los estudios de secundaria
-		$estudios =Educaciones::find($request -> idEducacion);
-		if($estudios == null){
-			$estudios = new Educaciones;
+		for ($i = 1; $i <= 36; $i++) {
+			$this->guardarDetalleEntrevista($idEntrevista, $i, 'pregunta'.(string)$i, $request);
 		}
 		
-		$estudios->tipo_educacion = $request->tipoDeColegio;
-		$estudios->nombre_inst = $request->colegio;
-		//$estudios->grado_obtenido = $request->email;
-		//$estudios->anio_finalizacion = $request->modalidad;
-		$estudios->id_ciudad_inst = $request->ciudadColegio;
-		$estudios->barrio_inst = $request->barrioColegio;
-		$estudios->jornada = $request->jornadaColegio;
-		$estudios->cod_icfes_inst = $request->codigoIcfesColegio;
-		$estudios->anio_icfes_inst = $request->anioIcfesColegio;
-		//$estudios->fecha_graduacion = $request->programa;
-		$estudios->id_inscripcion = $idInscripcion;
-		
-		$estudios->save();
-		
-		//Guardando la información de la referencia personal
-		if($request->homologacion == 1){
-			$homologacion =Homologacion::find($request -> idHomologacion);
-			if($homologacion == null){
-				$homologacion = new Homologacion;
-			}
-			$homologacion->titulo = $request->tituloHomologacion;
-			$homologacion->institucion = $request->instHomologacion;
-			$homologacion->id_ciudad = $request->ciudadHomologacion;
-			$homologacion->fecha_finalizacion = $request->fechaFinHomologacion;
-			$homologacion->id_inscripcion = $idInscripcion;
-			
-			$homologacion->save();
-		}
-		
-		///*
+		/*
 		$historicoProcesos = new HistoricosProcesoAdmision;
 		$historicoProcesos->id_usuario = Auth::user()->id;
 		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
@@ -255,12 +179,24 @@ class EntrevistaController extends Controller
 		$historicoProcesos->fecha = Carbon::now();
 		
 		$historicoProcesos->save();
-		//*/
+		
 		
 		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
 		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
         $proceso->save();
+		//*/
 		
-        return redirect('/menu');
+        return redirect('/');
     }
+	
+	private function guardarDetalleEntrevista($idEntrevista, $idPregunta, $nombreCampo, Request $request){
+		$detalleEntrevista = DetalleEntrevista::where('id_entrevista', '=', $idEntrevista)->where('id_pregunta', $idPregunta)->first();
+		if($detalleEntrevista == null){
+			$detalleEntrevista = new DetalleEntrevista;
+			$detalleEntrevista->id_entrevista = $idEntrevista;
+			$detalleEntrevista->id_pregunta = $idPregunta;
+		}
+		$detalleEntrevista->texto_respuesta = $request->input($nombreCampo);
+		$detalleEntrevista->save();
+	}
 }
