@@ -21,4 +21,9 @@ class ProcesoAdmision extends Model
     {
         return $this->belongsTo(EstadosProcesoAdmision::class, 'id_estado', 'id_estado');
     }
+	
+	public function tipoProcesoAdmision()
+    {
+        return $this->belongsTo(TipoProcesoAdmision::class, 'id_tipo_proceso', 'id_tipo_proceso');
+    }
 }

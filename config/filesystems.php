@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => 'ftp',
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +61,22 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
+		
+		
+		
+		'ftp' => [
+			'driver'   => 'ftp',
+			'host'     => 'localhost',
+			'username' => 'camilo590@hotmail.com',
+			'password' => 'analisisydiseno',
+
+			// Optional FTP Settings...
+			// 'port'     => 21,
+			// 'root'     => '',
+			// 'passive'  => true,
+			// 'ssl'      => true,
+			// 'timeout'  => 30,
+		],
 
     ],
 

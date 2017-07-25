@@ -65,6 +65,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@store')->name('inscripcion-pregrado');
 	
 	
+	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos');
+	Route::post('/cargarDocumentos', 'DocumentosController@cargarDocumentos')->name('cargarDocumentos');
+	Route::get('/mostrarDocumento/{id}', ['uses' =>'DocumentosController@mostrarDocumento']) ->name('mostrarDocumento');
+
 	
 		//rutas para administraci󮠤e registros
 	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro');	
