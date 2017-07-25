@@ -19,6 +19,7 @@ use App\HistoricosProcesoAdmision;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
+use Mail;
 
 class InscripcionPregradoController extends Controller
 {
@@ -299,9 +300,18 @@ class InscripcionPregradoController extends Controller
 		//*/
 		
 		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
-		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
-        $proceso->save();
+		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+        $procesoAdmon->save();
+		
+		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
 		
         return redirect('/menu');
+    }
+	
+	public function enviarCorreoCuestionario(Inscripcion $inscripcion, ProcesoAdmision $procesoAdmon, Persona $persona)
+    {
+        Mail::send('entrevista.email.cuestionarioEntrevista', ['persona' => $persona, 'procesoAdmon' => $procesoAdmon], function ($m) use ($procesoAdmon, $persona, $inscripcion) {
+            $m->to($inscripcion->email, $persona->nombres)->subject('Cuestionario Iberoamericana');
+        });
     }
 }

@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'iberoamericanamail@gmail.com', 'name' => 'Administrador'],
+    'from' => ['address' => 'iberoamericanamail@gmail.com', 'name' => 'Admisiones Iberoamericana'],
 
     /*
     |--------------------------------------------------------------------------

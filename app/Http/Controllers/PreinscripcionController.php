@@ -98,10 +98,6 @@ class PreinscripcionController extends Controller
 	
 		
         Mail::send('preinscripcion.email.preinscripcion', ['persona' => $persona, 'inscripcion' => $inscripcion], function ($m) use ($inscripcion, $persona) {
-            $m->from('iberoamericanamail@gmail.com', 'Inscripción Iberoamericana');
-
-			
-			
             $m->to($inscripcion->email, $persona->nombres)->subject('Inscripción Iberoamericana');
         });
     }
