@@ -95,15 +95,7 @@
                             </div>
                         </div>
 						
-						<!-- Modalidad -->
-                        <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Modalidad</label>
-
-                            <div class="col-sm-6">
-							  <input type="radio" name="modalidad" value="1" > Presencial <br/>
-							  <input type="radio" name="modalidad" value="2"> Virtual <br/>
-							</div>
-                        </div>
+						
 						
 						<!-- Programa -->
                         <div class="form-group">

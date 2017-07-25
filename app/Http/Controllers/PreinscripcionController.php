@@ -10,6 +10,7 @@ use App\Persona;
 use App\Inscripcion;
 use App\ProcesoAdmision;
 use App\EstadosProcesoAdmisionEnum;
+use Mail;
 
 
 class PreinscripcionController extends Controller
@@ -43,7 +44,6 @@ class PreinscripcionController extends Controller
 			'celular' => 'required|max:50',
 			'email' => 'required|max:100',
 			'tipoEdu' => 'required|max:10',
-			'modalidad' => 'required|max:10',
 			'programa' => 'required|max:10',
 			'termYCond' => 'required|max:10',
         ]);
@@ -70,7 +70,7 @@ class PreinscripcionController extends Controller
 		$inscripcion->telefono = $request->telefono;
 		$inscripcion->celular = $request->celular;
 		$inscripcion->email = $request->email;
-		$inscripcion->id_modalidad = $request->modalidad;
+		//$inscripcion->id_modalidad = $request->modalidad;
 		$inscripcion->id_programa = $request->programa;
 		$inscripcion->nombre_programa = $request->programa;
 		$inscripcion->acepta_terms_cond = $request->termYCond;
@@ -84,6 +84,25 @@ class PreinscripcionController extends Controller
 		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
         $proceso->save();
 		
+		$this->enviarCorreoBienvenida($inscripcion, $persona);
+		
         return redirect('/menu');
+    }
+	
+	
+	
+	
+	
+	public function enviarCorreoBienvenida(Inscripcion $inscripcion, Persona $persona)
+    {
+	
+		
+        Mail::send('preinscripcion.email.preinscripcion', ['persona' => $persona, 'inscripcion' => $inscripcion], function ($m) use ($inscripcion, $persona) {
+            $m->from('iberoamericanamail@gmail.com', 'Inscripción Iberoamericana');
+
+			
+			
+            $m->to($inscripcion->email, $persona->nombres)->subject('Inscripción Iberoamericana');
+        });
     }
 }
