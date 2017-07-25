@@ -16,6 +16,7 @@ class CreatePreguntasTable extends Migration
             $table->increments('id_pregunta');
 			$table->string('texto_pregunta', 400);
 			$table->string('sugerencia', 400);
+			$table->integer('id_tipo_pregunta');
             $table->timestamps();
         });
     }

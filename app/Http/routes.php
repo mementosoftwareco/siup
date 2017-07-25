@@ -79,7 +79,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/eliminarRegistro', 'RegistroController@eliminarRegistro') ->name('eliminarRegistro');
 	
 	
-
+	//Rutas para entrevista
+	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
+	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
 	
     Route::auth();
 

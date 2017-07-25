@@ -1,0 +1,7 @@
+--Tabla de perfiles
+
+create table PERFILES(
+ID NUMERIC(10,0) PRIMARY KEY,
+NOMBRE VARCHAR2(50),
+DESCRIPCION VARCHAR2(100)
+);

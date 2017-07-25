@@ -15,10 +15,24 @@ use App\Educaciones;
 use App\Homologacion;
 use App\InscripcionPregrado;
 use App\EstadosProcesoAdmisionEnum;
+use App\HistoricosProcesoAdmision;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
+use Auth;
 
 class InscripcionPregradoController extends Controller
 {
+	
+	/**
+     * Create a new controller instance.
+     *
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
 	
 	public function listProcesos(Request $request)
@@ -273,6 +287,20 @@ class InscripcionPregradoController extends Controller
 			$homologacion->save();
 		}
 		
+		///*
+		$historicoProcesos = new HistoricosProcesoAdmision;
+		$historicoProcesos->id_usuario = Auth::user()->id;
+		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
+		$historicoProcesos->id_proceso_admon = $procesoAdmon->id_proceso_admon;
+		$historicoProcesos->comentarios = "Modificado por usuario " . Auth::user()->name;
+		$historicoProcesos->fecha = Carbon::now();
+		
+		$historicoProcesos->save();
+		//*/
+		
+		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
+		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+        $proceso->save();
 		
         return redirect('/menu');
     }

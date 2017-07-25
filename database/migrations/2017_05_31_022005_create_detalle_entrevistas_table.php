@@ -15,11 +15,10 @@ class CreateDetalleEntrevistasTable extends Migration
         Schema::create('detalle_entrevistas', function (Blueprint $table) {
             $table->increments('id_detalle_entrevista');
 			$table->integer('id_entrevista');
-			$table->integer('id_respuesta');
+			$table->string('texto_respuesta', 1000);
 			$table->integer('id_pregunta');
             $table->timestamps();
 			$table->foreign('id_entrevista')->references('id_entrevista')->on('entrevistas');
-			$table->foreign('id_respuesta')->references('id_respuesta')->on('respuestas');
 			$table->foreign('id_pregunta')->references('id_pregunta')->on('preguntas');
         });
     }

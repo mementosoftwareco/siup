@@ -5,7 +5,7 @@ namespace App;
 use App\ProcesoAdmision;
 use App\HistoricosProcesoAdmision;
 
-abstract class EstadosProcesoAdmisionEnum
+interface ProcesoAdmisionState
 {
 	const PreInscrito = 1;	    
 	const PreInscritoFormularioInscripcion = 2;	    
@@ -22,13 +22,19 @@ abstract class EstadosProcesoAdmisionEnum
 	const ValidadoFacultad= 13;	
 	const Admitido= 14;
 	
-	public function calcularProximoEstadoProceso(ProcesoAdmision $procesoAdmon, $estadoAccionActual){
-		
-		$historicoProcesos = App\HistoricosProcesoAdmision::where('id_proceso_admon', $procesoAdmon->id_proceso_admon)
-               ->orderBy('created_at', 'desc')
-               ->take(10)
-               ->get();
-		
-	}
+	public function preinscribir();
+    public function llenarFormularioInscripcion();
+    public function cargarDocumentos();
+    public function aprobarFormularioInscripcion();
+	public function rechazarFormularioInscripcion();
+	public function aprobarDocumentos();
+	public function rechazarDocumentos();
+	public function aprobarEntrevista();
+	public function rechazarEntrevista();
+	public function aprobarComercial();
+	public function rechazarComercial();
+	public function aprobarFacultad();
+	public function rechazarFacultad();
+	public function obtenerIdEstadoProceso();
 	
 }

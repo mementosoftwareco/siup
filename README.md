@@ -37,85 +37,49 @@ php artisan make:migration create_respuestas_table --create=respuestas
 
 php artisan make:migration create_preguntas_table --create=preguntas
 
---Borrado de tablas
+--modificacion de tablas el 16 de julio de 2017
 
-drop table procesos_admision cascade constraints;
-drop table personas cascade constraints;
-drop table tipos_documento cascade constraints;
-drop table tipos_identificacion cascade constraints;
-drop table tipos_proceso cascade constraints;
-drop table estados_civil cascade constraints;
-drop table entrevistas cascade constraints;
-drop table convenios cascade constraints;
-drop table estados_validacion cascade constraints;
-drop table grupos_etnicos cascade constraints;
-drop table refs_personal_familiar cascade constraints;
-drop table homologaciones cascade constraints;
-drop table ubicaciones_geograficas cascade constraints;
-drop table educaciones cascade constraints;
-drop table inscripciones cascade constraints;
-drop table migrations cascade constraints;
-drop table modalidades cascade constraints;
-drop table password_resets cascade constraints;
-drop table detalle_entrevistas cascade constraints;
-drop table documentos cascade constraints;
-drop table preguntas cascade constraints;
-drop table respuestas cascade constraints;
-drop table validaciones cascade constraints;
+alter table detalle_entrevistas drop constraint DETALLE_ENTREVISTAS_ID_RESPUES;
+alter table detalle_entrevistas drop column id_respuesta;
+drop table respuestas;
+drop sequence "RESPUESTAS_ID_RESPUESTA_SEQ";
+alter table detalle_entrevistas add texto_respuesta varchar2(1000);
+alter table entrevistas add acepta_comunicacion varchar2(1);
+alter table entrevistas add acepta_politicas_priv varchar2(1);
 
-drop table tasks;
-drop table users;
-
-drop sequence "SIUP"."CONVENIOS_ID_CONVENIO_SEQ";
-drop sequence "SIUP"."ENTREVISTAS_ID_ENTREVISTA_SEQ";
-drop sequence "SIUP"."ESTADOS_CIVIL_ID_ESTADO_CIVIL_";
-drop sequence "SIUP"."ESTADOS_VALIDACION_ID_ESTADO_S";
-drop sequence "SIUP"."GRUPOS_ETNICOS_ID_GRUPO_ETNICO";
-drop sequence "SIUP"."INSCRIPCIONES_ID_INSCRIPCION_S";
-drop sequence "SIUP"."MODALIDADES_ID_MODALIDAD_SEQ";
-drop sequence "SIUP"."TASKS_ID_SEQ";
-drop sequence "SIUP"."TIPOS_DOCUMENTO_ID_TIPO_DOCUME";
-drop sequence "SIUP"."TIPOS_IDENTIFICACION_ID_TIPO_I";
-drop sequence "SIUP"."TIPOS_PROCESO_ID_TIPO_PROCESO_";
-drop sequence "SIUP"."USERS_ID_SEQ";
-drop sequence "SIUP"."DETALLE_ENTREVISTAS_ID_DETALLE";
-drop sequence "SIUP"."DOCUMENTOS_ID_DOCUMENTO_SEQ";
-drop sequence "SIUP"."PREGUNTAS_ID_PREGUNTA_SEQ";
-drop sequence "SIUP"."PROCESOS_ADMISION_ID_PROCESO_A";
-drop sequence "SIUP"."RESPUESTAS_ID_RESPUESTA_SEQ";
-drop sequence "SIUP"."VALIDACIONES_ID_VALIDACION_SEQ";
-drop sequence "SIUP"."HOMOLOGACIONES_ID_HOMOLOGACION";
-drop sequence "SIUP"."EDUCACIONES_ID_EDUCACION_SEQ";
-drop sequence "SIUP"."UBICACIONES_GEOGRAFICAS_ID_UBI";
-drop sequence "SIUP"."REFS_PERSONAL_FAMILIAR_ID_REFE";
-
---Agregando los datos a las tablas de referencia
-
-insert into modalidades (nombre, descripcion) values ('Presencial','Presencial');
-insert into modalidades (nombre, descripcion) values ('Virtual','Virtual');
-
-insert into tipos_proceso (nombre, descripcion) values ('Pregrado','Pregrado');
-insert into tipos_proceso (nombre, descripcion) values ('Postgrado','Postgrado');
-insert into tipos_proceso (nombre, descripcion) values ('Educación continuada','Educación continuada');
-
-insert into TIPOS_identificacion (nombre, descripcion) values ('Cédula de ciudadnía','Cédula de ciudadnía');
-insert into TIPOS_identificacion (nombre, descripcion) values ('Cédula de extranjería','Cédula de extranjería');
-insert into TIPOS_identificacion (nombre, descripcion) values ('Pasaporte','Pasaporte');
-insert into TIPOS_identificacion (nombre, descripcion) values ('Tarjeta de identidad','Tarjeta de identidad');
-
---Grupo Etnico
-insert into grupos_etnicos(nombre, descripcion) values ('Afrocolombiano o Afrodescendiente','Afrocolombiano o Afrodescendiente');
-insert into grupos_etnicos(nombre, descripcion) values ('Pueblos indígenas','Pueblos indígenas');
-insert into grupos_etnicos(nombre, descripcion) values ('Raizales','Raizales');
-insert into grupos_etnicos(nombre, descripcion) values ('Rom','Rom');
-insert into grupos_etnicos(nombre, descripcion) values ('No aplica','No Aplica');
-
---Estado civil
-insert into estados_civil (nombre, descripcion) values ('Soltero/a','Soltero/a');
-insert into estados_civil (nombre, descripcion) values ('Casado/a','Casado/a');
-
---Convenio
-insert into convenios (nombre, descripcion) values ('No Aplica','No Aplica');
-insert into convenios (nombre, descripcion) values ('Ser pilo paga','Ser pilo paga');
-insert into convenios (nombre, descripcion) values ('icetex..otro','icetex..otro');
-
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('He ingresado a la página de la universidad y he navegado por ella','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Leí el pensamiento Ibero (Misión y Visión) y me identifico en ellos','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('La universidad cuenta con un valor distintivo en comparación con otras instituciones','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Conozco los convenios con los que cuenta la universidad','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Conozco el proceso de admisión y los requisitos para mi matricula','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Cuento con los recursos tecnológicos para garantizar mi proceso de formación','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Tengo experiencia en procesos formativos bajo la modalidad virtual','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Revisé el programa que oferta el programa al que me inscribí','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Me identifico con el rol profesional y ocupacional de la carrera que elegí','N/A',1);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Al comenzar a estudiar una lectura, primero la leo toda de forma superficial','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('A medida que voy estudiando busco el significado de las palabras desconocidas ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Cuando estudio trato de resumir mentalmente lo más importante','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Cuando leo diferencio las ideas principales de las secundarias ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Establezco analogías elaborando metáforas con las cuestiones que estoy aprendiendo','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Uso aquello que aprendo, en la medida de lo posible, en mi vida diaria','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Me intereso por la aplicación que puedan tener los temas que estudio a los campos laborales que conozco','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Hago resúmenes de lo estudiado al final de cada tema','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Mientras estudio un tema hago mapas mentales o conceptuales ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Antes de iniciar el estudio de un tema distribuyo el tiempo de que dispongo ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Cuando se acercan los exámenes establezco un plan de trabajo para estudiar ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Cuando compruebo que las estrategias que utilizo para “aprender” no son eficaces busco otras alternativas','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Procuro que en el lugar que estudio no haya nada que pueda distraerme','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Me digo a mi mismo que puedo superar mi nivel de rendimiento actual ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Cuando tengo conflictos familiares, procuro resolverlos antes , si puedo, para concentrarme mejor en el estudio','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Me dirijo a mí mismo palabras de ánimo para estimularme y mantenerme en las tareas de estudio','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Estudio para ampliar mis conocimientos, para saber más, para ser más experto','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Me esfuerzo en el estudio para sentirme orgulloso ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Lo que he logrado en mi vida ha sido porque lo he buscado ','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Los logros que he tenido en mi vida se deben a mi esfuerzo','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Mejorará mi vida si me esfuerzo en ello','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Mantengo a mis amigos por decisión propia','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Las calificaciones que tengo se deben a mi empeño','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Tengo habilidad para relacionarme con las personas','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('He sacado buenas calificaciones porque le caigo bien a mis maestros','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Los logros que he tenido en mi vida se deben a la casualidad','N/A',2);
+insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Lo que he logrado en mi vida ha sido porque así tenía que suceder','N/A',2);
