@@ -63,6 +63,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/inscripcion-pregrado.list/', 'InscripcionPregradoController@listProcesos');
 	Route::get('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@index');
 	Route::post('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@store')->name('inscripcion-pregrado');
+	Route::get('ajax-ciudad/{id}', 'InscripcionPregradoController@ajaxDeptoCiudad');
+	Route::get('ajax-municipio/{id}', 'InscripcionPregradoController@ajaxCiudadMunicipio');
 	
 	
 	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos');

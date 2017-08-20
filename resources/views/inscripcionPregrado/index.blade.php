@@ -254,9 +254,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Departamento</label>
 
                             <div class="col-sm-6">
-							{{Form::select('departamento', ['11001' => 'Atlantico',
-														'11002' => 'Cundinamarca'
-													   ], null, ['class'=>'form-control'])}}
+							{{Form::select('departamento', $deptos, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							
 							</div>
                         </div>
@@ -266,9 +264,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudad', ['11001' => 'Bogotá',
-														'11002' => 'Barranquilla'
-													   ], null, ['class'=>'form-control'])}}
+							{{Form::select('ciudad', $ciudades, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						
@@ -277,11 +273,79 @@
                             <label for="task-name" class="col-sm-3 control-label">Municipio</label>
 
                             <div class="col-sm-6">
-							{{Form::select('municipio', ['11001' => 'Chía',
-														'11002' => 'Cota'
-													   ], null, ['class'=>'form-control'])}}
+							{{Form::select('municipio', $centrosPoblados, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
+						
+						<script>
+						$(document).ready(function() {
+
+							$('select[name="departamento"]').on('change', function(){
+								var countryId = $(this).val();
+								if(countryId) {
+									console.log("entro a log");
+									$.ajax({
+										url: '/ajax-ciudad/'+countryId,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="ciudad"]').empty();
+											$('select[name="municipio"]').empty();
+
+											$.each(data, function(key, value){
+
+												$('select[name="ciudad"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+								} else {
+									$('select[name="ciudad"]').empty();
+								}
+
+							});
+							
+							$('select[name="ciudad"]').on('change', function(){
+								var ciudadId = $(this).val();
+								if(ciudadId) {
+									$.ajax({
+										url: '/ajax-municipio/'+ciudadId,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="municipio"]').empty();
+
+											$.each(data, function(key, value){
+
+												$('select[name="municipio"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+								} else {
+									$('select[name="municipio"]').empty();
+								}
+
+							});
+
+						});
+						</script>
 						
 						<!-- Barrio -->
                         <div class="form-group">
@@ -417,9 +481,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadColegio', ['11001' => 'Bogotá',
-														     '11002' => 'Barranquilla'
-													   ], null, ['class'=>'form-control'])}}
+							{{Form::select('ciudadColegio', $ciudadesTotal, null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						
@@ -504,9 +566,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadHomologacion', ['11001' => 'Bogotá',
-														     '11002' => 'Barranquilla'
-													   ], null, ['class'=>'form-control'])}}
+							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control'])}}
 							</div>
                         </div>
 						

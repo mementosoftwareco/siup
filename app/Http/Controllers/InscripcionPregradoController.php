@@ -16,10 +16,14 @@ use App\Homologacion;
 use App\InscripcionPregrado;
 use App\EstadosProcesoAdmisionEnum;
 use App\HistoricosProcesoAdmision;
+use App\Departamento;
+use App\Municipio;
+use App\CentroPoblado;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
 use Mail;
+use Response;
 
 class InscripcionPregradoController extends Controller
 {
@@ -128,8 +132,36 @@ class InscripcionPregradoController extends Controller
 			$inscripcionPregrado->ciudadHomologacion = $homologacion->id_ciudad;
 			$inscripcionPregrado->fechaFinHomologacion = $homologacion->fecha_finalizacion;
 		}
-		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado'));
+		
+		$deptos = Departamento::all('nombre', 'codigo')->sortBy('nombre')->pluck('nombre', 'codigo');
+		if($ubicacionGeografica != null){
+			$ciudades = Municipio::where('codigo_depto', '=', $ubicacionGeografica->id_departamento)->orderBy('nombre')->pluck('nombre', 'codigo');
+			$centrosPoblados = CentroPoblado::where('codigo_municipio', '=', $ubicacionGeografica->id_ciudad)->orderBy('nombre')->pluck('nombre', 'codigo');
+		}else{
+			$ciudades = [];
+			$centrosPoblados = [];
+		}
+		/*
+		$ciudadesTotal = Municipio::pluck('nombre', 'codigo');
+		$ciudadesTotal = $ciudadesTotal->sortBy(0);
+		*/
+		
+		$ciudadesTotal = Municipio::all('nombre', 'codigo')->sortBy('nombre')->pluck('nombre', 'codigo');
+		
+		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal'));
         
+    }
+	
+	public function ajaxDeptoCiudad($id){
+		
+		$ciudades = Municipio::where('codigo_depto', '=', $id)->orderBy('nombre')->pluck('nombre', 'codigo');
+		return Response::json($ciudades);
+    }
+	
+	public function ajaxCiudadMunicipio($id){
+		
+		$municipios = CentroPoblado::where('codigo_municipio', '=', $id)->orderBy('nombre')->pluck('nombre', 'codigo');
+		return Response::json($municipios);
     }
 	
 	/**
