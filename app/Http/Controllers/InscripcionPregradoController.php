@@ -75,6 +75,8 @@ class InscripcionPregradoController extends Controller
 		$inscripcionPregrado->fechaNacimiento = $persona->fecha_nacimiento;
 		$inscripcionPregrado->genero = $persona->genero;
 		
+		$inscripcionPregrado->tipoEdu = $procesoAdmon -> id_tipo_proceso;
+		
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
 		$inscripcionPregrado->telefono = $inscripcion->telefono;
 		$inscripcionPregrado->celular = $inscripcion->celular;
@@ -112,7 +114,7 @@ class InscripcionPregradoController extends Controller
 		}
 		
 		$estudios = Educaciones::where('id_inscripcion', '=', $idInscripcion)->first();
-		if($estudios != null){
+		if($estudios != null && $procesoAdmon -> id_tipo_proceso == 1){
 			$inscripcionPregrado->idEducacion = $estudios->id_educacion;
 			$inscripcionPregrado->tipoDeColegio = $estudios->tipo_educacion;
 			$inscripcionPregrado->colegio = $estudios->nombre_inst;
@@ -121,6 +123,14 @@ class InscripcionPregradoController extends Controller
 			$inscripcionPregrado->jornadaColegio = $estudios->jornada;
 			$inscripcionPregrado->codigoIcfesColegio = $estudios->cod_icfes_inst;
 			$inscripcionPregrado->anioIcfesColegio = $estudios->anio_icfes_inst;
+		}
+		if($estudios != null && $procesoAdmon -> id_tipo_proceso == 2){
+			$inscripcionPregrado->idEducacion = $estudios->id_educacion;
+			$inscripcionPregrado->programaPregrado = $estudios->programa_pregrado;
+			$inscripcionPregrado->tituloPregrado = $estudios->grado_obtenido;
+			$inscripcionPregrado->universidadPregado = $estudios->nombre_inst;
+			$inscripcionPregrado->ciudadPregrado = $estudios->id_ciudad_inst;
+			$inscripcionPregrado->fechaFinPregrado = $estudios->fecha_graduacion;
 		}
 		
 		$homologacion = Homologacion::where('id_inscripcion', '=', $idInscripcion)->first();
@@ -141,10 +151,6 @@ class InscripcionPregradoController extends Controller
 			$ciudades = [];
 			$centrosPoblados = [];
 		}
-		/*
-		$ciudadesTotal = Municipio::pluck('nombre', 'codigo');
-		$ciudadesTotal = $ciudadesTotal->sortBy(0);
-		*/
 		
 		$ciudadesTotal = Municipio::all('nombre', 'codigo')->sortBy('nombre')->pluck('nombre', 'codigo');
 		
@@ -197,7 +203,7 @@ class InscripcionPregradoController extends Controller
 			'direccion' => 'required|max:300',
 			'departamento' => 'required|max:50',
 			'ciudad' => 'required|max:10',
-			'municipio' => 'required|max:10',
+			//'municipio' => 'required|max:10',
 			'barrio' => 'required|max:200',
 			'estrato' => 'required|max:10',
 			//Campos referencia personal
@@ -209,13 +215,13 @@ class InscripcionPregradoController extends Controller
 			'emailReferencia' => 'required|max:50',
 			'parentescoRef' => 'required|max:50',
 			//informacion estudios de secundaria
-			'tipoDeColegio' => 'required|max:10',
-			'colegio' => 'required|max:200',
-			'ciudadColegio' => 'required|max:10',
-			'barrioColegio' => 'required|max:100',
-			'jornadaColegio' => 'required|max:10',
-			'codigoIcfesColegio' => 'required|max:20',
-			'anioIcfesColegio' => 'required|max:4',
+			//'tipoDeColegio' => 'required|max:10',
+			//'colegio' => 'required|max:200',
+			//'ciudadColegio' => 'required|max:10',
+			//'barrioColegio' => 'required|max:100',
+			//'jornadaColegio' => 'required|max:10',
+			//'codigoIcfesColegio' => 'required|max:20',
+			//'anioIcfesColegio' => 'required|max:4',
 			//Homologacion desde otra institucion
 			//'homologacion' => 'required|max:200',
 			//'tituloHomologacion' => 'required|max:200',
@@ -291,19 +297,41 @@ class InscripcionPregradoController extends Controller
 			$estudios = new Educaciones;
 		}
 		
-		$estudios->tipo_educacion = $request->tipoDeColegio;
-		$estudios->nombre_inst = $request->colegio;
-		//$estudios->grado_obtenido = $request->email;
-		//$estudios->anio_finalizacion = $request->modalidad;
-		$estudios->id_ciudad_inst = $request->ciudadColegio;
-		$estudios->barrio_inst = $request->barrioColegio;
-		$estudios->jornada = $request->jornadaColegio;
-		$estudios->cod_icfes_inst = $request->codigoIcfesColegio;
-		$estudios->anio_icfes_inst = $request->anioIcfesColegio;
-		//$estudios->fecha_graduacion = $request->programa;
-		$estudios->id_inscripcion = $idInscripcion;
+		//Si es pregrado
+		if($procesoAdmon -> id_tipo_proceso == 1){
+			$estudios->tipo_educacion = $request->tipoDeColegio;
+			$estudios->nombre_inst = $request->colegio;
+			//$estudios->grado_obtenido = $request->email;
+			//$estudios->anio_finalizacion = $request->modalidad;
+			$estudios->id_ciudad_inst = $request->ciudadColegio;
+			$estudios->barrio_inst = $request->barrioColegio;
+			$estudios->jornada = $request->jornadaColegio;
+			$estudios->cod_icfes_inst = $request->codigoIcfesColegio;
+			$estudios->anio_icfes_inst = $request->anioIcfesColegio;
+			//$estudios->fecha_graduacion = $request->programa;
+			$estudios->id_inscripcion = $idInscripcion;
+			
+			$estudios->save();
+		}
 		
-		$estudios->save();
+		//Si es postgrado
+		if($procesoAdmon -> id_tipo_proceso == 2){
+			//$estudios->tipo_educacion = $request->tipoDeColegio;
+			$estudios->nombre_inst = $request->universidadPregado;
+			$estudios->grado_obtenido = $request->tituloPregrado;
+			$estudios->programa_pregrado = $request->programaPregrado;
+			//$estudios->anio_finalizacion = $request->modalidad;
+			$estudios->id_ciudad_inst = $request->ciudadPregrado;
+			//$estudios->barrio_inst = $request->barrioColegio;
+			//$estudios->jornada = $request->jornadaColegio;
+			//$estudios->cod_icfes_inst = $request->codigoIcfesColegio;
+			//$estudios->anio_icfes_inst = $request->anioIcfesColegio;
+			$estudios->fecha_graduacion = $request->fechaFinPregrado;
+			$estudios->id_inscripcion = $idInscripcion;
+			
+			$estudios->save();
+		}
+		
 		
 		//Guardando la información de la referencia personal
 		if($request->homologacion == 1){

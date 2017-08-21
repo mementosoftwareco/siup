@@ -128,7 +128,7 @@
                             <div class="col-sm-6">
 							{{Form::select('genero', ['FEMENINO' => 'Femenino',
 													'MASCULINO' => 'Masculino'
-													], null, ['class'=>'form-control'])}}
+													], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
                             </div>
                         </div>
 						
@@ -142,7 +142,7 @@
 														  '2' => 'Pueblos indígenas',
 														  '3' => 'Raizales',
 														  '4' => 'Rom'
-														  ], null, ['class'=>'form-control'])}}
+														  ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							
 							</div>
                         </div>
@@ -166,7 +166,7 @@
                             <div class="col-sm-6">
 							{{Form::select('estCivil', ['1' => 'Soltero',
 														  '2' => 'Casado'
-														  ], null, ['class'=>'form-control'])}}
+														  ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							
                             </div>
                         </div>
@@ -367,7 +367,7 @@
 														'4' => '4',
 														'5' => '5',
 														'6' => '6'
-													   ], null, ['class'=>'form-control'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							
 							</div>
                         </div>
@@ -443,7 +443,7 @@
                             <div class="col-sm-6">
 							{{Form::select('parentescoRef', ['1' => 'Familiar',
 														     '2' => 'Amigo'
-													   ], null, ['class'=>'form-control'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							
 							</div>
                         </div>
@@ -451,7 +451,7 @@
 <!-- Fin subsección referencia personal o familiar ----------------------------------------------------------------------  -->
 
 <!-- Inicio subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
-					<div class="panel panel-default">	
+					<div class="panel panel-default" id="panelSecundaria" name="panelSecundaria">	
 						<div class="panel-heading">
 							¿Donde estudiaste la secundaria?
 						</div>
@@ -463,7 +463,7 @@
                             <div class="col-sm-6">
 							{{Form::select('tipoDeColegio', ['1' => 'Privado',
 														     '2' => 'Público'
-													   ], null, ['class'=>'form-control'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						
@@ -481,7 +481,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadColegio', $ciudadesTotal, null, ['class'=>'form-control'])}}
+							{{Form::select('ciudadColegio', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						
@@ -501,7 +501,7 @@
                             <div class="col-sm-6">
 							{{Form::select('jornadaColegio', ['AM' => 'Mañana',
 														     'PM' => 'Tarde'
-													   ], null, ['class'=>'form-control'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							
 							</div>
                         </div>
@@ -527,7 +527,7 @@
 <!-- Inicio subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
 
 <!-- Inicio subsección homologación desde otra institución ----------------------------------------------------------------------  -->
-					<div class="panel panel-default">	
+					<div class="panel panel-default" id="panelHomologacion" name="panelHomologacion">	
 						<div class="panel-heading">
 							¿Vienes de otra U?
 						</div>
@@ -546,9 +546,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Título</label>
 
                             <div class="col-sm-6">
-							{{Form::select('tituloHomologacion', ['Ingeniero de Sistemas' => 'Ingeniero de Sistemas',
-														     'Ingeniero Industrial' => 'Ingeniero Industrial'
-													   ], null, ['class'=>'form-control'])}}
+							{{ 	Form::text('tituloHomologacion',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste']) }}
 							</div>
                         </div>
 						
@@ -566,7 +564,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control'])}}
+							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						
@@ -579,6 +577,98 @@
                             </div>
                         </div>
 					</div>	
+
+<!-- Inicio subsección homologación desde otra institución ----------------------------------------------------------------------  -->
+					<div class="panel panel-default" id="panelPregrado" name="panelPregrado">	
+						<div class="panel-heading">
+							Dínos de tu pregrado
+						</div>
+						
+						<!-- Homologado -->
+						<div class="form-group">
+                            
+							<label for="task-name" class="col-sm-3 control-label">Programa</label>
+							<div class="col-sm-6">	  
+							{{ 	Form::text('programaPregrado',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste']) }}
+                            </div>
+                        </div>
+						
+						<!-- Titulo -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Título</label>
+
+                            <div class="col-sm-6">
+							{{ 	Form::text('tituloPregrado',null,['class'=>'form-control', 'placeholder'=>'El titulo como aparece en tu diploma']) }}
+							</div>
+                        </div>
+						
+						<!-- Institución -->
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Universidad</label>
+
+                            <div class="col-sm-6">
+								{{ 	Form::text('universidadPregado',null,['class'=>'form-control']) }}
+                            </div>
+                        </div>
+						
+						<!-- Ciudad -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
+
+                            <div class="col-sm-6">
+							{{Form::select('ciudadPregrado', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							</div>
+                        </div>
+						
+						<!-- Fecha finalización -->
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Fecha finalización</label>
+
+                            <div class="col-sm-6">
+								{{ Form::date('fechaFinPregrado', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
+                            </div>
+                        </div>
+					</div>
+					
+					<script>
+						$(document).ready(function() {
+							
+							if($('select[name="tipoEdu"]').val() == 1){
+								$('div[name="panelHomologacion"]').show();
+								$('div[name="panelSecundaria"]').show();
+								$('div[name="panelPregrado"]').hide();
+							}else if($('select[name="tipoEdu"]').val() == 2){
+								$('div[name="panelHomologacion"]').hide();
+								$('div[name="panelSecundaria"]').hide();
+								$('div[name="panelPregrado"]').show();
+							}
+							else{
+								$('div[name="panelHomologacion"]').hide();
+								$('div[name="panelSecundaria"]').hide();
+								$('div[name="panelPregrado"]').hide();
+							}
+														
+
+							$('select[name="tipoEdu"]').on('change', function(){
+								var tipoEduId = $(this).val();
+								if(tipoEduId == 1) {
+									$('div[name="panelHomologacion"]').show();
+									$('div[name="panelSecundaria"]').show();
+									$('div[name="panelPregrado"]').hide();
+								} else if(tipoEduId == 2) {
+									$('div[name="panelHomologacion"]').hide();
+									$('div[name="panelSecundaria"]').hide();
+									$('div[name="panelPregrado"]').show();
+								}else {
+									$('div[name="panelHomologacion"]').hide();
+									$('div[name="panelSecundaria"]').hide();
+									$('div[name="panelPregrado"]').hide();
+								}
+
+							});
+							
+						});
+						</script>
 <!-- Final subsección homologación desde otra institución ----------------------------------------------------------------------  -->						
 
                         <!-- inscripcion Button -->

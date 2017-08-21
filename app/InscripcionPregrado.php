@@ -58,5 +58,11 @@ class InscripcionPregrado
 	public $instHomologacion;
 	public $ciudadHomologacion;
 	public $fechaFinHomologacion;
+	//informacion de estudios de pregrado
+	public $programaPregrado;
+	public $tituloPregrado;
+	public $universidadPregado;
+	public $ciudadPregrado;
+	public $fechaFinPregrado;
 	
 }
