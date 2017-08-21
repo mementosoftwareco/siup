@@ -20,7 +20,7 @@
                         
 						
 						                           
-							 <br><a href="{{ url('/inscripcion-pregrado.list') }}">Inscribir Estudiante</a>
+							 <br><a href="{{ url('/inscripcion.list') }}">Inscribir Estudiante</a>
                       
 						
 					

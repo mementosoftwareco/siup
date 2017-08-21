@@ -15,7 +15,7 @@
                     @include('common.errors')
 					
                     <!-- New inscripcion Form -->
-                    {{ Form::model($inscripcionPregrado, array('route' => ['inscripcion-pregrado',$inscripcionPregrado->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
+                    {{ Form::model($inscripcionPregrado, array('route' => ['inscripcion',$inscripcionPregrado->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
 
 						{{ Form::hidden('idUbicacion') }}
 						{{ Form::hidden('idReferencia') }}
@@ -240,6 +240,7 @@
 						<div class="panel-heading">
 							¿Donde vives?
 						</div>
+						<br/>
 						<!-- Direccion -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Dirección</label>
@@ -381,7 +382,7 @@
 						<div class="panel-heading">
 							Alguien que te conozca
 						</div>
-
+						<br/>
 						<!-- Nombres -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Nombres</label>
@@ -455,7 +456,7 @@
 						<div class="panel-heading">
 							¿Donde estudiaste la secundaria?
 						</div>
-						
+						<br/>
 						<!-- Tipo de Colegio -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Tipo de colegio</label>
@@ -531,7 +532,7 @@
 						<div class="panel-heading">
 							¿Vienes de otra U?
 						</div>
-						
+						<br/>
 						<!-- Homologado -->
 						<div class="form-group">
                             
@@ -583,7 +584,7 @@
 						<div class="panel-heading">
 							Dínos de tu pregrado
 						</div>
-						
+						<br/>
 						<!-- Homologado -->
 						<div class="form-group">
                             

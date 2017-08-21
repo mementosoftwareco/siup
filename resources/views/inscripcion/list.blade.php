@@ -37,7 +37,7 @@
 
                                         <!-- Continuar inscripción Button -->
                                         <td>
-                                            <form action="{{url('inscripcion-pregrado/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
+                                            <form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">

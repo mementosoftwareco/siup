@@ -25,7 +25,7 @@ use Auth;
 use Mail;
 use Response;
 
-class InscripcionPregradoController extends Controller
+class InscripcionController extends Controller
 {
 	
 	/**
@@ -45,7 +45,7 @@ class InscripcionPregradoController extends Controller
 		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
-        return view('inscripcionPregrado.list', [
+        return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,
         ]);
 		
@@ -154,7 +154,7 @@ class InscripcionPregradoController extends Controller
 		
 		$ciudadesTotal = Municipio::all('nombre', 'codigo')->sortBy('nombre')->pluck('nombre', 'codigo');
 		
-		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal'));
         
     }
 	
