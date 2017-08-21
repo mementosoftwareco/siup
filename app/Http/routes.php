@@ -60,11 +60,14 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
+
 	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos');
 	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index');
 	Route::post('/inscripcion/{procesoAdmon}', 'InscripcionController@store')->name('inscripcion');
-	Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante');
-	Route::post('/asignarAspirante/{procesoAdmon}', 'InscripcionController@asignarAspirante')->name('asignarAspirante');
+	Route::get('ajax-ciudad/{id}', 'InscripcionController@ajaxDeptoCiudad');
+	Route::get('ajax-municipio/{id}', 'InscripcionController@ajaxCiudadMunicipio');
+    Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante');
+    Route::post('/asignarAspirante/{procesoAdmon}', 'InscripcionController@asignarAspirante')->name('asignarAspirante');
 	Route::post('/enviarValidacionComercial/{procesoAdmon}', 'InscripcionController@enviarValidacionComercial')->name('enviarValidacionComercial');
 	
 	
