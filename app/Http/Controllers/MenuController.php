@@ -40,6 +40,9 @@ class MenuController extends Controller
 	 
 		if ( $perfil === 'Comercial' )
          return View::make('menus.comercial');
+	 
+		if ( $perfil === 'Facultad' )
+         return View::make('menus.facultad');
 	}
 
 	
