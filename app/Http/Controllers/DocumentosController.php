@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Input;
 
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\HistoricosProcesoAdmision;
+use Auth;
+use App\EstadosProcesoAdmisionEnum;
 
 
 class DocumentosController extends Controller
@@ -131,7 +134,24 @@ class DocumentosController extends Controller
 				$documentoRequerido->documento->save();
 			}  
 
-		}   
+		} 
+		
+		
+		$historico = new HistoricosProcesoAdmision;	
+		if (Auth::user() != null){
+			$historico->id_usuario = Auth::user()->id;	
+		} else{
+			$historico->id_usuario = null;
+		}
+			
+		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+		$historico->comentarios = 'Carga de Documentos';
+		$historico->fecha = Carbon::now();
+		$historico->id_proceso_admon = $idProceso;
+		$historico->save();
+
+		return $this->prepararCargaDocumentos($idProceso)	;
+		
 	}
 	
 	

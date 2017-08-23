@@ -42,6 +42,7 @@
                                 </button>
 								
 								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								 
                             </div>
 							
                                 

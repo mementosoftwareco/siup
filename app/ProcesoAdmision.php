@@ -26,4 +26,20 @@ class ProcesoAdmision extends Model
     {
         return $this->belongsTo(TipoProcesoAdmision::class, 'id_tipo_proceso', 'id_tipo_proceso');
     }
+	
+	public function inscripcion()
+    {
+        return $this->belongsTo(Inscripcion::class, 'id_inscripcion', 'id_inscripcion');
+    }
+	
+	public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
+    }
+	
+	public function historicosProcesoAdmision()
+    {
+        return $this->hasToMany(HistoricosProcesoAdmision::class, 'id_proceso_admon', 'id_proceso_admon');
+    }
+	
 }

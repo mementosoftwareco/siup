@@ -11,6 +11,9 @@ use App\Inscripcion;
 use App\ProcesoAdmision;
 use App\EstadosProcesoAdmisionEnum;
 use Mail;
+use Carbon\Carbon;
+use App\HistoricosProcesoAdmision;
+use Auth;
 
 
 class PreinscripcionController extends Controller
@@ -82,11 +85,28 @@ class PreinscripcionController extends Controller
 		$proceso->id_persona = $persona->id_persona;
 		$proceso->id_inscripcion = $inscripcion->id_inscripcion;
 		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
-        $proceso->save();
+        $id_proceso = $proceso->save();
+		
+		
+		$historico = new HistoricosProcesoAdmision;	
+		if (Auth::user() != null){
+			$historico->id_usuario = Auth::user()->id;	
+		} else{
+			$historico->id_usuario = null;
+		}
+			
+		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+		$historico->comentarios = 'Preinscripción';
+		$historico->fecha = Carbon::now();
+		$historico->id_proceso_admon = $id_proceso;
+		$historico->save();
+		
+		
+		
 		
 		$this->enviarCorreoBienvenida($inscripcion, $persona);
 		
-        return redirect('/menu');
+        return redirect('/');
     }
 	
 	

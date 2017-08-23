@@ -15,7 +15,7 @@
                     @include('common.errors')
 					
                     <!-- New inscripcion Form -->
-                    {{ Form::model($inscripcionPregrado, array('route' => ['inscripcion-pregrado',$inscripcionPregrado->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
+                    {{ Form::model($inscripcionPregrado, array('route' => ['inscripcion',$inscripcionPregrado->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
 
 						{{ Form::hidden('idUbicacion') }}
 						{{ Form::hidden('idReferencia') }}

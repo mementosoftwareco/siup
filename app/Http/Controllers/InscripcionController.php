@@ -20,8 +20,9 @@ use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
 use Mail;
+use Illuminate\Support\Facades\Input;
 
-class InscripcionPregradoController extends Controller
+class InscripcionController extends Controller
 {
 	
 	/**
@@ -38,14 +39,83 @@ class InscripcionPregradoController extends Controller
 	
 	public function listProcesos(Request $request)
     {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
-		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
+		//$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
+		//$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
-        return view('inscripcionPregrado.list', [
+		
+		//$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
+		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->where('id_estado','<', EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial)->get();
+		
+        return view('inscripcion.list', [
+            'procesosAdmon' => $procesosAdmon, 
+        ]);
+		
+    }
+	
+	
+	public function buscarAspirante(Request $request)
+    {
+		$identificacion = Input::get('identificacion');		
+		$procesosAdmon = ProcesoAdmision::where('id_persona', '=', $identificacion)->get();
+		
+		
+		
+        return view('inscripcion.list', [
+            'procesosAdmon' => $procesosAdmon, 
+        ]);
+		
+    }
+	
+	
+	
+	public function asignarAspirante($idProcesoAdmision)
+    {
+				
+		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
+		$procesoAdmon->id_usuario=Auth::user()->id;
+		$procesoAdmon->save();
+		
+		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->get();
+		
+		
+        return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,
         ]);
 		
     }
+	
+	
+	
+	
+	public function listEntrevistas(Request $request)
+    {
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
+		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
+		
+        return view('entrevista.list', [
+            'procesosAdmon' => $procesosAdmon,
+        ]);
+		
+    }
+	
+	
+	public function enviarValidacionComercial($idProcesoAdmision)
+    {
+		
+		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
+		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial;
+		$procesoAdmon->save();
+		
+		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->where('id_estado','<', EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial)->get();
+		
+        return view('inscripcion.list', [
+            'procesosAdmon' => $procesosAdmon,
+        ]);
+		
+    }
+	
+	
+	
 	
 	//
 	/**
@@ -128,7 +198,7 @@ class InscripcionPregradoController extends Controller
 			$inscripcionPregrado->ciudadHomologacion = $homologacion->id_ciudad;
 			$inscripcionPregrado->fechaFinHomologacion = $homologacion->fecha_finalizacion;
 		}
-		return View::make('inscripcionPregrado.index')->with(compact('inscripcionPregrado'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado'));
         
     }
 	
@@ -288,7 +358,7 @@ class InscripcionPregradoController extends Controller
 			$homologacion->save();
 		}
 		
-		///*
+		/*
 		$historicoProcesos = new HistoricosProcesoAdmision;
 		$historicoProcesos->id_usuario = Auth::user()->id;
 		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
@@ -297,11 +367,29 @@ class InscripcionPregradoController extends Controller
 		$historicoProcesos->fecha = Carbon::now();
 		
 		$historicoProcesos->save();
-		//*/
+		*/
 		
 		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
-		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
-        $procesoAdmon->save();
+		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
+        $id_proceso = $procesoAdmon->save();
+		
+		
+		
+		
+		$historico = new HistoricosProcesoAdmision;	
+		if (Auth::user() != null){
+			$historico->id_usuario = Auth::user()->id;	
+		} else{
+			$historico->id_usuario = null;
+		}
+			
+		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
+		$historico->comentarios = 'Formulario de Inscripción';
+		$historico->fecha = Carbon::now();
+		$historico->id_proceso_admon = $id_proceso;
+		$historico->save();
+		
+		
 		
 		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
 		

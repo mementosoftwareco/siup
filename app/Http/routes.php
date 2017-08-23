@@ -60,9 +60,16 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
-	Route::get('/inscripcion-pregrado.list/', 'InscripcionPregradoController@listProcesos');
-	Route::get('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@index');
-	Route::post('/inscripcion-pregrado/{procesoAdmon}', 'InscripcionPregradoController@store')->name('inscripcion-pregrado');
+	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos');
+	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index');
+	Route::post('/inscripcion/{procesoAdmon}', 'InscripcionController@store')->name('inscripcion');
+	Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante');
+	Route::post('/asignarAspirante/{procesoAdmon}', 'InscripcionController@asignarAspirante')->name('asignarAspirante');
+	Route::post('/enviarValidacionComercial/{procesoAdmon}', 'InscripcionController@enviarValidacionComercial')->name('enviarValidacionComercial');
+	
+	
+	Route::get('/cargarProcesosAdmision/', 'HistoricoController@cargarProcesosAdmision')->name('cargarProcesosAdmision');
+	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico');
 	
 	
 	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos');
@@ -82,6 +89,7 @@ Route::group(['middleware' => ['web']], function () {
 	//Rutas para entrevista
 	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
+	Route::get('/entrevista.list/', 'InscripcionPregradoController@listEntrevistas');
 	
     Route::auth();
 
