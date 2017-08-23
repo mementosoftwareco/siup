@@ -20,6 +20,7 @@ class CreateEducacionesTable extends Migration
 			$table->integer('anio_finalizacion')->nullable();
 			$table->integer('id_ciudad_inst')->nullable();
 			$table->string('barrio_inst', 100)->nullable();
+			$table->string('programa_pregrado', 400)->nullable();
 			$table->string('jornada', 2)->nullable();
 			$table->string('cod_icfes_inst', 10)->nullable();
 			$table->string('anio_icfes_inst', 4)->nullable();

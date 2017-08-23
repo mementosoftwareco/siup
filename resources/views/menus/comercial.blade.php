@@ -18,9 +18,7 @@
                         
                              <!--<a href="{{ url('/preinscripcion') }}">Preinscribir Estudiante</a>	-->						
                         
-						
-						                           
-							 <br><a href="{{ url('/inscripcion.list') }}">Inscribir Estudiante</a>
+													 <br><a href="{{ url('/inscripcion.list') }}">Inscribir Estudiante</a>
 							<br><a href="{{ url('/cargarProcesosAdmision') }}">Ver Histórico de Inscripciones</a>
 						
 					

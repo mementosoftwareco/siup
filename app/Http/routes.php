@@ -66,6 +66,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante');
 	Route::post('/asignarAspirante/{procesoAdmon}', 'InscripcionController@asignarAspirante')->name('asignarAspirante');
 	Route::post('/enviarValidacionComercial/{procesoAdmon}', 'InscripcionController@enviarValidacionComercial')->name('enviarValidacionComercial');
+	Route::get('ajax-ciudad/{id}', 'InscripcionController@ajaxDeptoCiudad');
+	Route::get('ajax-municipio/{id}', 'InscripcionController@ajaxCiudadMunicipio');
 	
 	
 	Route::get('/cargarProcesosAdmision/', 'HistoricoController@cargarProcesosAdmision')->name('cargarProcesosAdmision');
