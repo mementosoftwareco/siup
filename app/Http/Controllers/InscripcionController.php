@@ -112,6 +112,11 @@ class InscripcionController extends Controller
 		
 		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->where('id_estado','<', EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial)->get();
 		
+		$idInscripcion = $procesoAdmon -> id_inscripcion;
+		$inscripcion =Inscripcion::findOrFail($idInscripcion);
+		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
+		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
+		
         return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,
         ]);
@@ -450,10 +455,6 @@ class InscripcionController extends Controller
 		$historico->fecha = Carbon::now();
 		$historico->id_proceso_admon = $id_proceso;
 		$historico->save();
-		
-		
-		
-		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
 		
         return redirect('/menu');
     }

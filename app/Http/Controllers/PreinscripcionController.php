@@ -104,7 +104,7 @@ class PreinscripcionController extends Controller
 		
 		
 		
-		$this->enviarCorreoBienvenida($inscripcion, $persona);
+		$this->enviarCorreoBienvenida($inscripcion, $persona, $proceso);
 		
         return redirect('/');
     }
@@ -113,11 +113,11 @@ class PreinscripcionController extends Controller
 	
 	
 	
-	public function enviarCorreoBienvenida(Inscripcion $inscripcion, Persona $persona)
+	public function enviarCorreoBienvenida(Inscripcion $inscripcion, Persona $persona, ProcesoAdmision $proceso)
     {
 	
 		
-        Mail::send('preinscripcion.email.preinscripcion', ['persona' => $persona, 'inscripcion' => $inscripcion], function ($m) use ($inscripcion, $persona) {
+        Mail::send('preinscripcion.email.preinscripcion', ['persona' => $persona, 'inscripcion' => $inscripcion, 'proceso' => $proceso], function ($m) use ($inscripcion, $persona) {
             $m->to($inscripcion->email, $persona->nombres)->subject('Inscripción Iberoamericana');
         });
     }
