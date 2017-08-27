@@ -20,7 +20,7 @@
                         
 						
 						                           
-							 <br><a href="{{ url('/entrevista.list') }}">Evaluar Entrevistas</a>
+							 <br><a href="{{ url('/listarEntrevistas') }}">Evaluar Entrevistas</a>
                       
 						
 					

@@ -90,8 +90,10 @@ Route::group(['middleware' => ['web']], function () {
 	
 	//Rutas para entrevista
 	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
+	Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista');
+	Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista');
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
-	Route::get('/entrevista.list/', 'InscripcionPregradoController@listEntrevistas');
+	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas');
 	
     Route::auth();
 

@@ -39,12 +39,12 @@ class EntrevistaController extends Controller
     }
     
 	
-	public function listEntrevistas(Request $request)
+	public function listarEntrevistas(Request $request)
     {
 		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
-        return view('inscripcionPregrado.list', [
+        return view('entrevista.list', [
             'procesosAdmon' => $procesosAdmon,
         ]);
 		
@@ -100,6 +100,68 @@ class EntrevistaController extends Controller
 		return View::make('entrevista.index')->with(compact('entrevistaViewModel'));
         
     }
+	
+	
+	
+	 public function evaluarEntrevista(Request $request, ProcesoAdmision $procesoAdmon)
+    {
+		$idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		$entrevistaViewModel = new EntrevistaViewModel;
+		$idInscripcion = $procesoAdmon -> id_inscripcion;
+		$inscripcion =Inscripcion::findOrFail($idInscripcion);
+		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
+		
+		$entrevistaViewModel->idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		$entrevistaViewModel->nombres = $persona->nombres;
+		$entrevistaViewModel->apellidos = $persona->apellidos;
+		$entrevistaViewModel->tipoIdentificacion = $persona->id_tipo_identificacion;
+		$entrevistaViewModel->numeroIdentificacion = $persona->id_persona;
+		
+		
+		$inscripcion =Inscripcion::findOrFail($idInscripcion);
+		$entrevistaViewModel->modalidad = $inscripcion->id_modalidad;
+		$entrevistaViewModel->programa = $inscripcion->nombre_programa;
+						
+		$entrevista = Entrevista::where('id_proceso_admon', '=', $idProcesoAdmision)->first();
+		
+		if($entrevista != null){
+			$entrevistaViewModel->idEntrevista = $entrevista->id_entrevista;
+			$entrevistaViewModel->fechaEntrevista = $entrevista->fecha_entrevista;
+			$entrevistaViewModel->aceptaComunicacion = $entrevista->acepta_comunicacion;
+			$entrevistaViewModel->aceptaPoliticasPriv = $entrevista->acepta_politicas_priv;
+		
+			for ($i = 1; $i <= 36; $i++) {			
+				$detalleEntrevista = DetalleEntrevista::where('id_entrevista', '=', $entrevista->id_entrevista)->where('id_pregunta', $i)->first();
+				if($detalleEntrevista != null){
+					$nombreCampo = 'pregunta'.(string)$i;
+					$entrevistaViewModel->$nombreCampo = $detalleEntrevista->texto_respuesta;
+				}
+			}
+		
+		}
+		
+		
+		
+		
+		return View::make('entrevista.evaluate')->with(compact('entrevistaViewModel'));
+        
+    }
+	
+	
+	
+	 public function aprobarEntrevista(Request $request, ProcesoAdmision $procesoAdmon)
+    {
+		
+		$procesoAdmon ->id_estado;
+		
+		
+		
+		return View::make('entrevista.evaluate')->with(compact('entrevistaViewModel'));
+        
+    }
+	
+	
+	
 	
 	/**
      * Create a preinscripcion.

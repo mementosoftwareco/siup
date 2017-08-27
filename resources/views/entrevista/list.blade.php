@@ -16,10 +16,12 @@
                         <table class="table table-striped task-table">
                             <thead>
                                 <!--<th>Proceso</th>-->
-								<th>Documento aspirante</th>
-								<th>Aspirante</th>
+								<th>Identificación</th>
+								<th>Nombre</th>
 								<th>Estado</th>
 								<th>Fecha inscripción</th>
+								<th>Educación</th>
+								<th>Programa</th>
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody>
@@ -34,10 +36,15 @@
 										<td class="table-text"><div>{{ $procesoAdmon->estadoProceso == null ? 'viene nulo' : $procesoAdmon->estadoProceso->nombre }}</div></td>
 										
 										<td class="table-text"><div>{{ $procesoAdmon->created_at }}</div></td>
+										
+										<td class="table-text"><div>{{ $procesoAdmon->tipoProcesoAdmision == null ? 'viene nulo' : $procesoAdmon->tipoProcesoAdmision->nombre }}</div></td>
+
+										<td class="table-text"><div>{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</div></td>
+											
 
                                         <!-- Continuar inscripción Button -->
                                         <td>
-                                            <form action="{{url('entrevista/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
+                                            <form action="{{url('evaluarEntrevista/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
