@@ -84,7 +84,7 @@ class EntrevistaController extends Controller
 			$entrevistaViewModel->aceptaComunicacion = $entrevista->acepta_comunicacion;
 			$entrevistaViewModel->aceptaPoliticasPriv = $entrevista->acepta_politicas_priv;
 		
-			for ($i = 1; $i <= 36; $i++) {			
+			for ($i = 1; $i <= 36; $i++) {
 				$detalleEntrevista = DetalleEntrevista::where('id_entrevista', '=', $entrevista->id_entrevista)->where('id_pregunta', $i)->first();
 				if($detalleEntrevista != null){
 					$nombreCampo = 'pregunta'.(string)$i;
@@ -170,21 +170,17 @@ class EntrevistaController extends Controller
 			$this->guardarDetalleEntrevista($idEntrevista, $i, 'pregunta'.(string)$i, $request);
 		}
 		
-		/*
 		$historicoProcesos = new HistoricosProcesoAdmision;
-		$historicoProcesos->id_usuario = Auth::user()->id;
-		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
+		//$historicoProcesos->id_usuario = Auth::user()->id;
+		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
 		$historicoProcesos->id_proceso_admon = $procesoAdmon->id_proceso_admon;
-		$historicoProcesos->comentarios = "Modificado por usuario " . Auth::user()->name;
+		$historicoProcesos->comentarios = "El estudiante completa el formulario de entrevista";
 		$historicoProcesos->fecha = Carbon::now();
 		
 		$historicoProcesos->save();
 		
-		
-		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
-		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
-        $proceso->save();
-		//*/
+		$ProcesoAdmision->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
+        $ProcesoAdmision->save();
 		
         return redirect('/');
     }
