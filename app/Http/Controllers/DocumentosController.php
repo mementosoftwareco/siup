@@ -71,14 +71,19 @@ class DocumentosController extends Controller
 				
 		for ($i = 0; $i < sizeof($documentosRequeridos); $i++) {
 			if(sizeof($documentosCargados) > 0){
-			
+				$documentFound = false;
 				for($j =0; $j < sizeof($documentosCargados); $j++){			
 			
 					if($documentosRequeridos[$i] -> id == $documentosCargados[$j] -> id_documento_tipo_proceso){
 						$documentosRequeridos[$i] -> documento = $documentosCargados[$j];
-						$documentosRequeridos[$i] -> documento->estado = 'Cargado';				
+						$documentosRequeridos[$i] -> documento->estado = 'Cargado';
+						$documentFound = true;
 					}					
 		        }
+				if(!$documentFound){
+					$documentosRequeridos[$i] -> documento = new Documento;
+					$documentosRequeridos[$i] -> documento->estado = 'Pendiente';
+				}
 			} else{
 				$documentosRequeridos[$i] -> documento = new Documento;
 				$documentosRequeridos[$i] -> documento->estado = 'Pendiente';
@@ -107,10 +112,8 @@ class DocumentosController extends Controller
 	}
 	
 	
-	
 	public function cargarDocumentos(Request $request)
 	{
-		
 		$idProceso = Input::get('idProceso');			
 		//echo 'idProceso'.($idProceso);		
 		$proceso = ProcesoAdmision::find($idProceso);
@@ -158,7 +161,7 @@ class DocumentosController extends Controller
 			$historico->id_usuario = null;
 		}
 			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscritoDocumentos;
 		$historico->comentarios = 'Carga de Documentos';
 		$historico->fecha = Carbon::now();
 		$historico->id_proceso_admon = $idProceso;
@@ -170,81 +173,6 @@ class DocumentosController extends Controller
 	
 	
 	
-	public function actualizarPerfil($id)
-	{
-		$rules = array(
-        'nombre'       => 'required',
-        'descripcion'      => 'required'
-		);
-		// store
-		$perfil = Perfil::find($id);
-		$perfil->nombre = Input::get('nombre');
-		$perfil->descripcion = Input::get('descripcion');
-		$perfil->save();
-	
-	
-		return Redirect::to('nuevoPerfil');
-	}
-	
-	
-	public function eliminarPerfil($id)
-	{
-		
-		// store
-		$perfil = Perfil::find($id);
-		
-		$perfil->delete();
-	
-	
-		return Redirect::to('nuevoPerfil');
-	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		// load the create form (app/views/perfiles/create.blade.php)
-		return View::make('perfiles.create');
-	}
-	
-	
-		/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function guardarPerfil()
-	{
-		// validate
-		// read more on validation at http://laravel.com/docs/validation
-		$rules = array(
-			'nombre'       => 'required',
-			'descripcion'      => 'required'
-		);
-		$validator = Validator::make(Input::all(), $rules);
-
-		// process the login
-		if ($validator->fails()) {
-			return Redirect::to('perfiles/create')
-				->withErrors($validator);
-				
-		} else {
-			// store
-			$perfil = new Perfil;
-			$perfil->nombre       = Input::get('nombre');
-			$perfil->descripcion      = Input::get('descripcion');	
-			$perfil->save();
-
-			// redirect
-			Session::flash('message', 'Perfil creado correctamente');
-			return Redirect::to('nuevoPerfil');
-		}
-	}
-	
-	
-	
 	
 }

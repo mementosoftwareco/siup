@@ -89,12 +89,7 @@ class PreinscripcionController extends Controller
 		
 		
 		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
+		
 		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
 		$historico->comentarios = 'Preinscripción';
 		$historico->fecha = Carbon::now();

@@ -116,7 +116,7 @@ class InscripcionController extends Controller
 		$historico->id_estado = EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial;
 		$historico->comentarios = 'Enviado a validación Comercial';
 		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $id_proceso;
+		$historico->id_proceso_admon = $idProcesoAdmision;
 		$historico->save();
 		
 		
@@ -131,12 +131,12 @@ class InscripcionController extends Controller
 		$historico->id_estado = EstadosProcesoAdmisionEnum::InscritoPendienteEntrevista;
 		$historico->comentarios = 'Enviado formulario de entrevista';
 		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $id_proceso;
+		$historico->id_proceso_admon = $idProcesoAdmision;
 		$historico->save();
 		
 		
 		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
-		
+		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::Inscrito;
 		$procesoAdmon->save();
 		
 		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->where('id_estado','<', EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial)->get();
@@ -146,7 +146,7 @@ class InscripcionController extends Controller
 		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
 		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
 		
-		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::Inscrito;
+	
 		
         return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,
@@ -468,7 +468,7 @@ class InscripcionController extends Controller
 		*/
 		
 		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
-		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
+		//$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
         $id_proceso = $procesoAdmon->save();
 		
 		
