@@ -160,15 +160,15 @@ class EntrevistaController extends Controller
 		}
 			
 		$historico->id_estado = EstadosProcesoAdmisionEnum::ValidadoFacultad;
-		$historico->comentarios = 'Formulario de Inscripción';
+		$historico->comentarios = 'Aprobación de Entrevista';
 		$historico->fecha = Carbon::now();
 		$historico->id_proceso_admon = $id_proceso;
 		$historico->save();
 		
-		$historicos = new HistoricosProcesoAdmision::where('id_proceso_admon', '=', $procesoAdmon->id_proceso_admon)->get();
+		$historicos = HistoricosProcesoAdmision::where('id_proceso_admon', '=', $procesoAdmon->id_proceso_admon)->get();
 		$validadoComercial = false;
-		for(int i=0; i<sizeof($historicos); i++){
-			if($historicos[i]->id_estado == EstadosProcesoAdmisionEnum::ValidadoLiderComercial){
+		for( $i=0; $i<sizeof($historicos); $i++){
+			if($historicos[$i]->id_estado == EstadosProcesoAdmisionEnum::ValidadoLiderComercial){
 				$validadoComercial = true;
 			}
 		}
