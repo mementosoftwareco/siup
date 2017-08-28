@@ -57,9 +57,15 @@ class EntrevistaController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function index(Request $request, ProcesoAdmision $procesoAdmon)
+    public function index(Request $request, $IdProcesoAdmon)
     {
-		$idProcesoAdmision = $procesoAdmon->id_proceso_admon;
+		try {
+			$idProcesoAdmision = decrypt($IdProcesoAdmon);
+		} catch (DecryptException $e) {
+			return redirect('/');
+		}
+		
+		$procesoAdmon = ProcesoAdmision::findOrFail($idProcesoAdmision);
 		$entrevistaViewModel = new EntrevistaViewModel;
 		$idInscripcion = $procesoAdmon -> id_inscripcion;
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
@@ -93,10 +99,6 @@ class EntrevistaController extends Controller
 			}
 		
 		}
-		
-		
-		
-		
 		return View::make('entrevista.index')->with(compact('entrevistaViewModel'));
         
     }
@@ -139,9 +141,6 @@ class EntrevistaController extends Controller
 			}
 		
 		}
-		
-		
-		
 		
 		return View::make('entrevista.evaluate')->with(compact('entrevistaViewModel'));
         
