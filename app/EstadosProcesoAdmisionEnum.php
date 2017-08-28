@@ -20,7 +20,8 @@ abstract class EstadosProcesoAdmisionEnum
 	const RechazadoPorAdmision= 11;	
 	const ValidadoLiderComercial= 12;	
 	const ValidadoFacultad= 13;	
-	const Admitido= 14;
+	const Validado=14;
+	const Admitido= 15;
 	
 	public function calcularProximoEstadoProceso(ProcesoAdmision $procesoAdmon, $estadoAccionActual){
 		

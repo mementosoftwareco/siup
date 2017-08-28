@@ -9,6 +9,7 @@ class DocumentoTipoProceso extends Model
     //
 	protected $table = 'documentos_tipo_proceso';
 	protected $primaryKey = 'id';
+	public $documento;
 	
 	
 	public function tipoDocumento()
@@ -21,10 +22,10 @@ class DocumentoTipoProceso extends Model
         return $this->belongsTo(TipoProcesoAdmision::class, 'id_tipo_proceso', 'id_tipo_proceso');
     }
 	
-	public function documento()
+	/*public function documento()
     {
         return $this->belongsTo(Documento::class,  'id', 'id_documento_tipo_proceso');
-    }
+    }*/
 	
 	
 	

@@ -51,21 +51,28 @@ class DocumentosController extends Controller
 		
 		$proceso = ProcesoAdmision::find($idProceso);
         $documentosRequeridos = DocumentoTipoProceso::where('id_tipo_proceso', '=',$proceso->tipoProcesoAdmision->id_tipo_proceso)->get();		
-		$documentosCargados = array(); 
+		$documentosCargados = Documento::where('id_proceso_admon', '=',$idProceso)->get();		
 		
 	
 		
 		for ($i = 0; $i < sizeof($documentosRequeridos); $i++) {
+			if(sizeof($documentosCargados) > 0){
 			
-			if($documentosRequeridos[$i] -> documento == null){
-				$documento = new Documento;
-				$documento->estado = 'Pendiente';
-				$documentosRequeridos[$i] -> documento = $documento;
+				for($j =0; $j < sizeof($documentosCargados); $j++){
 				
+				
+			
+					if($documentosRequeridos[$i] -> id == $documentosCargados[$j] -> id_documento_tipo_proceso){
+						$documentosRequeridos[$i] -> documento = $documentosCargados[$j];
+						$documentosRequeridos[$i] -> documento->estado = 'Cargado';				
+					}
+					
+		        }
+			} else{
+				$documentosRequeridos[$i] -> documento = new Documento;
+				$documentosRequeridos[$i] -> documento->estado = 'Pendiente';
 			}
-			else{
-				$documentosRequeridos[$i] -> documento->estado = 'Cargado';
-			}
+			
 		}
 		
 

@@ -41,7 +41,7 @@ class EntrevistaController extends Controller
 	
 	public function listarEntrevistas(Request $request)
     {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::Inscrito;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
         return view('entrevista.list', [
@@ -152,12 +152,40 @@ class EntrevistaController extends Controller
 	 public function aprobarEntrevista(Request $request, ProcesoAdmision $procesoAdmon)
     {
 		
-		$procesoAdmon ->id_estado;
+		$historico = new HistoricosProcesoAdmision;	
+		if (Auth::user() != null){
+			$historico->id_usuario = Auth::user()->id;	
+		} else{
+			$historico->id_usuario = null;
+		}
+			
+		$historico->id_estado = EstadosProcesoAdmisionEnum::ValidadoFacultad;
+		$historico->comentarios = 'Formulario de Inscripción';
+		$historico->fecha = Carbon::now();
+		$historico->id_proceso_admon = $id_proceso;
+		$historico->save();
 		
+		$historicos = new HistoricosProcesoAdmision::where('id_proceso_admon', '=', $procesoAdmon->id_proceso_admon)->get();
+		$validadoComercial = false;
+		for(int i=0; i<sizeof($historicos); i++){
+			if($historicos[i]->id_estado == EstadosProcesoAdmisionEnum::ValidadoLiderComercial){
+				$validadoComercial = true;
+			}
+		}
 		
+		if($validadoComercial == true){
+			$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::Validado;
+			$procesoAdmon->save();
+		}
 		
-		return View::make('entrevista.evaluate')->with(compact('entrevistaViewModel'));
-        
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::Inscrito;
+		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
+		
+        return view('entrevista.list', [
+            'procesosAdmon' => $procesosAdmon,
+        ]);
+			
+		
     }
 	
 	
@@ -241,8 +269,8 @@ class EntrevistaController extends Controller
 		
 		$historicoProcesos->save();
 		
-		$ProcesoAdmision->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
-        $ProcesoAdmision->save();
+		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
+        $procesoAdmon->save();
 		
         return redirect('/');
     }
