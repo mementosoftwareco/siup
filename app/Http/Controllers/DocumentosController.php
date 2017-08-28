@@ -55,30 +55,29 @@ class DocumentosController extends Controller
 			return redirect('/');
 		}
 
-		return $this->prepararCargaDocumentos($idProceso);
-	}
+		return $this->prepararCargaDocumentosBackEnd($idProceso);
+	}	
 	
 	public function prepararCargaDocumentos($idProceso)
 	{
-		
+		$this->middleware('auth');
+		return $this->prepararCargaDocumentosBackEnd($idProceso);
+	}
+
+	public function prepararCargaDocumentosBackEnd($idProceso){
 		$proceso = ProcesoAdmision::find($idProceso);
         $documentosRequeridos = DocumentoTipoProceso::where('id_tipo_proceso', '=',$proceso->tipoProcesoAdmision->id_tipo_proceso)->get();		
 		$documentosCargados = Documento::where('id_proceso_admon', '=',$idProceso)->get();		
-		
-	
-		
+				
 		for ($i = 0; $i < sizeof($documentosRequeridos); $i++) {
 			if(sizeof($documentosCargados) > 0){
 			
-				for($j =0; $j < sizeof($documentosCargados); $j++){
-				
-				
+				for($j =0; $j < sizeof($documentosCargados); $j++){			
 			
 					if($documentosRequeridos[$i] -> id == $documentosCargados[$j] -> id_documento_tipo_proceso){
 						$documentosRequeridos[$i] -> documento = $documentosCargados[$j];
 						$documentosRequeridos[$i] -> documento->estado = 'Cargado';				
-					}
-					
+					}					
 		        }
 			} else{
 				$documentosRequeridos[$i] -> documento = new Documento;
@@ -86,13 +85,9 @@ class DocumentosController extends Controller
 			}
 			
 		}
-		
 
 		return View::make('documentos.index')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon);
-	}
-	
-	
-	
+	}	
 	
 	public function mostrarDocumento($id)
 	{
