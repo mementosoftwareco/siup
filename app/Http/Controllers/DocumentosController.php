@@ -55,7 +55,7 @@ class DocumentosController extends Controller
 			return redirect('/');
 		}
 
-		return prepararCargaDocumentos($idProceso);
+		return $this->prepararCargaDocumentos($idProceso);
 	}
 	
 	public function prepararCargaDocumentos($idProceso)
