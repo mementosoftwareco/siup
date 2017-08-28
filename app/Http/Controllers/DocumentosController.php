@@ -26,6 +26,7 @@ use Carbon\Carbon;
 use App\HistoricosProcesoAdmision;
 use Auth;
 use App\EstadosProcesoAdmisionEnum;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 
 class DocumentosController extends Controller
@@ -44,6 +45,17 @@ class DocumentosController extends Controller
 		$perfil = Perfil::find($id);		
 		return View::make('perfiles.edit')
 			->with('perfil', $perfil);
+	}
+	
+	public function prepararCargaDocumentosP($idProcesoCiphered)
+	{
+		try {
+			$idProceso = decrypt($idProcesoCiphered);
+		} catch (DecryptException $e) {
+			return redirect('/');
+		}
+
+		return prepararCargaDocumentos($idProceso);
 	}
 	
 	public function prepararCargaDocumentos($idProceso)

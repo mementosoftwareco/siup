@@ -75,6 +75,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos');
+	Route::get('/prepararCargaDocumentosP/{idProceso}', 'DocumentosController@prepararCargaDocumentosP')->name('prepararCargaDocumentosP');
 	Route::post('/cargarDocumentos', 'DocumentosController@cargarDocumentos')->name('cargarDocumentos');
 	Route::get('/mostrarDocumento/{id}', ['uses' =>'DocumentosController@mostrarDocumento']) ->name('mostrarDocumento');
 
