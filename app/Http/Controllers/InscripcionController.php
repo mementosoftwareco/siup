@@ -291,22 +291,48 @@ class InscripcionController extends Controller
 			'celularReferencia' => 'required|max:50',
 			'emailReferencia' => 'required|max:50',
 			'parentescoRef' => 'required|max:50',
-			//informacion estudios de secundaria
-			//'tipoDeColegio' => 'required|max:10',
-			//'colegio' => 'required|max:200',
-			//'ciudadColegio' => 'required|max:10',
-			//'barrioColegio' => 'required|max:100',
-			//'jornadaColegio' => 'required|max:10',
-			//'codigoIcfesColegio' => 'required|max:20',
-			//'anioIcfesColegio' => 'required|max:4',
-			//Homologacion desde otra institucion
-			//'homologacion' => 'required|max:200',
-			//'tituloHomologacion' => 'required|max:200',
-			//'instHomologacion' => 'required|max:200',
-			//'ciudadHomologacion' => 'required|max:10',
-			//'fechaFinHomologacion' => 'required|max:10',
+			
         ]);
-
+		
+		//validando formulario de pregrado
+		if($request->tipoEdu == 1){
+			$this->validate($request, [
+				//informacion estudios de secundaria
+				'tipoDeColegio' => 'required|max:10',
+				'colegio' => 'required|max:200',
+				'ciudadColegio' => 'required|max:10',
+				'barrioColegio' => 'required|max:100',
+				'jornadaColegio' => 'required|max:10',
+				'codigoIcfesColegio' => 'required|max:20',
+				'anioIcfesColegio' => 'required|max:4',
+				
+				
+			]);
+		
+			if($request->homologacion == 1){
+				$this->validate($request, [
+				//Homologacion desde otra institucion
+				'homologacion' => 'required|max:200',
+				'tituloHomologacion' => 'required|max:200',
+				'instHomologacion' => 'required|max:200',
+				'ciudadHomologacion' => 'required|max:10',
+				'fechaFinHomologacion' => 'required|max:10',
+				]);
+			}
+		}
+		
+		//validando formulario de postgrado
+		if($request->tipoEdu == 2){
+			$this->validate($request, [
+				//informacion estudios de secundaria
+				'programaPregrado' => 'required|max:400',
+				'tituloPregrado' => 'required|max:200',
+				'universidadPregado' => 'required|max:300',
+				'ciudadPregrado' => 'required|max:200',
+				'fechaFinPregrado' => 'required|max:10',
+				]);			
+		}
+		
 		$idInscripcion = $procesoAdmon -> id_inscripcion;
 		
 		//Guardando la información de la persona
@@ -375,7 +401,7 @@ class InscripcionController extends Controller
 		}
 		
 		//Si es pregrado
-		if($procesoAdmon -> id_tipo_proceso == 1){
+		if($request->tipoEdu == 1){
 			$estudios->tipo_educacion = $request->tipoDeColegio;
 			$estudios->nombre_inst = $request->colegio;
 			//$estudios->grado_obtenido = $request->email;
@@ -392,7 +418,7 @@ class InscripcionController extends Controller
 		}
 		
 		//Si es postgrado
-		if($procesoAdmon -> id_tipo_proceso == 2){
+		if($request->tipoEdu == 2){
 			//$estudios->tipo_educacion = $request->tipoDeColegio;
 			$estudios->nombre_inst = $request->universidadPregado;
 			$estudios->grado_obtenido = $request->tituloPregrado;
@@ -425,37 +451,14 @@ class InscripcionController extends Controller
 			$homologacion->save();
 		}
 		
-		/*
-		$historicoProcesos = new HistoricosProcesoAdmision;
-		$historicoProcesos->id_usuario = Auth::user()->id;
-		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
-		$historicoProcesos->id_proceso_admon = $procesoAdmon->id_proceso_admon;
-		$historicoProcesos->comentarios = "Modificado por usuario " . Auth::user()->name;
-		$historicoProcesos->fecha = Carbon::now();
-		
-		$historicoProcesos->save();
-		*/
 		
 		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
 		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
-        $id_proceso = $procesoAdmon->save();
+		$procesoAdmon->id_tipo_proceso = $request->tipoEdu;
+        $procesoAdmon->save();
 		
-		
-		
-		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
-		$historico->comentarios = 'Formulario de Inscripción';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $id_proceso;
-		$historico->save();
-		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion, 'Edición de formulario de inscripción', $procesoAdmon->id_proceso_admon);
+				
         return redirect('/menu');
     }
 	
