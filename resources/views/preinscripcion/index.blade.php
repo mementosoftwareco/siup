@@ -16,7 +16,7 @@
                     <form action="{{ url('preinscripcion') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 						
-						{{ Form::hidden('nombrePrograma') }}
+						{{ Form::hidden('nombrePrograma') }} 
 
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
