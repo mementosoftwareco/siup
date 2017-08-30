@@ -34,7 +34,7 @@
 										
 										<td class="table-text"><div>{{ $historico->fecha == null ? 'viene nulo' : $historico->fecha }}</div></td>
 										
-										<td class="table-text"><div>{{ $historico->usuario == null ? 'viene nulo' : $historico->usuario->name }}</div></td>
+										<td class="table-text"><div>{{ $historico->usuario == null ? 'Aspirante' : $historico->usuario->name }}</div></td>
 										
 										<td class="table-text"><div>{{ $historico->estado == null ? 'viene nulo' : $historico->estado->nombre }}</div></td>
 																				

@@ -89,50 +89,16 @@ class InscripcionController extends Controller
     }
 	
 	
-	
-	
-	public function listEntrevistas(Request $request)
-    {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
-		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
-		
-        return view('entrevista.list', [
-            'procesosAdmon' => $procesosAdmon,
-        ]);
-		
-    }
+
 	
 	
 	public function enviarValidacionComercial($idProcesoAdmision)
     {
 		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial;
-		$historico->comentarios = 'Enviado a validación Comercial';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $idProcesoAdmision;
-		$historico->save();
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial, 'Enviado a Validación de Líder Comercial', $idProcesoAdmision);
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteEntrevista, 'Enviado Formulario de Entrevista a Estudiante', $idProcesoAdmision);
 		
 		
-		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::InscritoPendienteEntrevista;
-		$historico->comentarios = 'Enviado formulario de entrevista';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $idProcesoAdmision;
-		$historico->save();
 		
 		
 		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
@@ -456,36 +422,14 @@ class InscripcionController extends Controller
 			$homologacion->save();
 		}
 		
-		/*
-		$historicoProcesos = new HistoricosProcesoAdmision;
-		$historicoProcesos->id_usuario = Auth::user()->id;
-		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
-		$historicoProcesos->id_proceso_admon = $procesoAdmon->id_proceso_admon;
-		$historicoProcesos->comentarios = "Modificado por usuario " . Auth::user()->name;
-		$historicoProcesos->fecha = Carbon::now();
 		
-		$historicoProcesos->save();
-		*/
-		
-		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
-		//$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
-        $id_proceso = $procesoAdmon->save();
+        $id_proceso = $procesoAdmon->save();		
 		
 		
 		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion, 'Edición de formulario de Inscripción', $procesoAdmon->id_proceso_admon);
 		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
-		$historico->comentarios = 'Formulario de Inscripción';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $id_proceso;
-		$historico->save();
+		
 		
         return redirect('/menu');
     }

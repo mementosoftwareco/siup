@@ -70,7 +70,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('ajax-municipio/{id}', 'InscripcionController@ajaxCiudadMunicipio');
 	
 	
-	Route::get('/cargarProcesosAdmision/', 'HistoricoController@cargarProcesosAdmision')->name('cargarProcesosAdmision');
+	Route::get('/cargarMisProcesosAdmision/', 'HistoricoController@cargarMisProcesosAdmision')->name('cargarMisProcesosAdmision');
 	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico');
 	
 	

@@ -8,4 +8,5 @@ class EstadosProcesoAdmision extends Model
 {
     //
 	protected $table = 'estados_proceso_admision';
+
 }

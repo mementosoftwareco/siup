@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
+<?php use App\EstadosProcesoAdmisionEnum;?>
+
 @section('content')
     <div class="container">
         
-		<div class="col-sm-offset-0 col-sm-12">
+		<div class="col-sm-offset-0 col-sm-22">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Buscar Aspirante
@@ -56,7 +58,8 @@
                                 <!--<th>Proceso</th>-->
 								<th>Identificación</th>
 								<th>Nombre</th>
-								<th>Estado</th>
+								<th>Estado del Proceso</th>	
+																
 								<th>Fecha inscripción</th>
 								<th>Educación</th>
 								<th>Programa</th>
@@ -80,6 +83,17 @@
 										<td class="table-text"><div>{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</div></td>
 											
 									   <!-- Continuar inscripción Button -->
+									   
+									   <td>
+											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
+												{{ csrf_field() }}
+
+												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+													<i class="fa fa-btn fa-edit"></i>Histórico
+												</button>
+											</form>
+										</td>
+										
                                         
 										
 										<?php if($procesoAdmon->id_usuario == null) {?>
@@ -99,7 +113,7 @@
 										
 										
 										
-										<?php if($procesoAdmon->id_usuario != null && $procesoAdmon->id_usuario == Auth::user()->id ) {?>
+										<?php if($procesoAdmon->id_usuario != null && $procesoAdmon->id_usuario == Auth::user()->id && $procesoAdmon->estadoProceso->id_estado==EstadosProcesoAdmisionEnum::PreInscrito) {?>
 											
 										
 											<td>

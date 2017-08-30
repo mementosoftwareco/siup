@@ -154,18 +154,10 @@ class DocumentosController extends Controller
 		} 
 		
 		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscritoDocumentos;
-		$historico->comentarios = 'Carga de Documentos';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $idProceso;
-		$historico->save();
+		
+		
+		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscritoDocumentos, 'Carga de Documentos', $proceso->id_proceso_admon);
 
 		return $this->prepararCargaDocumentos($idProceso)	;
 		
