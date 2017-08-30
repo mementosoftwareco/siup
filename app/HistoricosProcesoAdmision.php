@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\EstadosProcesoAdmision;
+use Auth;
+use Carbon\Carbon;
 
 class HistoricosProcesoAdmision extends Model
 {
@@ -24,5 +26,20 @@ class HistoricosProcesoAdmision extends Model
         return $this->belongsTo(EstadosProcesoAdmision::class, 'id_estado', 'id_estado');
     }
 	
+	
+	public static function storeHistoricoProceso($idEstado, $comentarios, $idProceso){
+		$historico = new HistoricosProcesoAdmision;	
+		if (Auth::user() != null){
+			$historico->id_usuario = Auth::user()->id;	
+		} else{
+			$historico->id_usuario = null;
+		}
+			
+		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+		$historico->comentarios = 'Preinscripción';
+		$historico->fecha = Carbon::now();
+		$historico->id_proceso_admon = $idProceso;
+		$historico->save();
+	}
 	
 }

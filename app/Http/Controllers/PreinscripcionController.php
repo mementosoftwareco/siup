@@ -87,23 +87,8 @@ class PreinscripcionController extends Controller
 		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
         $id_proceso = $proceso->save();
 		
-		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
-		$historico->comentarios = 'Preinscripción';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $id_proceso;
-		$historico->save();
-		
-		
-		
-		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscrito, 'Preinscripción', $proceso->id_proceso_admon);
+				
 		$this->enviarCorreoBienvenida($inscripcion, $persona, $proceso);
 		
         return redirect('/');
@@ -114,9 +99,7 @@ class PreinscripcionController extends Controller
 	
 	
 	public function enviarCorreoBienvenida(Inscripcion $inscripcion, Persona $persona, ProcesoAdmision $proceso)
-    {
-	
-		
+    {	
         Mail::send('preinscripcion.email.preinscripcion', ['persona' => $persona, 'inscripcion' => $inscripcion, 'proceso' => $proceso], function ($m) use ($inscripcion, $persona) {
             $m->to($inscripcion->email, $persona->nombres)->subject('Inscripción Iberoamericana');
         });
