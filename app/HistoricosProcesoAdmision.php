@@ -25,4 +25,5 @@ class HistoricosProcesoAdmision extends Model
     }
 	
 	
+	
 }
