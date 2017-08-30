@@ -89,25 +89,20 @@ class InscripcionController extends Controller
     }
 	
 	
-	
-	
-	public function listEntrevistas(Request $request)
-    {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PreInscrito;
-		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
-		
-        return view('entrevista.list', [
-            'procesosAdmon' => $procesosAdmon,
-        ]);
-		
-    }
+
 	
 	
 	public function enviarValidacionComercial($idProcesoAdmision)
     {
 		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial, 'Enviado a Validación de Líder Comercial', $idProcesoAdmision);
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteEntrevista, 'Enviado Formulario de Entrevista a Estudiante', $idProcesoAdmision);
+		
+		
+		
+		
 		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
-		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial;
+		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::Inscrito;
 		$procesoAdmon->save();
 		
 		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->where('id_estado','<', EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial)->get();
@@ -116,6 +111,8 @@ class InscripcionController extends Controller
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
 		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
 		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
+		
+	
 		
         return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,

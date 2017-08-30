@@ -41,7 +41,7 @@ class EntrevistaController extends Controller
 	
 	public function listarEntrevistas(Request $request)
     {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::Inscrito;
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
         return view('entrevista.list', [
@@ -148,36 +148,27 @@ class EntrevistaController extends Controller
 	
 	
 	
-	 public function aprobarEntrevista(Request $request, ProcesoAdmision $procesoAdmon)
+	 public function aprobarEntrevista(Request $request,  $idProcesoAdmon)
     {
 		
-		$historico = new HistoricosProcesoAdmision;	
-		if (Auth::user() != null){
-			$historico->id_usuario = Auth::user()->id;	
-		} else{
-			$historico->id_usuario = null;
-		}
-			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::ValidadoFacultad;
-		$historico->comentarios = 'Formulario de Inscripción';
-		$historico->fecha = Carbon::now();
-		$historico->id_proceso_admon = $id_proceso;
-		$historico->save();
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::ValidadoFacultad, 'Entrevista Aprobada por Facultad', $idProcesoAdmon);
 		
-		$historicos = new HistoricosProcesoAdmision::where('id_proceso_admon', '=', $procesoAdmon->id_proceso_admon)->get();
+		$historicos = HistoricosProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmon)->get();
 		$validadoComercial = false;
-		for(int i=0; i<sizeof($historicos); i++){
-			if($historicos[i]->id_estado == EstadosProcesoAdmisionEnum::ValidadoLiderComercial){
+		for( $i=0; $i<sizeof($historicos); $i++){
+			if($historicos[$i]->id_estado == EstadosProcesoAdmisionEnum::ValidadoLiderComercial){
 				$validadoComercial = true;
 			}
 		}
+		
+		//buscar el proceso por id
 		
 		if($validadoComercial == true){
 			$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::Validado;
 			$procesoAdmon->save();
 		}
 		
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::Inscrito;
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
         return view('entrevista.list', [
@@ -263,7 +254,7 @@ class EntrevistaController extends Controller
 		//$historicoProcesos->id_usuario = Auth::user()->id;
 		$historicoProcesos->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
 		$historicoProcesos->id_proceso_admon = $procesoAdmon->id_proceso_admon;
-		$historicoProcesos->comentarios = "El estudiante completa el formulario de entrevista";
+		$historicoProcesos->comentarios = "Formulario de entrevista diligenciado por el Estudiante";
 		$historicoProcesos->fecha = Carbon::now();
 		
 		$historicoProcesos->save();

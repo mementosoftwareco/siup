@@ -46,7 +46,7 @@
             @if (count($procesosAdmon) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Inscripciones
+                        Mis Procesos de Inscripción
                     </div>
 					
 					
@@ -80,7 +80,7 @@
 
 										<td class="table-text"><div>{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</div></td>
 											
-										<td class="table-text"><div>{{ $procesoAdmon->usuario == null ? 'viene nulo' : $procesoAdmon->usuario->name }}</div></td>
+										<td class="table-text"><div>{{ $procesoAdmon->usuario == null ? 'Aspirante' : $procesoAdmon->usuario->name }}</div></td>
 									   <!-- Continuar inscripción Button -->
                                         
 										

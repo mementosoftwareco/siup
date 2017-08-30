@@ -39,7 +39,18 @@ class ProcesoAdmision extends Model
 	
 	public function historicosProcesoAdmision()
     {
-        return $this->hasToMany(HistoricosProcesoAdmision::class, 'id_proceso_admon', 'id_proceso_admon');
+        return $this->hasMany(HistoricosProcesoAdmision::class, 'id_proceso_admon', 'id_proceso_admon');
     }
+	
+	public function ultimoHistorico()
+	{
+		echo 'va a empezar';
+		/*$historico = $this->historicosProcesoAdmision();
+		echo sizeof($historico);
+		return end($historico);*/
+		
+	}
+	
+	
 	
 }

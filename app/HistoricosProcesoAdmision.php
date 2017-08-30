@@ -35,11 +35,12 @@ class HistoricosProcesoAdmision extends Model
 			$historico->id_usuario = null;
 		}
 			
-		$historico->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
-		$historico->comentarios = 'Preinscripción';
+		$historico->id_estado = $idEstado;
+		$historico->comentarios = $comentarios;
 		$historico->fecha = Carbon::now();
 		$historico->id_proceso_admon = $idProceso;
 		$historico->save();
 	}
+	
 	
 }

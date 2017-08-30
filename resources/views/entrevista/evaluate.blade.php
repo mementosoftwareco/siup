@@ -826,10 +826,10 @@
 
 
                        <td>
-							<form action="{{url('aprobarEntrevista/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
+							<form action="{{url('aprobarEntrevista/' . $entrevistaViewModel->idProcesoAdmision)}}" method="POST">
 								{{ csrf_field() }}
 
-								<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+								<button type="submit" id="edit-process-{{ $entrevistaViewModel->idProcesoAdmision }}" class="btn btn-danger">
 									<i class="fa fa-btn fa-upload"></i>Aprobar
 								</button>
 							</form>

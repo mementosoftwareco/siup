@@ -18,13 +18,16 @@ use Auth;
 
 class HistoricoController extends Controller
 {
-    public function cargarProcesosAdmision()
+    public function cargarMisProcesosAdmision()
 	{
 		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->get();
 		
 		return View::make('historico.list')
 			->with('procesosAdmon', $procesosAdmon);
 	}
+	
+	
+	
 	
 	
 	public function mostrarHistorico($idProceso)
