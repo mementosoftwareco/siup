@@ -21,6 +21,7 @@ class InscripcionPregrado
 	public $tipoEdu;
 	public $modalidad;
 	public $programa;
+	public $nombrePrograma;
 	public $estCivil;
 	public $procedencia;
 	public $convenio;

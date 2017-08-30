@@ -15,6 +15,8 @@
                     <!-- New Preinscripcion Form -->
                     <form action="{{ url('preinscripcion') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
+						
+						{{ Form::hidden('nombrePrograma') }}
 
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
@@ -140,6 +142,19 @@
 								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
                             </div>
                         </div>
+						
+						<script>
+						$(document).ready(function() {
+							
+							$('select[name="programa"]').on('change', function(){
+								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
+								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
+								//console.log("entro a con nombre programa: " + nombreProgramaVar);
+							});
+
+						});
+						</script>
+						
                     </form>
                 </div>
             </div>

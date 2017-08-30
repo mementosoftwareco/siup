@@ -355,7 +355,7 @@ class InscripcionController extends Controller
 		$inscripcion->email = $request->email;
 		$inscripcion->id_modalidad = $request->modalidad;
 		$inscripcion->id_programa = $request->programa;
-		$inscripcion->nombre_programa = $request->programa;
+		$inscripcion->nombre_programa = $request->nombrePrograma;
 		$inscripcion->acepta_terms_cond = $request->termYCond;
 		$inscripcion->procedencia = $request->procedencia;
 		$inscripcion->id_estado_civil = $request->estCivil;

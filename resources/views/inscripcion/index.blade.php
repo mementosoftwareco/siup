@@ -21,6 +21,7 @@
 						{{ Form::hidden('idReferencia') }}
 						{{ Form::hidden('idEducacion') }}
 						{{ Form::hidden('idHomologacion') }}
+						{{ Form::hidden('nombrePrograma') }}
 						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
@@ -343,6 +344,12 @@
 									$('select[name="municipio"]').empty();
 								}
 
+							});
+							
+							$('select[name="programa"]').on('change', function(){
+								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
+								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
+								//console.log("entro a con nombre programa: " + nombreProgramaVar);
 							});
 
 						});
