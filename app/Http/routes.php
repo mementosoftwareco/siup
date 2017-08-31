@@ -90,11 +90,19 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	//Rutas para entrevista
-	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
+	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@indexCiphered');
+	Route::get('/ver.entrevista/{procesoAdmon}', 'EntrevistaController@index');
 	Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista');
 	Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista');
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
 	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas');
+	
+	//Rutas para lider comercial
+	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos');
+	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index');
+	Route::get('/lc.buscarAspirante/', 'LiderComercialController@buscarAspirante')->name('lc.buscarAspirante');
+	Route::post('/lc.aprobar.proceso/', 'LiderComercialController@aprobarProceso')->name('lc.aprobar.proceso');
+	Route::post('/lc.rechazar.proceso/', 'LiderComercialController@rechazarProceso')->name('lc.rechazar.proceso');
 	
     Route::auth();
 
