@@ -450,7 +450,7 @@ class InscripcionController extends Controller
 		
 		
 		//$nuevoEstadoProceso = EstadosProcesoAdmisionEnum::calcularProximoEstadoProceso($procesoAdmon, EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion);
-		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
+		//$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion;
 		$procesoAdmon->id_tipo_proceso = $request->tipoEdu;
         $procesoAdmon->save();
 		

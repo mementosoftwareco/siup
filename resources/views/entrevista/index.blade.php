@@ -48,7 +48,7 @@
 
                             <div class="col-sm-6">
                                 
-							{{ 	Form::text('numeroIdentificacion',null,['class'=>'form-control']) }}
+							{{ 	Form::text('numeroIdentificacion',null,['class'=>'form-control', 'disabled']) }}
                             </div>
                         </div>
 						
@@ -57,7 +57,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha expedición documento</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaExpDocumento', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
+								{{ Form::date('fechaExpDocumento', \Carbon\Carbon::now(), ['class'=>'form-control', 'disabled']) }}
                             </div>
                         </div>
 						
@@ -68,7 +68,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Nombres</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('nombres',null,['class'=>'form-control']) }}
+								{{ 	Form::text('nombres',null,['class'=>'form-control', 'disabled']) }}
                             </div>
                         </div>
 						
@@ -77,7 +77,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Apellidos</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('apellidos',null,['class'=>'form-control']) }}
+								{{ 	Form::text('apellidos',null,['class'=>'form-control', 'disabled']) }}
                             </div>
                         </div>
 						
@@ -111,7 +111,7 @@
 														  '11012' => 'Psicología',
 														  '11013' => 'Técnico Profesional en Logística',
 														  '11014' => 'Tecnología en Logística'
-														  ], null, ['class'=>'form-control'])}}
+														  ], null, ['class'=>'form-control', 'disabled'])}}
                             </div>
                         </div>
 						

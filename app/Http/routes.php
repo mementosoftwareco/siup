@@ -96,6 +96,17 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
 	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas');
 	
+	
+	//Rutas para admisiones
+	//Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
+	//Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista');
+	//Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista');
+	Route::post('/admitirAspirante/{procesoAdmon}', 'AdmisionesController@admitirAspirante')->name('admitirAspirante');
+	Route::get('/listarAspirantes/', 'AdmisionesController@listarAspirantes')->name('listarAspirantes');
+	
+	
+	
+	
     Route::auth();
 
 });

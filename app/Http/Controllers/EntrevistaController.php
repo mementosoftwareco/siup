@@ -41,11 +41,29 @@ class EntrevistaController extends Controller
 	
 	public function listarEntrevistas(Request $request)
     {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::Inscrito;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
+		$procesos = array();
+		
+		for($i=0; $i<sizeof($procesosAdmon); $i++){
+			$procesoAdmon = $procesosAdmon[$i];
+			$historicos = HistoricosProcesoAdmision::where('id_proceso_admon', '=', $procesoAdmon->id_proceso_admon)->get();
+			$pendienteValidacionEntrevista = false;
+			for( $j=0; $j<sizeof($historicos); $j++){
+				if($historicos[$j]->id_estado == EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista){
+					$pendienteValidacionEntrevista = true;
+				}
+			}
+			
+			if($pendienteValidacionEntrevista == true){
+				array_push($procesos, $procesoAdmon);
+			}
+		}
+		
+		
 		
         return view('entrevista.list', [
-            'procesosAdmon' => $procesosAdmon,
+            'procesosAdmon' => $procesos,
         ]);
 		
     }
@@ -259,10 +277,10 @@ class EntrevistaController extends Controller
 		
 		$historicoProcesos->save();
 		
-		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
+		//$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
         $procesoAdmon->save();
 		
-        return redirect('/');
+        return redirect('/menu');
     }
 	
 	private function guardarDetalleEntrevista($idEntrevista, $idPregunta, $nombreCampo, Request $request){

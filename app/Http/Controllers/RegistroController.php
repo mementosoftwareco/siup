@@ -36,7 +36,7 @@ class RegistroController extends Controller
 		$user = User::find($id);
 	
 		return View::make('auth.edit')
-			->with('users', $users);
+			->with('user', $user);
 			
 	}
 
