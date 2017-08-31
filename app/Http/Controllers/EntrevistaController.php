@@ -68,6 +68,17 @@ class EntrevistaController extends Controller
 		
     }
 	
+	public function indexCiphered(Request $request, $IdProcesoAdmon)
+    {
+		try {
+			$idProcesoAdmision = decrypt($IdProcesoAdmon);
+		} catch (DecryptException $e) {
+			return redirect('/');
+		}
+		return $this->index($request, $idProcesoAdmision);
+	}
+		
+	
 	//
 	/**
      * Display the Entrevista page
@@ -75,13 +86,8 @@ class EntrevistaController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function index(Request $request, $IdProcesoAdmon)
+    public function index(Request $request, $idProcesoAdmision)
     {
-		try {
-			$idProcesoAdmision = decrypt($IdProcesoAdmon);
-		} catch (DecryptException $e) {
-			return redirect('/');
-		}
 		
 		$procesoAdmon = ProcesoAdmision::findOrFail($idProcesoAdmision);
 		$entrevistaViewModel = new EntrevistaViewModel;

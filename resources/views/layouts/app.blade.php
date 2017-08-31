@@ -14,7 +14,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Lato:100"        rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -27,6 +27,7 @@
         }
     </style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">
@@ -41,10 +42,16 @@
                     <span class="icon-bar"></span>
                 </button>
 
+				@if(Auth::guest())
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Sistema de Inscripción Estudiantil Universidad Iberoamericana
                 </a>
+				 @else
+					 <a class="navbar-brand" href="{{ url('/menu') }}">
+                    Sistema de Inscripción Estudiantil Universidad Iberoamericana
+                </a>
+				@endif
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">

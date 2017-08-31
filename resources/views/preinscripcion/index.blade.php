@@ -105,6 +105,7 @@
 
                             <div class="col-sm-6">
 								<select name="programa" id="preinscripcion-programa" class="form-control">
+									<option value="">Seleccione..</option>
 									<option value="11001">Administración Logística</option>
 									<option value="11002">Administración y Finanzas</option>
 									<option value="11003">Contaduría Pública Virtual</option>
