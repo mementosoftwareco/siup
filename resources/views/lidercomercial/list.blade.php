@@ -80,28 +80,26 @@
 										
 										<td class="table-text"><div>{{ $procesoAdmon->tipoProcesoAdmision == null ? 'viene nulo' : $procesoAdmon->tipoProcesoAdmision->nombre }}</div></td>
 
-										<td class="table-text"><div><span id="nombre_programa">Programa{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</span></div></td>
+										<td class="table-text"><div><span id="nombre_programa">{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</span></div></td>
 											
 									   <!-- Continuar inscripción Button -->
 									   
 									   <td>
-											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
-												{{ csrf_field() }}
-
-												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-view"></i>Histórico
-												</button>
-											</form>
-										</td>
-										
-										<td>
-											<form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
+									   <form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
 													<i class="fa fa-btn fa-view"></i>Inscripción
 												</button>
 											</form>
+											<br>
+											<form action="{{url('prepararCargaDocumentos').'/'. urlencode($procesoAdmon->id_proceso_admon) }}" method="GET">
+													{{ csrf_field() }}
+												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+													<i class="fa fa-btn fa-upload"></i>Documentos
+												</button>
+											</form>
+											
 										</td>
 										
 										<td>
@@ -112,6 +110,18 @@
 													<i class="fa fa-btn fa-view"></i>Entrevista
 												</button>
 											</form>
+											<br>
+											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
+												{{ csrf_field() }}
+
+												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+													<i class="fa fa-btn fa-view"></i>Histórico
+												</button>
+											</form>
+										</td>
+										
+										<td>
+											
 										</td>
 										
 										<?php if($procesoAdmon->estadoProceso->id_estado==EstadosProcesoAdmisionEnum::Inscrito) {?>
@@ -127,9 +137,8 @@
 												   data-target="#aprobarModal">
 												  <i class="fa fa-btn fa-edit"></i>Aprobar
 												</button>
-											</td>
-											
-											<td>
+											<br>
+											<br>
 												<button 
 												   type="button" 
 												   class="btn btn-danger" 
