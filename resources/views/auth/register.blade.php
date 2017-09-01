@@ -126,7 +126,7 @@
 										
 										<td class="table-text"><div><a href="{{route('editarRegistro' , ['id' =>$user->id ]) }}">Editar</a></div></td>
 										
-										<td class="table-text"><div><a href="{{route('prepararEliminarRegistro' , ['id' =>$user->id ]) }}">Eliminar</a></div></td>
+										<!--<td class="table-text"><div><a href="{{route('prepararEliminarRegistro' , ['id' =>$user->id ]) }}">Eliminar</a></div></td>-->
 										
 										
                                 

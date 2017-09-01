@@ -54,7 +54,7 @@
 						<div class="col-sm-offset-5 col-sm-5">
 							
 							
-							 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Aceptar</a></button>
+							 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Aceptar</a></button>-->
 							 
 					 </div>	
 						

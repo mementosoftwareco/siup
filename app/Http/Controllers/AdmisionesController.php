@@ -42,7 +42,7 @@ class AdmisionesController extends Controller
 	
 	public function listarAspirantes(Request $request)
     {
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PendienteValidacionAdmision;
+		$idEstadoProceso = EstadosProcesoAdmisionEnum::Validado;
 		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
 		
         return view('admision.list', [

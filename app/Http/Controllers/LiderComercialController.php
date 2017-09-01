@@ -74,14 +74,29 @@ class LiderComercialController extends Controller
     {
 		
 		$idProcesoAdmision = $request->idProceso;
+		echo $idProcesoAdmision;
 		$comentarios = $request->comentariosAprobacion;
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::ValidadoLiderComercial, $comentarios, $idProcesoAdmision);
 		
-				
-		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
-		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::Validado;
-		$procesoAdmon->save();
+		
+		$historicos = HistoricosProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get();
+		$validadoFacultad = false;
+		for( $i=0; $i<sizeof($historicos); $i++){
+			if($historicos[$i]->id_estado == EstadosProcesoAdmisionEnum::ValidadoFacultad){
+				$validadoFacultad = true;
+			}
+		}
+		
+		//buscar el proceso por id
+		
+		if($validadoFacultad == true){
+			$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::Validado;
+			$procesoAdmon->save();
+			HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PendienteValidacionAdmision, $comentarios, $idProcesoAdmision);
+		}
+
+
 		
         return redirect('/lc.inscripcion.list');
 		
