@@ -44,12 +44,12 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	//Rutas para administración de perfiles
-	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil');
-    Route::post('/guardarPerfil', 'PerfilController@guardarPerfil');
-	Route::get('/editarPerfil/{id}', ['uses' =>'PerfilController@editarPerfil'])->name('editarPerfil');
-	Route::post('/actualizarPerfil/{id}', ['uses' =>'PerfilController@actualizarPerfil'])->name('actualizarPerfil');
-    Route::get('/prepararEliminarPerfil/{id}', ['uses' =>'PerfilController@prepararEliminarPerfil']) ->name('prepararEliminarPerfil');
-	Route::post('/eliminarPerfil/{id}', ['uses' =>'PerfilController@eliminarPerfil']) ->name('eliminarPerfil');
+	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil')->middleware('auth');
+    Route::post('/guardarPerfil', 'PerfilController@guardarPerfil')->middleware('auth');
+	Route::get('/editarPerfil/{id}', ['uses' =>'PerfilController@editarPerfil'])->name('editarPerfil')->middleware('auth');
+	Route::post('/actualizarPerfil/{id}', ['uses' =>'PerfilController@actualizarPerfil'])->name('actualizarPerfil')->middleware('auth');
+    Route::get('/prepararEliminarPerfil/{id}', ['uses' =>'PerfilController@prepararEliminarPerfil']) ->name('prepararEliminarPerfil')->middleware('auth');
+	Route::post('/eliminarPerfil/{id}', ['uses' =>'PerfilController@eliminarPerfil']) ->name('eliminarPerfil')->middleware('auth');
 
 	
    /* Route::get('/tasks', 'TaskController@index');
@@ -60,24 +60,24 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
-	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos');
-	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index');
-	Route::post('/inscripcion/{procesoAdmon}', 'InscripcionController@store')->name('inscripcion');
-	Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante');
-	Route::post('/asignarAspirante/{procesoAdmon}', 'InscripcionController@asignarAspirante')->name('asignarAspirante');
-	Route::post('/enviarValidacionComercial/{procesoAdmon}', 'InscripcionController@enviarValidacionComercial')->name('enviarValidacionComercial');
+	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos')->middleware('auth');
+	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index')->middleware('auth');
+	Route::post('/inscripcion/{procesoAdmon}', 'InscripcionController@store')->name('inscripcion')->middleware('auth');
+	Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante')->middleware('auth');
+	Route::post('/asignarAspirante/{procesoAdmon}', 'InscripcionController@asignarAspirante')->name('asignarAspirante')->middleware('auth');
+	Route::post('/enviarValidacionComercial/{procesoAdmon}', 'InscripcionController@enviarValidacionComercial')->name('enviarValidacionComercial')->middleware('auth');
 	Route::get('ajax-ciudad/{id}', 'InscripcionController@ajaxDeptoCiudad');
 	Route::get('ajax-municipio/{id}', 'InscripcionController@ajaxCiudadMunicipio');
 	
 	
-	Route::get('/cargarMisProcesosAdmision/', 'HistoricoController@cargarMisProcesosAdmision')->name('cargarMisProcesosAdmision');
-	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico');
+	Route::get('/cargarMisProcesosAdmision/', 'HistoricoController@cargarMisProcesosAdmision')->name('cargarMisProcesosAdmision')->middleware('auth');
+	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico')->middleware('auth');
 	
 	
-	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos');
+	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos')->middleware('auth');
 	Route::get('/prepararCargaDocumentosP/{idProceso}', 'DocumentosController@prepararCargaDocumentosP')->name('prepararCargaDocumentosP');
 	Route::post('/cargarDocumentos', 'DocumentosController@cargarDocumentos')->name('cargarDocumentos');
-	Route::get('/mostrarDocumento/{id}', ['uses' =>'DocumentosController@mostrarDocumento']) ->name('mostrarDocumento');
+	Route::get('/mostrarDocumento/{idCiphered}', ['uses' =>'DocumentosController@mostrarDocumento']) ->name('mostrarDocumento');
 
 	
 		//rutas para administració® ¤e registros
@@ -91,19 +91,19 @@ Route::group(['middleware' => ['web']], function () {
 	
 	//Rutas para entrevista
 	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@indexCiphered');
-	Route::get('/ver.entrevista/{procesoAdmon}', 'EntrevistaController@index');
-	Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista');
-	Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista');
+	Route::get('/ver.entrevista/{procesoAdmon}', 'EntrevistaController@index')->middleware('auth');
+	Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista')->middleware('auth');
+	Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista')->middleware('auth');
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
-	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas');
+	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas')->middleware('auth');
 	
 	
 //Rutas para lider comercial
-	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos');
-	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index');
-	Route::get('/lc.buscarAspirante/', 'LiderComercialController@buscarAspirante')->name('lc.buscarAspirante');
-	Route::post('/lc.aprobar.proceso/', 'LiderComercialController@aprobarProceso')->name('lc.aprobar.proceso');
-	Route::post('/lc.rechazar.proceso/', 'LiderComercialController@rechazarProceso')->name('lc.rechazar.proceso');
+	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos')->middleware('auth');
+	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index')->middleware('auth');
+	Route::get('/lc.buscarAspirante/', 'LiderComercialController@buscarAspirante')->name('lc.buscarAspirante')->middleware('auth');
+	Route::post('/lc.aprobar.proceso/', 'LiderComercialController@aprobarProceso')->name('lc.aprobar.proceso')->middleware('auth');
+	Route::post('/lc.rechazar.proceso/', 'LiderComercialController@rechazarProceso')->name('lc.rechazar.proceso')->middleware('auth');
 	
 
 
@@ -111,9 +111,9 @@ Route::group(['middleware' => ['web']], function () {
 	//Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
 	//Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista');
 	//Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista');
-	Route::post('/admitirAspirante/{procesoAdmon}', 'AdmisionesController@admitirAspirante')->name('admitirAspirante');
-	Route::get('/listarAspirantes/', 'AdmisionesController@listarAspirantes')->name('listarAspirantes');
-	    Route::auth();
+	Route::post('/admitirAspirante/{procesoAdmon}', 'AdmisionesController@admitirAspirante')->name('admitirAspirante')->middleware('auth');
+	Route::get('/listarAspirantes/', 'AdmisionesController@listarAspirantes')->name('listarAspirantes')->middleware('auth');
+	Route::auth();
 
 });
 

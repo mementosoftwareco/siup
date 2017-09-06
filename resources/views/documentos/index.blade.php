@@ -49,7 +49,7 @@
 												<td class="table-text"><div>{{ $documentoRequerido->documento->estado }}</div></td>
 										
 												
-												<td class="table-text"><div><a href="{{ route('mostrarDocumento', ['id' =>$documentoRequerido->documento->id_documento]) }}">{{ $documentoRequerido->documento->nombre }}</a></div></td>
+												<td class="table-text"><div><a href="{{ route('mostrarDocumento', ['id' =>urlencode(encrypt($documentoRequerido->documento->id_documento))]) }}">{{ $documentoRequerido->documento->nombre }}</a></div></td>
 												
 	
 												

@@ -66,6 +66,10 @@ class DocumentosController extends Controller
 
 	public function prepararCargaDocumentosBackEnd($idProceso){
 		$proceso = ProcesoAdmision::find($idProceso);
+		if($proceso == null){
+			return  redirect('/');
+		}
+		
         $documentosRequeridos = DocumentoTipoProceso::where('id_tipo_proceso', '=',$proceso->tipoProcesoAdmision->id_tipo_proceso)->get();		
 		$documentosCargados = Documento::where('id_proceso_admon', '=',$idProceso)->get();		
 				
@@ -94,10 +98,21 @@ class DocumentosController extends Controller
 		return View::make('documentos.index')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon);
 	}	
 	
-	public function mostrarDocumento($id)
+	public function mostrarDocumento($idCiphered)
 	{
 		
-		$documento = Documento::where('id_documento', '=',$id)->get()->first();	
+		try {
+			$id = decrypt($idCiphered);
+		} catch (DecryptException $e) {
+			return redirect('/');
+		}
+		
+		$documento = Documento::where('id_documento', '=',$id)->get()->first();
+		
+		if($documento == null){
+			return  redirect('/');
+		}
+		
         $ruta = $documento->ubicacion.$documento->nombre;		
 		$archivo = Storage::disk('ftp')->get($ruta);	
 		//Storage::disk('local')->put($ruta, $archivo);
