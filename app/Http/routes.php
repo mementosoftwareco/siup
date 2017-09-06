@@ -80,7 +80,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/mostrarDocumento/{idCiphered}', ['uses' =>'DocumentosController@mostrarDocumento']) ->name('mostrarDocumento');
 
 	
-		//rutas para administraci󮠤e registros
+	//rutas para administraci󮠤e registros
 	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro');	
 	Route::post('/guardarRegistro', 'RegistroController@guardarRegistro');		
 	Route::get('/editarRegistro/{id}', ['uses' =>'RegistroController@editarRegistro']) ->name('editarRegistro');
@@ -97,24 +97,18 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
 	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas')->middleware('auth');
 	
-	
-//Rutas para lider comercial
+	//Rutas para lider
 	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos')->middleware('auth');
 	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index')->middleware('auth');
 	Route::get('/lc.buscarAspirante/', 'LiderComercialController@buscarAspirante')->name('lc.buscarAspirante')->middleware('auth');
 	Route::post('/lc.aprobar.proceso/', 'LiderComercialController@aprobarProceso')->name('lc.aprobar.proceso')->middleware('auth');
 	Route::post('/lc.rechazar.proceso/', 'LiderComercialController@rechazarProceso')->name('lc.rechazar.proceso')->middleware('auth');
 	
-
-
+	
 	//Rutas para admisiones
-	//Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@index');
-	//Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista');
-	//Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista');
 	Route::post('/admitirAspirante/{procesoAdmon}', 'AdmisionesController@admitirAspirante')->name('admitirAspirante')->middleware('auth');
 	Route::get('/listarAspirantes/', 'AdmisionesController@listarAspirantes')->name('listarAspirantes')->middleware('auth');
 	Route::auth();
-
 });
 
 Route::group(['middleware' => 'web'], function () {

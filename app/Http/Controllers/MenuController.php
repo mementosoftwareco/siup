@@ -47,7 +47,7 @@ class MenuController extends Controller
 		if ( $perfil === 'Admisiones' )
          return View::make('menus.admisiones');
 	 
-		if ( $perfil === 'Lider Comercial' )
+		if ( $perfil === 'Líder Comercial' )
          return View::make('menus.liderComercial');
 	}
 

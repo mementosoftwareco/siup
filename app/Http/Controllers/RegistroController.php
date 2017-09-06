@@ -39,6 +39,15 @@ class RegistroController extends Controller
 			->with('user', $user);
 			
 	}
+	
+	public function prepararEliminarRegistro($id)
+	{
+		// get all the perfiles
+		$user = User::find($id);		
+		return View::make('auth.delete')
+			->with('user', $user);
+	}
+	
 
 	
 	
