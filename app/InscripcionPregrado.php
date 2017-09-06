@@ -2,9 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 
-class InscripcionPregrado
+
+class InscripcionPregrado extends Model
 {
+	
+	protected $dates = ['fechaNacimiento'];
+	
     public $idProcesoAdmision;
 	public $tipoIdentificacion;
 	public $numeroIdentificacion;
@@ -66,4 +71,5 @@ class InscripcionPregrado
 	public $ciudadPregrado;
 	public $fechaFinPregrado;
 	
+		
 }
