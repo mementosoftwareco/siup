@@ -83,3 +83,9 @@ insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Te
 insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('He sacado buenas calificaciones porque le caigo bien a mis maestros','N/A',2);
 insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Los logros que he tenido en mi vida se deben a la casualidad','N/A',2);
 insert into preguntas (texto_pregunta, sugerencia, id_tipo_pregunta) values ('Lo que he logrado en mi vida ha sido porque así tenía que suceder','N/A',2);
+
+--Agregar Captcha al proyecto:
+
+Ejcutar el comando:
+
+composer require captcha-com/laravel-captcha:"4.*"

@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "yajra/laravel-oci8": "5.2.*",
 		"laravelcollective/html": "5.2.*",
-		"anchu/ftp": "2.0.*"
+		"anchu/ftp": "2.0.*",
+        "captcha-com/laravel-captcha": "4.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
