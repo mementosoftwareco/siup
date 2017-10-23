@@ -10,6 +10,8 @@ use App\Persona;
 use App\Inscripcion;
 use App\ProcesoAdmision;
 use App\EstadosProcesoAdmisionEnum;
+use App\SiupProgramas;
+use App\VParametros;
 use Mail;
 use Carbon\Carbon;
 use App\HistoricosProcesoAdmision;
@@ -28,7 +30,10 @@ class PreinscripcionController extends Controller
      */
     public function index(Request $request)
     {
-        return view('preinscripcion.index');
+        $progs = SiupProgramas::where('activo', '=', 'Y')->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+		$tiposDocId = VParametros::where('tabla', '=', 'TIPO_DE_IDENTIFICACION')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		
+		return view('preinscripcion.index')->with(compact('progs', 'tiposDocId'));
     }
 	
 	/**

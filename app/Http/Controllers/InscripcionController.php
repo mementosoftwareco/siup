@@ -19,6 +19,8 @@ use App\HistoricosProcesoAdmision;
 use App\Departamento;
 use App\Municipio;
 use App\CentroPoblado;
+use App\SiupProgramas;
+use App\VParametros;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
@@ -227,7 +229,16 @@ class InscripcionController extends Controller
 		
 		$ciudadesTotal = Municipio::all('nombre', 'codigo')->sortBy('nombre')->pluck('nombre', 'codigo');
 		
-		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal'));
+		//Cargando las listas de tipos de documentos, programas, 
+		$progs = SiupProgramas::where('activo', '=', 'Y')->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+		$tiposDocId = VParametros::where('tabla', '=', 'TIPO_DE_IDENTIFICACION')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoEstadosCiviles = VParametros::where('tabla', '=', 'ESTADO_CIVIL')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoGeneros = VParametros::where('tabla', '=', 'GENERO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoNivelEdu = VParametros::where('tabla', '=', 'NIVEL_EDUCATIVO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco'));
         
     }
 	
