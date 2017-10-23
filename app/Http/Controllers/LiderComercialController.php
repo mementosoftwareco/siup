@@ -74,7 +74,7 @@ class LiderComercialController extends Controller
     {
 		
 		$idProcesoAdmision = $request->idProceso;
-		echo $idProcesoAdmision;
+		//echo $idProcesoAdmision;
 		$comentarios = $request->comentariosAprobacion;
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::ValidadoLiderComercial, $comentarios, $idProcesoAdmision);
@@ -89,11 +89,13 @@ class LiderComercialController extends Controller
 		}
 		
 		//buscar el proceso por id
+		$procesoAdmon = ProcesoAdmision::findOrFail($idProcesoAdmision);
 		
 		if($validadoFacultad == true){
+			HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::Validado, 'Estudiante con validación comercial y de facultad', $idProcesoAdmon);
 			$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::Validado;
 			$procesoAdmon->save();
-			HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PendienteValidacionAdmision, $comentarios, $idProcesoAdmision);
+			
 		}
 
 

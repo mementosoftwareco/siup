@@ -14,7 +14,7 @@
                     <!-- Display Validation Errors -->
                     @include('common.errors')
 				
-				<form action="{{ url('/buscarAspirante') }}" method="GET" class="form-horizontal">					
+				<form action="{{ url('/lc.buscarAspirante') }}" method="GET" class="form-horizontal">					
 					{{ csrf_field() }}
 
 					<div class="form-group">
@@ -48,7 +48,7 @@
             @if (count($procesosAdmon) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Inscripciones Validadas
+                        Inscripciones Pendientes
                     </div>
 					
 					
@@ -80,82 +80,194 @@
 										
 										<td class="table-text"><div>{{ $procesoAdmon->tipoProcesoAdmision == null ? 'viene nulo' : $procesoAdmon->tipoProcesoAdmision->nombre }}</div></td>
 
-										<td class="table-text"><div>{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</div></td>
+										<td class="table-text"><div><span id="nombre_programa">{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}</span></div></td>
 											
 									   <!-- Continuar inscripción Button -->
 									   
 									   <td>
+									   <form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
+												{{ csrf_field() }}
+
+												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+													<i class="fa fa-btn fa-view"></i>Inscripción
+												</button>
+											</form>
+											<br>
+											<form action="{{url('prepararCargaDocumentos').'/'. urlencode($procesoAdmon->id_proceso_admon) }}" method="GET">
+													{{ csrf_field() }}
+												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+													<i class="fa fa-btn fa-upload"></i>Documentos
+												</button>
+											</form>
+											
+										
+										
+										
+											
+											<br>
 											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST" target="_blank">
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-edit"></i>Histórico
+													<i class="fa fa-btn fa-view"></i>Histórico
 												</button>
 											</form>
 										</td>
 										
-                                        
-										
-									
-											
-											<td>
-												<form action="{{url('admitirAspirante/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
-													{{ csrf_field() }}
-
-													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-edit"></i>Admitir
-													</button>
-												</form>
-											</td>
-									
+										<td>
 										
 										
-										
-										
-										
-										<?php if($procesoAdmon->id_usuario != null && $procesoAdmon->id_usuario == Auth::user()->id && $procesoAdmon->estadoProceso->id_estado==EstadosProcesoAdmisionEnum::PreInscrito) {?>
+										<?php if($procesoAdmon->estadoProceso->id_estado==EstadosProcesoAdmisionEnum::Validado) {?>
 											
 										
 											<td>
-												<form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
-													{{ csrf_field() }}
-
-													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-edit"></i>Inscripción
-													</button>
-												</form>
+												<button 
+												   type="button" 
+												   class="btn btn-danger" 
+												   data-toggle="modal"
+												   data-id="{{ $procesoAdmon->id_proceso_admon }}"
+												   data-nombre_programa="{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}"
+												   data-target="#aprobarModal">
+												  <i class="fa fa-btn fa-edit"></i>Aprobar
+												</button>
+											<br>
+											<br>
+												<button 
+												   type="button" 
+												   class="btn btn-danger" 
+												   data-toggle="modal"
+												   data-id="{{ $procesoAdmon->id_proceso_admon }}"
+												   data-nombre_programa="{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}"
+												   data-target="#rechazarModal">
+												  <i class="fa fa-btn fa-edit"></i>Rechazar
+												</button>
 											</td>
-											<!-- Cargar documentos Button -->
-											<td>
-												<form action="{{url('prepararCargaDocumentos').'/'. urlencode($procesoAdmon->id_proceso_admon) }}" method="GET">
-													{{ csrf_field() }}
-
-													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-upload"></i>Documentos
-													</button>
-												</form>
-											</td>
-											
-											
-											<td>
-												<form action="{{url('enviarValidacionComercial/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
-													{{ csrf_field() }}
-
-													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-upload"></i>Enviar a Validación
-													</button>
-												</form>
-											</td>
-											
-											
 											
 										<?php } ?>
 									
-										
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+						
+						<script>
+							$(function() {
+								$('#aprobarModal').on("show.bs.modal", function (e) {
+									 $("#fav-programa").html($(e.relatedTarget).data('nombre_programa'));
+									 $("#idProceso").val($(e.relatedTarget).data('id'));
+								});
+							});
+							
+							$(function() {
+								$('#rechazarModal').on("show.bs.modal", function (e) {
+									 $("#fav-programa-r").html($(e.relatedTarget).data('nombre_programa'));
+									 $("#idProcesoR").val($(e.relatedTarget).data('id'));
+								});
+							});
+						</script>
+						
+						<div class="modal fade" id="aprobarModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="aprobarModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" 
+								  data-dismiss="modal" 
+								  aria-label="Close">
+								  <span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" 
+								id="aprobarModalLabel">Vas a aprobar la Admisión</h4>
+							  </div>
+							  <div class="modal-body">
+								<p>
+								Por favor agrega un comentario para la aprobación de esta admisión al programa
+								<b><span id="fav-programa">Programa</span></b> 
+								
+								</p>
+							  </div>
+							  <div class="modal-footer">
+							  
+							  <form action="{{url('admitirAspirante/')}}" method="POST">
+													{{ csrf_field() }}
+													
+									{{ Form::hidden('idProceso', null,  array('id' => 'idProceso')) }}
+									<div class="form-group">
+										<div class="col-sm-6">
+											<input type="text" name="comentariosAprobacion" id="comentariosAprobacion" class="form-control" value="">
+										</div>
+									</div>
+									<br>
+									<br>
+									<br>
+									<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-6">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>   
+									<span class="pull-right">
+										<button type="submit" id="edit-process-btn" class="btn btn-danger">
+											<i class="fa fa-btn fa-edit"></i>Aprobar
+										</button>
+									</span>
+									</div>
+									</div>
+								</form>
+								
+							  </div>
+							</div>
+						  </div>
+						</div>
+						
+						<div class="modal fade" id="rechazarModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="rechazarModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" 
+								  data-dismiss="modal" 
+								  aria-label="Close">
+								  <span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" 
+								id="rechazarModalLabel">Vas a rechazar la Inscripcion</h4>
+							  </div>
+							  <div class="modal-body">
+								<p>
+								Por favor agrega un comentario para el rechazo de esta admisión al programa
+								<b><span id="fav-programa-r">Programa</span></b> 
+								
+								</p>
+							  </div>
+							  <div class="modal-footer">
+							  
+							  <form action="{{url('rechazarAspirante/')}}" method="POST">
+													{{ csrf_field() }}
+													
+									{{ Form::hidden('idProcesoR', null,  array('id' => 'idProcesoR')) }}
+									<div class="form-group">
+										<div class="col-sm-6">
+											<input type="text" name="comentariosRechazo" id="comentariosRechazo" class="form-control" value="">
+										</div>
+									</div>
+									<br>
+									<br>
+									<br>
+									<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-6">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>   
+									<span class="pull-right">
+										<button type="submit" id="edit-process-btn" class="btn btn-danger">
+											<i class="fa fa-btn fa-edit"></i>Rechazar
+										</button>
+									</span>
+									</div>
+									</div>
+								</form>
+								
+							  </div>
+							</div>
+						  </div>
+						</div>
+						
                     </div>
                 </div>
             @endif

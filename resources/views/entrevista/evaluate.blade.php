@@ -825,7 +825,10 @@
 <br/>
 
 
-                       <td>
+                       
+                    {{ Form::close() }}
+                </div>
+				<td>
 							<form action="{{url('aprobarEntrevista/' . $entrevistaViewModel->idProcesoAdmision)}}" method="POST">
 								{{ csrf_field() }}
 
@@ -834,8 +837,7 @@
 								</button>
 							</form>
 						</td>
-                    {{ Form::close() }}
-                </div>
+				
             </div>
             
         </div>
