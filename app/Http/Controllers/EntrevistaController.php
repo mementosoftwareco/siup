@@ -187,17 +187,17 @@ class EntrevistaController extends Controller
 		
 		//buscar el proceso por id
 		
+		$procesoAdmon = ProcesoAdmision::findOrFail($idProcesoAdmon);
+		echo $validadoComercial;
+		
 		if($validadoComercial == true){
+			HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::Validado, 'Estudiante con validación comercial y de facultad', $idProcesoAdmon);
 			$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::Validado;
 			$procesoAdmon->save();
+			
 		}
 		
-		$idEstadoProceso = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
-		$procesosAdmon = ProcesoAdmision::where('id_estado', '=', $idEstadoProceso)->get();
-		
-        return view('entrevista.list', [
-            'procesosAdmon' => $procesosAdmon,
-        ]);
+		return redirect('/menu');
 			
 		
     }
@@ -286,7 +286,7 @@ class EntrevistaController extends Controller
 		//$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
         $procesoAdmon->save();
 		
-        return redirect('/menu');
+        return redirect('/home');
     }
 	
 	private function guardarDetalleEntrevista($idEntrevista, $idPregunta, $nombreCampo, Request $request){

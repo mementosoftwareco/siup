@@ -107,7 +107,7 @@ class PreinscripcionController extends Controller
 		$proceso->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
         $id_proceso = $proceso->save();
 		
-		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscrito, 'Preinscripción', $proceso->id_proceso_admon);
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscrito, 'Formulario de Preinscripción diligenciado', $proceso->id_proceso_admon);
 				
 		$this->enviarCorreoBienvenida($inscripcion, $persona, $proceso);
 		

@@ -100,18 +100,12 @@
 												</button>
 											</form>
 											
-										</td>
 										
-										<td>
-											<form action="{{url('ver.entrevista/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
-												{{ csrf_field() }}
-
-												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-view"></i>Entrevista
-												</button>
-											</form>
+										
+										
+											
 											<br>
-											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
+											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST" target="_blank">
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
@@ -121,8 +115,7 @@
 										</td>
 										
 										<td>
-											
-										</td>
+										
 										
 										<?php if($procesoAdmon->estadoProceso->id_estado==EstadosProcesoAdmisionEnum::Inscrito) {?>
 											

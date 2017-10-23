@@ -44,6 +44,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	//Rutas para administración de perfiles
+	
 	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil')->middleware('auth');
     Route::post('/guardarPerfil', 'PerfilController@guardarPerfil')->middleware('auth');
 	Route::get('/editarPerfil/{id}', ['uses' =>'PerfilController@editarPerfil'])->name('editarPerfil')->middleware('auth');
@@ -74,12 +75,15 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico')->middleware('auth');
 	
 	
+
 	Route::get('/prepararCargaDocumentos/{idProceso}', 'DocumentosController@prepararCargaDocumentos')->name('prepararCargaDocumentos')->middleware('auth');
 	Route::get('/prepararCargaDocumentosP/{idProceso}', 'DocumentosController@prepararCargaDocumentosP')->name('prepararCargaDocumentosP');
 	Route::post('/cargarDocumentos', 'DocumentosController@cargarDocumentos')->name('cargarDocumentos');
+
 	Route::get('/mostrarDocumento/{idCiphered}', ['uses' =>'DocumentosController@mostrarDocumento']) ->name('mostrarDocumento');
 
 	
+
 	//rutas para administració® ¤e registros
 	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro');	
 	Route::post('/guardarRegistro', 'RegistroController@guardarRegistro');		
@@ -90,14 +94,18 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	//Rutas para entrevista
+
 	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@indexCiphered');
 	Route::get('/ver.entrevista/{procesoAdmon}', 'EntrevistaController@index')->middleware('auth');
 	Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista')->middleware('auth');
 	Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista')->middleware('auth');
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
+
 	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas')->middleware('auth');
 	
-	//Rutas para lider
+
+		//Rutas para lider
+
 	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos')->middleware('auth');
 	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index')->middleware('auth');
 	Route::get('/lc.buscarAspirante/', 'LiderComercialController@buscarAspirante')->name('lc.buscarAspirante')->middleware('auth');
