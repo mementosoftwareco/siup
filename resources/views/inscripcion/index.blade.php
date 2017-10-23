@@ -55,7 +55,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha expedición documento</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaExpDocumento', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
+								{{ Form::date('fechaExpDocumento', $inscripcionPregrado->fechaExpDocumento == null ? null : $inscripcionPregrado->fechaExpDocumento->format('Y-m-d'), ['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -118,7 +118,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha nacimiento</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaNacimiento', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
+								{{ Form::date('fechaNacimiento', $inscripcionPregrado->fechaNacimiento == null ? null : $inscripcionPregrado->fechaNacimiento->format('Y-m-d'), ['class'=>'form-control']) }}
                             </div>
                         </div>
 						
@@ -581,7 +581,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha finalización</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaFinHomologacion', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
+								{{ Form::date('fechaFinHomologacion', $inscripcionPregrado->fechaFinHomologacion == null ? null : $inscripcionPregrado->fechaFinHomologacion->format('Y-m-d'), ['class'=>'form-control']) }}
                             </div>
                         </div>
 					</div>	
@@ -633,7 +633,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Fecha finalización</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaFinPregrado', \Carbon\Carbon::now(), ['class'=>'form-control']) }}
+								{{ Form::date('fechaFinPregrado', $inscripcionPregrado->fechaFinPregrado == null ? null : $inscripcionPregrado->fechaFinPregrado->format('Y-m-d'), ['class'=>'form-control']) }}
                             </div>
                         </div>
 					</div>

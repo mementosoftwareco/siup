@@ -14,6 +14,7 @@ use Mail;
 use Carbon\Carbon;
 use App\HistoricosProcesoAdmision;
 use Auth;
+use Validator;
 
 
 class PreinscripcionController extends Controller
@@ -38,8 +39,8 @@ class PreinscripcionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'tipoIdentificacion' => 'required|max:10',
+		$validator = Validator::make($request->all(), [
+			'tipoIdentificacion' => 'required|max:10',
 			'numeroIdentificacion' => 'required|max:50',
 			'nombres' => 'required|max:100',
 			'apellidos' => 'required|max:100',
@@ -49,12 +50,26 @@ class PreinscripcionController extends Controller
 			'tipoEdu' => 'required|max:10',
 			'programa' => 'required|max:10',
 			'termYCond' => 'required|max:10',
-        ]);
-/*
-        $request->user()->tasks()->create([
-            'name' => $request->name,
-        ]);
-*/
+			'CaptchaCode' => 'required|max:4',
+			
+		]);
+		//*
+		if ($validator->fails()) {
+            return redirect('/preinscripcion')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+		
+		$code = $request->input('CaptchaCode');
+		$isHuman = captcha_validate($code);
+
+		if (! $isHuman) {
+			$validator->errors()->add('CaptchaCode', 'Código de verificación inválido intenta de nuevo');
+			 return redirect('/preinscripcion')
+                        ->withErrors($validator)
+                        ->withInput();
+		} 
+		
 		//Guardando la información de la persona
 		$persona = Persona::find($request->numeroIdentificacion);
 		

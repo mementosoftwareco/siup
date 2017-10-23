@@ -133,6 +133,18 @@
 							  <input type="radio" name="termYCond" value="0"> No acepto <br/>
 							</div>
                         </div>
+						
+						<!-- Terminos y Condiciones -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label"></label>
+
+                            <div class="col-sm-6">
+							  {!! captcha_image_html('ExampleCaptcha') !!}
+							  <input type="text" id="CaptchaCode" name="CaptchaCode">
+							</div>
+                        </div>
+						
+						
 
                         <!-- Preinscripcion Button -->
                         <div class="form-group">
