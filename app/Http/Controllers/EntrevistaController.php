@@ -20,6 +20,8 @@ use App\Entrevista;
 use App\EntrevistaViewModel;
 use App\DetalleEntrevista;
 use App\Pregunta;
+use App\SiupProgramas;
+use App\VParametros;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
@@ -104,7 +106,7 @@ class EntrevistaController extends Controller
 		
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
 		$entrevistaViewModel->modalidad = $inscripcion->id_modalidad;
-		$entrevistaViewModel->programa = $inscripcion->nombre_programa;
+		$entrevistaViewModel->programa = $inscripcion->id_programa;
 						
 		$entrevista = Entrevista::where('id_proceso_admon', '=', $idProcesoAdmision)->first();
 		
@@ -123,7 +125,11 @@ class EntrevistaController extends Controller
 			}
 		
 		}
-		return View::make('entrevista.index')->with(compact('entrevistaViewModel'));
+		
+		$progs = SiupProgramas::where('activo', '=', 'Y')->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+		$tiposDocId = VParametros::where('tabla', '=', 'TIPO_DE_IDENTIFICACION')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		
+		return View::make('entrevista.index')->with(compact('entrevistaViewModel','progs','tiposDocId'));
         
     }
 	

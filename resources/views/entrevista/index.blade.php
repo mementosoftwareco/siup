@@ -31,13 +31,7 @@
 							
 
                             <div class="col-sm-6">
-							{{ Form::select('tipoIdentificacion', ['1' => 'Cédula de ciudadanía',
-																  '2' => 'Cédula de extranjería',
-																  '3' => 'Pasaporte',
-																  '4' => 'Tarjeta de identidad'
-																  ], null, ['class'=>'form-control','disabled'])}}
-							
-							
+							{{Form::select('tipoIdentificacion', $tiposDocId, null, ['class'=>'form-control','disabled'])}}
                             </div>
                         </div>
 						
@@ -97,21 +91,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Programa</label>
 
                             <div class="col-sm-6">
-								{{Form::select('programa', ['11001' => 'Administración Logística',
-														  '11002' => 'Administración y Finanzas',
-														  '11003' => 'Contaduría Pública Virtual',
-														  '11004' => 'Contaduría Pública',
-														  '11005' => 'Fisioterapia',
-														  '11006' => 'Fonoaudiología',
-														  '11007' => 'Licenciatura en Educación Especial Virtual',
-														  '11008' => 'Licenciatura en Educación Especial',
-														  '11009' => 'Licenciatura en Pedagogía Infantil',
-														  '11010' => 'Marketing y Negocios Internacionales',
-														  '11011' => 'Psicología Virtual',
-														  '11012' => 'Psicología',
-														  '11013' => 'Técnico Profesional en Logística',
-														  '11014' => 'Tecnología en Logística'
-														  ], null, ['class'=>'form-control', 'disabled'])}}
+								{{Form::select('programa', $progs, null, ['class'=>'form-control', 'disabled'])}}
                             </div>
                         </div>
 						
