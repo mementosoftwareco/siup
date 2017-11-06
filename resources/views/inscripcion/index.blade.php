@@ -170,9 +170,10 @@
 
                             <div class="col-sm-6">
 							{{Form::select('convenio', ['1' => 'No aplica',
-														  '2' => 'Ser pilo paga',
-														  '3' => 'icetex..otro'
-														  ], null, ['class'=>'form-control'])}}
+														'2' => 'Ser pilo paga',
+														'3' => 'Icetex',
+														'4' => 'Otro'
+														], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						

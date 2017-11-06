@@ -9,6 +9,8 @@ use Carbon\Carbon;
 class Persona extends Model
 {
     protected $primaryKey = 'id_persona';
+	
+	public $incrementing = false;
 	//
 	protected $table = 'personas';
 	

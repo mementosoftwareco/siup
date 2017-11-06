@@ -157,7 +157,6 @@ class InscripcionController extends Controller
 		$inscripcionPregrado->email = $inscripcion->email;
 		$inscripcionPregrado->modalidad = $inscripcion->id_modalidad;
 		$inscripcionPregrado->programa = $inscripcion->id_programa;
-		$inscripcionPregrado->programa = $inscripcion->nombre_programa;
 		$inscripcionPregrado->termYCond = $inscripcion->acepta_terms_cond;
 		$inscripcionPregrado->procedencia = $inscripcion->procedencia;
 		$inscripcionPregrado->estCivil = $inscripcion->id_estado_civil;
