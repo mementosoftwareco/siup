@@ -162,6 +162,15 @@ return [
 		*Captcha service provider
 		*/
 		LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
+		
+		/*
+		*Breadcrumbs service provider
+		*/
+		DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+		
+		
+		
+		
     ],
 
     /*
@@ -209,6 +218,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 		'Form' 		=> Collective\Html\FormFacade::class,
 		'Html' 		=> Collective\Html\HtmlFacade::class,
+		'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
     ],
 

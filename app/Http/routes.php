@@ -26,7 +26,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
         return view('welcome');
-    })->middleware('guest');
+    })->name('/')->middleware('guest');
 
 	/*
 	// Authentication Routes...
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	//Rutas para administración de perfiles
 	
-	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil')->middleware('auth');
+	Route::get('/nuevoPerfil', 'PerfilController@nuevoPerfil')->name('nuevoPerfil')->middleware('auth');
     Route::post('/guardarPerfil', 'PerfilController@guardarPerfil')->middleware('auth');
 	Route::get('/editarPerfil/{id}', ['uses' =>'PerfilController@editarPerfil'])->name('editarPerfil')->middleware('auth');
 	Route::post('/actualizarPerfil/{id}', ['uses' =>'PerfilController@actualizarPerfil'])->name('actualizarPerfil')->middleware('auth');
@@ -57,7 +57,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/task', 'TaskController@store');
     Route::delete('/task/{task}', 'TaskController@destroy');*/
 	
-	Route::get('/preinscripcion', 'PreinscripcionController@index');
+	Route::get('/preinscripcion', 'PreinscripcionController@index')->name('preinscripcion');
+	Route::get('/terminos', 'PreinscripcionController@terms')->name('terminos');
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
@@ -85,7 +86,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 
 	//rutas para administració® ¤e registros
-	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro');	
+	Route::get('/nuevoRegistro', 'RegistroController@nuevoRegistro')->name('nuevoRegistro');	
 	Route::post('/guardarRegistro', 'RegistroController@guardarRegistro');		
 	Route::get('/editarRegistro/{id}', ['uses' =>'RegistroController@editarRegistro']) ->name('editarRegistro');
 	Route::post('/actualizarRegistro/{id}', ['uses' =>'RegistroController@actualizarRegistro'])->name('actualizarRegistro');

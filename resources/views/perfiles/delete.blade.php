@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
+		{!! Breadcrumbs::render('eliminarPerfil', $perfil) !!}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Eliminar Perfil
@@ -41,7 +42,7 @@
 						<div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">						
 								{!! Form::submit('Eliminar', ['class' => 'btn btn-default']) !!}
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
 							</div>	
 						</div>
 

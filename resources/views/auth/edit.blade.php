@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+		{!! Breadcrumbs::render('editarUsuario', $user) !!}
             <div class="panel panel-default">
                 <div class="panel-heading">Editar Usuario</div>
                 <div class="panel-body">
@@ -26,9 +27,9 @@
 						<div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">						
 								{!! Form::submit('Actualizar', ['class' => 'btn btn-default']) !!}
-								<button type="submit" class="btn btn-default" onClick="javascript:window.history.back();">
+								<!--<button type="submit" class="btn btn-default" onClick="javascript:window.history.back();">
                                     <i></i>Cancelar
-                                </button>
+                                </button>-->
 							</div>	
 						</div>
 

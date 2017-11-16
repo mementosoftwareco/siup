@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
+		{!! Breadcrumbs::render('perfil') !!}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Nuevo Perfil
@@ -41,7 +42,7 @@
                                     <i class="fa fa-btn fa-plus"></i>Crear
                                 </button>
 								
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								<!-- <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
 								 
                             </div>
 							
@@ -65,6 +66,11 @@
                                 <th>Perfil</th>
                                 <th>&nbsp;</th>
                             </thead>-->
+							<thead>
+                           		<th>Nombre</th>
+								<th>Descripción</th>								
+                                <th>&nbsp;</th>
+                            </thead>
                             <tbody>
                                 @foreach ($perfiles as $perfil)
                                     <tr>

@@ -1,8 +1,15 @@
 @extends('layouts.app')
 
+<script> 
+function abrir(url) { 
+open(url,'','top=300,left=300,width=500,height=200') ; 
+} 
+</script> 
+
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
+		{!! Breadcrumbs::render('preinscripcion') !!}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Pre-inscribete en la Iberoamericana
@@ -61,7 +68,7 @@
 						
 						<!-- Telefono -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Telefono</label>
+                            <label for="task-name" class="col-sm-3 control-label">Teléfono</label>
 
                             <div class="col-sm-6">
                                 <input type="text" name="telefono" id="preinscripcion-telefono" class="form-control" value="{{ old('telefono') }}">
@@ -126,8 +133,10 @@
 						
 						<!-- Terminos y Condiciones -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Terminos y Condiciones</label>
-
+                            <!--<label for="task-name" class="col-sm-3 control-label">Terminos y Condiciones</label>-->
+							<a href="javascript:abrir('terminos')" class="col-sm-3 control-label">Términos y Condiciones</a> 
+					
+							
                             <div class="col-sm-6">
 							  <input type="radio" name="termYCond" value="1" > Acepto <br/>
 							  <input type="radio" name="termYCond" value="0"> No acepto <br/>
@@ -152,7 +161,7 @@
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Pre inscribirme
                                 </button>
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								<!-- <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
                             </div>
                         </div>
 						

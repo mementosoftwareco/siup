@@ -31,6 +31,15 @@ class PreinscripcionController extends Controller
         return view('preinscripcion.index');
     }
 	
+	
+	
+	
+	public function terms(Request $request)
+    {
+        return view('preinscripcion.terminos');
+    }
+	
+	
 	/**
      * Create a preinscripcion.
      *

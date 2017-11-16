@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+		{!! Breadcrumbs::render('usuario') !!}
             <div class="panel panel-default">
                 <div class="panel-heading">Registro de Nuevo Usuario</div>
                 <div class="panel-body">
@@ -95,7 +96,7 @@
                                     <i class="fa fa-btn fa-user"></i>Registrar
                                 </button>
 								
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
                             </div>
                         </div>
                     </form>
@@ -112,10 +113,12 @@
 
                     <div class="panel-body">
                         <table class="table table-striped task-table">
-                            <!--<thead>
-                                <th>Perfil</th>
+                            <thead>
+                           		<th>Nombre</th>
+								<th>Email</th>		
+								<th>Perfil</th>									
                                 <th>&nbsp;</th>
-                            </thead>-->
+                            </thead>
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
