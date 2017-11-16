@@ -30,12 +30,7 @@ open(url,'','top=300,left=300,width=500,height=200') ;
                             <label for="task-name" class="col-sm-3 control-label">Tipo de identificación</label>
 
                             <div class="col-sm-6">
-								<select name="tipoIdentificacion" id="preinscripcion-tipoId" class="form-control">
-									<option value="1">Cédula de ciudadanía</option>
-									<option value="2">Cédula de extranjería</option>
-									<option value="3">Pasaporte</option>
-									<option value="4">Tarjeta de identidad</option>
-								</select>
+								{{Form::select('tipoIdentificacion', $tiposDocId, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
                             </div>
                         </div>
 						
@@ -111,23 +106,8 @@ open(url,'','top=300,left=300,width=500,height=200') ;
                             <label for="task-name" class="col-sm-3 control-label">Programa</label>
 
                             <div class="col-sm-6">
-								<select name="programa" id="preinscripcion-programa" class="form-control">
-									<option value="">Seleccione..</option>
-									<option value="11001">Administración Logística</option>
-									<option value="11002">Administración y Finanzas</option>
-									<option value="11003">Contaduría Pública Virtual</option>
-									<option value="11004">Contaduría Pública</option>
-									<option value="11005">Fisioterapia</option>
-									<option value="11006">Fonoaudiología</option>
-									<option value="11007">Licenciatura en Educación Especial Virtual</option>
-									<option value="11008">Licenciatura en Educación Especial</option>
-									<option value="11009">Licenciatura en Pedagogía Infantil</option>
-									<option value="11010">Marketing y Negocios Internacionales</option>
-									<option value="11011">Psicología Virtual</option>
-									<option value="11012">Psicología</option>
-									<option value="11013">Técnico Profesional en Logística</option>
-									<option value="11014">Tecnología en Logística</option>
-								</select>
+								{{Form::select('programa', $progs, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+								
                             </div>
                         </div>
 						

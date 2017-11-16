@@ -29,13 +29,7 @@
 							
 
                             <div class="col-sm-6">
-							{{ Form::select('tipoIdentificacion', ['1' => 'Cédula de ciudadanía',
-																  '2' => 'Cédula de extranjería',
-																  '3' => 'Pasaporte',
-																  '4' => 'Tarjeta de identidad'
-																  ], null, ['class'=>'form-control'])}}
-							
-							
+							{{Form::select('tipoIdentificacion', $tiposDocId, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
                             </div>
                         </div>
 						
@@ -127,9 +121,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Género</label>
 
                             <div class="col-sm-6">
-							{{Form::select('genero', ['FEMENINO' => 'Femenino',
-													'MASCULINO' => 'Masculino'
-													], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('genero', $listadoGeneros, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
                             </div>
                         </div>
 						
@@ -138,13 +130,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Grupo étnico</label>
 
                             <div class="col-sm-6">
-							{{Form::select('grupoEtnico', ['5' => 'No aplica',
-														  '1' => 'Afrocolombiano o Afrodescendiente',
-														  '2' => 'Pueblos indígenas',
-														  '3' => 'Raizales',
-														  '4' => 'Rom'
-														  ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
-							
+								{{Form::select('grupoEtnico', $listadoTipoEtnia, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						
@@ -165,10 +151,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Estado civil</label>
 
                             <div class="col-sm-6">
-							{{Form::select('estCivil', ['1' => 'Soltero',
-														  '2' => 'Casado'
-														  ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
-							
+							{{Form::select('estCivil', $listadoEstadosCiviles, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
                             </div>
                         </div>
 						
@@ -187,9 +170,10 @@
 
                             <div class="col-sm-6">
 							{{Form::select('convenio', ['1' => 'No aplica',
-														  '2' => 'Ser pilo paga',
-														  '3' => 'icetex..otro'
-														  ], null, ['class'=>'form-control'])}}
+														'2' => 'Ser pilo paga',
+														'3' => 'Icetex',
+														'4' => 'Otro'
+														], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 						
@@ -208,21 +192,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Programa</label>
 
                             <div class="col-sm-6">
-								{{Form::select('programa', ['11001' => 'Administración Logística',
-														  '11002' => 'Administración y Finanzas',
-														  '11003' => 'Contaduría Pública Virtual',
-														  '11004' => 'Contaduría Pública',
-														  '11005' => 'Fisioterapia',
-														  '11006' => 'Fonoaudiología',
-														  '11007' => 'Licenciatura en Educación Especial Virtual',
-														  '11008' => 'Licenciatura en Educación Especial',
-														  '11009' => 'Licenciatura en Pedagogía Infantil',
-														  '11010' => 'Marketing y Negocios Internacionales',
-														  '11011' => 'Psicología Virtual',
-														  '11012' => 'Psicología',
-														  '11013' => 'Técnico Profesional en Logística',
-														  '11014' => 'Tecnología en Logística'
-														  ], null, ['class'=>'form-control'])}}
+								{{Form::select('programa', $progs, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
                             </div>
                         </div>
 						
@@ -449,10 +419,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Parentesco</label>
 
                             <div class="col-sm-6">
-							{{Form::select('parentescoRef', ['1' => 'Familiar',
-														     '2' => 'Amigo'
-													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
-							
+							{{Form::select('parentescoRef', $listadoTipoParentesco, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
 							</div>
                         </div>
 					</div>	
