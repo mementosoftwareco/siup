@@ -301,3 +301,5 @@ Insert into siup_v_parametros_table (TABLA,CODIGO,DESCRIPCION) values ('TIPO_PAR
 Insert into siup_v_parametros_table (TABLA,CODIGO,DESCRIPCION) values ('TIPO_PARENTESCO','M','OTRO');
 Insert into siup_v_parametros_table (TABLA,CODIGO,DESCRIPCION) values ('TIPO_PARENTESCO','N','PADRE');
 Insert into siup_v_parametros_table (TABLA,CODIGO,DESCRIPCION) values ('TIPO_PARENTESCO','O','VECINO');
+
+--Comentario de prueba
