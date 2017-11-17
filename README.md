@@ -94,6 +94,10 @@ Ejecutar el comando
 
 php artisan vendor:publish
 
+--Agregar BreadCrumbs
+composer require davejamesmiller/laravel-breadcrumbs
+php artisan vendor:publish
+
 --Creando tablas para las vistas de parametros
 
 create table siup_programas_table (

@@ -14,10 +14,14 @@ use Validator;
 use Session;
 use Redirect;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Str;
 
 class RegistroController extends Controller
 {
-    public function nuevoRegistro()
+    use ResetsPasswords;
+	
+	public function nuevoRegistro()
 	{
 		$users = User::all();
 		$perfiles = Perfil::lists('nombre','id');
@@ -34,9 +38,36 @@ class RegistroController extends Controller
 	public function editarRegistro($id)
 	{
 		$user = User::find($id);
-	
+		$estadoUsuario = $user->state;
 		return View::make('auth.edit')
-			->with('user', $user);
+			->with(['user' => $user]);
+			
+	}
+	
+	/**
+	Acción para guardar los datos de un usuario actualizados
+	*/
+	public function actualizarRegistro($id, Request $request)
+	{
+		$user = User::find($id);
+		
+		$rules = array(
+			'name'       => 'required',
+			'state'=> 'required'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+				
+		if ($validator->fails()) {
+			return redirect('/editarRegistro/'.$id)
+				->withErrors($validator);
+		}
+		
+		$user->name = $request['name'];
+		$user->state = $request['state'];
+		
+		$user->save();
+	
+		return $this->nuevoRegistro();
 			
 	}
 	
@@ -56,7 +87,7 @@ class RegistroController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function guardarRegistro()
+	public function guardarRegistro(Request $request)
 	{
 		
 		
@@ -64,39 +95,42 @@ class RegistroController extends Controller
 		// read more on validation at http://laravel.com/docs/validation
 		$rules = array(
 			'name'       => 'required',
-			'email'      => 'required',
-			'contrasenia'       => 'required'
+			'email'      => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
 		
 		// process the login
-		/*if ($validator->fails()) {
-			return redirect('auth.register')
+		if ($validator->fails()) {
+			return redirect('/nuevoRegistro')
 				->withErrors($validator);
 				
-		} else {*/
+		}
+		
+			
+		$id_user = User::create([
+		'name' => Input::get('name'),
+		'email' => Input::get('email'),
+		'password' => bcrypt(Str::random(10)),
+		'state' => 'ACT',
+		'id_perfil' => Input::get('perfil'),
+		
+		]);
 		
 		
-			
-			$id_user = User::create([
-            'name' => Input::get('name'),
-            'email' => Input::get('email'),
-            'password' => bcrypt(Input::get('contrasenia')),
-			'state' => 'ACT',
-			'id_perfil' => Input::get('nombre'),
-			
-			]);
-			
-			
-			Session::flash('message', 'Usuario registrado correctamente');
+		Session::flash('message', 'Usuario registrado correctamente');
+	
+		return $this->sendResetLinkEmail($request);
 		
-			return redirect('/nuevoRegistro');			
+			//return redirect('/nuevoRegistro');
 			
 		//}
 	}
 	
-	
+	protected function getEmailSubject()
+    {
+        return property_exists($this, 'subject') ? $this->subject : 'Bienvenido a SIUP, Sistema de Inscripción universitaria de la IBERO';
+    }
 	
 	
 }
