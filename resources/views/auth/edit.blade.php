@@ -22,6 +22,16 @@
                             </div>
                         </div>
 						
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Estado</label>
+
+                            <div class="col-sm-6">
+							{{Form::select('state', ['ACT' => 'Activo',
+														  'INACT' => 'Inactivo'
+														  ], null, ['class'=>'form-control'])}}
+                            </div>
+                        </div>
+						
 						
 						
 						<div class="form-group">

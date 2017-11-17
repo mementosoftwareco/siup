@@ -30,6 +30,9 @@ class PasswordController extends Controller
         $this->middleware('guest');
     }
 	
-	
+	protected function getEmailSubject()
+    {
+        return property_exists($this, 'subject') ? $this->subject : 'Cambia tu contraseña en SIUP de la IBERO';
+    }
 	
 }
