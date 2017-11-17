@@ -153,6 +153,19 @@ open(url,'','top=300,left=300,width=500,height=200') ;
 								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
 								//console.log("entro a con nombre programa: " + nombreProgramaVar);
 							});
+							
+							$(':input[type="submit"]').prop('disabled', true);
+							
+							$("input[name='termYCond']:radio").change(function(){
+								if($(this).val() == '1')
+								{
+								  $(':input[type="submit"]').prop('disabled', false);
+								}
+								else if($(this).val() == '0')
+								{
+								  $(':input[type="submit"]').prop('disabled', true);
+								}
+							});
 
 						});
 						</script>
