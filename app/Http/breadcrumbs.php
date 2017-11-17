@@ -56,6 +56,23 @@ Breadcrumbs::register('editarUsuario', function($breadcrumbs, $user)
 });
 
 
+////////////////////Inscripción////////////////////////////
+
+Breadcrumbs::register('comercial', function($breadcrumbs)
+{
+    $breadcrumbs->push('Gesti&oacute;n Comercial', route('menu'));
+});
+
+
+////////////////////Administración de Perfiles////////////////////////////
+
+Breadcrumbs::register('formularioInscripcion', function($breadcrumbs)
+{
+    $breadcrumbs->parent('comercial');
+    $breadcrumbs->push('Formulario de Inscripci&oacute;n', route('inscripcion.list'));
+});
+
+
 
 
 

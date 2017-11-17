@@ -67,6 +67,24 @@ class PreinscripcionController extends Controller
 			'CaptchaCode' => 'required|max:4',
 			
 		]);
+		
+		$niceNames = array( 
+			'tipoIdentificacion' => 'Tipo de Identificación',
+			'numeroIdentificacion' => 'Número de Identificación',
+			'nombres' => 'Nombres',
+			'apellidos' => 'Apellidos',
+			'telefono' => 'Teléfono',
+			'celular' => 'Celular',
+			'email' => 'Email',
+			'tipoEdu' => 'Tipo de Educación',
+			'programa' => 'Programa',
+			'termYCond' => 'Términos y Condiciones',
+			'CaptchaCode' => 'Captcha',
+		);
+		
+		
+		$validator->setAttributeNames($niceNames); 
+		
 		//*
 		if ($validator->fails()) {
             return redirect('/preinscripcion')

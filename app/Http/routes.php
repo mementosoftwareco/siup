@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	
 	
-	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos')->middleware('auth');
+	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos')->name('inscripcion.list')->middleware('auth');
 	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index')->middleware('auth');
 	Route::post('/inscripcion/{procesoAdmon}', 'InscripcionController@store')->name('inscripcion')->middleware('auth');
 	Route::get('/buscarAspirante/', 'InscripcionController@buscarAspirante')->name('buscarAspirante')->middleware('auth');

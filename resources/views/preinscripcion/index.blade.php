@@ -36,7 +36,7 @@ open(url,'','top=300,left=300,width=500,height=200') ;
 						
 						<!-- Numero de identificacion -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Número de identificación</label>
+                            <label for="task-name" class="col-sm-3 control-label">Número de Identificación</label>
 
                             <div class="col-sm-6">
                                 <input type="text" name="numeroIdentificacion" id="preinscripcion-numeroId" class="form-control" value="{{ old('numeroIdentificacion') }}">
@@ -90,7 +90,7 @@ open(url,'','top=300,left=300,width=500,height=200') ;
 						
 						<!-- Tipo educacion -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Tipo de educación</label>
+                            <label for="task-name" class="col-sm-3 control-label">Tipo de Educación</label>
 
                             <div class="col-sm-6">
 							  <input type="radio" name="tipoEdu" value="1" > Pregrado <br/>

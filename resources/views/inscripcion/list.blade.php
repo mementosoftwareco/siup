@@ -7,6 +7,7 @@
         
 		<div class="col-sm-offset-0 col-sm-22">
             <div class="panel panel-default">
+			{!! Breadcrumbs::render('formularioInscripcion') !!}
                 <div class="panel-heading">
                     Buscar Aspirante
                 </div>
@@ -89,7 +90,7 @@
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger" >
-													<i class="fa fa-btn fa-edit"></i>Histórico
+													<i class="fa fa-book fa-fw"></i>Histórico
 												</button>
 											</form>
 										</td>
