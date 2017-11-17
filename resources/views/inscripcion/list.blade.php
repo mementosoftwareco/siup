@@ -90,7 +90,7 @@
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger" >
-													<i class="fa fa-book fa-fw"></i>Histórico
+													<i class="fa fa-btn fa"></i>Histórico
 												</button>
 											</form>
 										</td>
