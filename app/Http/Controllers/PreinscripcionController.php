@@ -17,11 +17,27 @@ use Carbon\Carbon;
 use App\HistoricosProcesoAdmision;
 use Auth;
 use Validator;
+use Response;
 
 
 class PreinscripcionController extends Controller
 {
-    //
+    
+	public function ajaxPrograma($idTipoPrograma){
+		$tipoPrograma = '';
+		if($idTipoPrograma == 1){
+			$tipoPrograma = 'PREGRADO';
+		}elseif($idTipoPrograma == 2){
+			$tipoPrograma = 'POSTGRADO';
+		}
+		elseif($idTipoPrograma == 3){
+			$tipoPrograma = 'EDUCACION CONTINUA';
+		}
+		$progs = SiupProgramas::where('activo', '=', 'Y')->where('tipo_programa', '=', $tipoPrograma)->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+		return Response::json($progs);
+    }
+	
+	//
 	/**
      * Display the preinscripcion page
      *
