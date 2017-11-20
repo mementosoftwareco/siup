@@ -106,13 +106,15 @@
 										
 											
 										<td>
-											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST" target="_blank">
-												{{ csrf_field() }}
-
-												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-history"></i>Histórico
-												</button>
-											</form>
+											
+											<button 
+												   type="button" 
+												   class="btn btn-danger" 
+												   data-toggle="modal"												   
+												   data-ruta-historico="{{ url('mostrarHistoricoGet/' . $procesoAdmon->id_proceso_admon) }}"
+												   data-target="#historicoModal">
+												  <i class="fa fa-btn fa-history"></i>Ver Histórico
+											</button>
 										</td>
 										
 									
@@ -165,7 +167,20 @@
 									 $("#idProcesoR").val($(e.relatedTarget).data('id'));
 								});
 							});
+							
+							$(function() {
+								$('#historicoModal').on("show.bs.modal", function (e) {
+									 
+									 $("#historicoModal").load($(e.relatedTarget).data('ruta-historico'));
+									 
+								});
+							});
 						</script>
+						
+						<div class="modal fade" id="historicoModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="historicoLabel">
+					</div>
 						
 						<div class="modal fade" id="aprobarModal" 
 							 tabindex="-1" role="dialog" 
