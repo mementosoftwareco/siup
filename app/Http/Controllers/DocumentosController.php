@@ -67,6 +67,23 @@ class DocumentosController extends Controller
 	}
 
 	public function prepararCargaDocumentosBackEnd($idProceso){
+		
+		$user = new User;
+		$perfil = $user->obtenerNombrePerfil();
+
+		if ( $perfil === 'Operador' || $perfil === 'Call Center' || $perfil === 'Comercial'){
+         $edicion=false;
+		 $breadcrumb='cargaDocumentos';
+	 	}
+		if ( $perfil === 'Líder Comercial' ){
+         $edicion=true;
+		 $breadcrumb='validacionCargaDocumentos';
+		}
+		
+		
+		
+		
+		
 		$proceso = ProcesoAdmision::find($idProceso);
 		if($proceso == null){
 			return  redirect('/');
@@ -101,7 +118,7 @@ class DocumentosController extends Controller
 		$inscripcion =Inscripcion::findOrFail($proceso -> id_inscripcion);
 
 		return View::make('documentos.index')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon)
-			->with('persona', $persona)->with('inscripcion', $inscripcion);
+			->with('persona', $persona)->with('inscripcion', $inscripcion), ->with('breadcrumb', $breadcrumb)->with('edicion', $edicion);
 	}	
 	
 	public function mostrarDocumento($idCiphered)

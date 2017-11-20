@@ -4,7 +4,7 @@
     <div class="container">
         <div class="col-sm-offset-0 col-sm-12">
           
-			{!! Breadcrumbs::render('cargaDocumentos', $idProceso) !!}
+			{!! Breadcrumbs::render('$breadcrumb', $idProceso) !!}
 			
 			 <!-- Current Tasks -->
             @if (count($documentosRequeridos) > 0)
@@ -60,7 +60,7 @@
 												
 												 <td class="table-text"><div>
 													<?php echo 
-														"<input type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
+														"<input disabled= \"".$edicion."\"    type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
 														
 														
 													?>
