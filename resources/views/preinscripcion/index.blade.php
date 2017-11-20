@@ -170,7 +170,7 @@ open(url,'','top=300,left=300,width=500,height=200') ;
 							$("input[name='tipoEdu']:radio").change(function(){
 								var tipoEduId = $(this).val();
 								if(tipoEduId) {
-									console.log("entro a log");
+									console.log("Se filtraran los programas por el tipo " + tipoEduId);
 									$.ajax({
 										url: '/ajax-programa/'+tipoEduId,
 										type:"GET",
