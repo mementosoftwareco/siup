@@ -83,6 +83,7 @@ class InscripcionController extends Controller
 		
 		$procesosAdmon = ProcesoAdmision::where('id_usuario', '=', Auth::user()->id)->get();
 		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscrito, 'El usuario: '.Auth::user()->name.' se ha asignado este proceso de admisión', $idProcesoAdmision);
 		
         return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,
