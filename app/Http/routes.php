@@ -60,7 +60,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/preinscripcion', 'PreinscripcionController@index')->name('preinscripcion');
 	Route::get('/terminos', 'PreinscripcionController@terms')->name('terminos');
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
-	
+	Route::get('ajax-programa/{idTipoPrograma}', 'PreinscripcionController@ajaxPrograma');
 	
 	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos')->name('inscripcion.list')->middleware('auth');
 	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index')->middleware('auth');
@@ -74,6 +74,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::get('/cargarMisProcesosAdmision/', 'HistoricoController@cargarMisProcesosAdmision')->name('cargarMisProcesosAdmision')->middleware('auth');
 	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico')->middleware('auth');
+	Route::get('/mostrarHistoricoGet/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico')->middleware('auth');
 	
 	
 

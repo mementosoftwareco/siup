@@ -86,13 +86,15 @@
 									   <!-- Continuar inscripción Button -->
 									   
 									   <td>
-											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST" target="_blank">
-												{{ csrf_field() }}
-
-												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger" >
-													<i class="fa fa-btn fa-history"></i>Histórico
-												</button>
-											</form>
+										
+											<button 
+												   type="button" 
+												   class="btn btn-danger" 
+												   data-toggle="modal"												   
+												   data-ruta-historico="{{ url('mostrarHistoricoGet/' . $procesoAdmon->id_proceso_admon) }}"
+												   data-target="#historicoModal">
+												  <i class="fa fa-btn fa-history"></i>Histórico
+											</button>
 										</td>
 										
                                         
@@ -104,6 +106,7 @@
 													{{ csrf_field() }}
 
 													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+												
 														<i class="fa fa-btn fa-download"></i>Asignar
 													</button>
 												</form>
@@ -143,6 +146,7 @@
 													{{ csrf_field() }}
 
 													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
+												
 														<i class="fa fa-calendar-check-o"></i>Enviar a Validación
 													</button>
 												</form>
@@ -158,6 +162,22 @@
                             </tbody>
                         </table>
                     </div>
+					
+					<script>
+							$(function() {
+								$('#historicoModal').on("show.bs.modal", function (e) {
+									 
+									 $("#historicoModal").load($(e.relatedTarget).data('ruta-historico'));
+									 
+								});
+							});
+					</script>
+					
+					<div class="modal fade" id="historicoModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="historicoLabel">
+					</div>
+					
                 </div>
             @endif
         </div>

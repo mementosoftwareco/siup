@@ -166,6 +166,37 @@ open(url,'','top=300,left=300,width=500,height=200') ;
 								  $(':input[type="submit"]').prop('disabled', true);
 								}
 							});
+							
+							$("input[name='tipoEdu']:radio").change(function(){
+								var tipoEduId = $(this).val();
+								if(tipoEduId) {
+									console.log("Se filtraran los programas por el tipo " + tipoEduId);
+									$.ajax({
+										url: '/ajax-programa/'+tipoEduId,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="programa"]').empty();
+											$.each(data, function(key, value){
+
+												$('select[name="programa"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+								} else {
+									$('select[name="programa"]').empty();
+								}
+
+							});
 
 						});
 						</script>
