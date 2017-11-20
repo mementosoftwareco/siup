@@ -74,6 +74,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::get('/cargarMisProcesosAdmision/', 'HistoricoController@cargarMisProcesosAdmision')->name('cargarMisProcesosAdmision')->middleware('auth');
 	Route::post('/mostrarHistorico/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico')->middleware('auth');
+	Route::get('/mostrarHistoricoGet/{procesoAdmon}', 'HistoricoController@mostrarHistorico')->name('mostrarHistorico')->middleware('auth');
 	
 	
 
