@@ -4,7 +4,7 @@
     <div class="container">
         <div class="col-sm-offset-0 col-sm-12">
           
-			
+			{!! Breadcrumbs::render('cargaDocumentos', $idProceso) !!}
 			
 			 <!-- Current Tasks -->
             @if (count($documentosRequeridos) > 0)
@@ -12,7 +12,7 @@
 					<div class="panel panel-default">
 					
 						<div class="panel-heading">
-							Documentos Requeridos
+							Documentos requeridos para el Aspirante {{ $persona->nombres }} {{ $persona->apellidos }} inscrito/a al programa {{ $inscripcion->nombre_programa }}
 						</div>
 
 						<div class="panel-body">
@@ -81,10 +81,10 @@
 							
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-plus"></i>Guardar Documentos
+                                    <i class="fa fa-btn fa-upload"></i>Cargar Documentos
                                 </button>
 								
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
                             </div>
 					
                            

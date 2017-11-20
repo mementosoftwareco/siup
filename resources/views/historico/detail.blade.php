@@ -13,7 +13,7 @@
             @if (count($historicos) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Histórico de Proceso
+                        Histórico del Proceso de Inscripción para el Aspirante {{ $persona->nombres }} {{ $persona->apellidos }} inscrito/a al programa {{ $inscripcion->nombre_programa }}
                     </div>
 					
 					

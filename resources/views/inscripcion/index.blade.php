@@ -5,6 +5,7 @@
 
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
+		{!! Breadcrumbs::render($breadcrumb, $inscripcionPregrado) !!}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Completa tus datos de inscripción en la Iberoamericana
@@ -25,40 +26,40 @@
 						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
-                             {{ Form::label('Tipo de identificación', null, ['class' => 'col-sm-3 control-label']) }}
+                             {{ Form::label('Tipo de Identificación', null, ['class' => 'col-sm-3 control-label']) }}
 							
 
                             <div class="col-sm-6">
-							{{Form::select('tipoIdentificacion', $tiposDocId, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('tipoIdentificacion', $tiposDocId, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
                             </div>
                         </div>
 						
 						<!-- Numero de identificacion -->
                         <div class="form-group">
                             
-							{{ Form::label('Número de identificación', null, ['class' => 'col-sm-3 control-label']) }}
+							{{ Form::label('Número de Identificación', null, ['class' => 'col-sm-3 control-label']) }}
 
                             <div class="col-sm-6">
                                 
-							{{ 	Form::text('numeroIdentificacion',null,['class'=>'form-control']) }}
+							{{ 	Form::text('numeroIdentificacion',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
 						<!-- fecha expedicion documento -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Fecha expedición documento</label>
+                            <label for="task-name" class="col-sm-3 control-label">Fecha Expedición Documento</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaExpDocumento', $inscripcionPregrado->fechaExpDocumento == null ? null : $inscripcionPregrado->fechaExpDocumento->format('Y-m-d'), ['class'=>'form-control']) }}
+								{{ Form::date('fechaExpDocumento', $inscripcionPregrado->fechaExpDocumento == null ? null : $inscripcionPregrado->fechaExpDocumento->format('Y-m-d'), ['class'=>'form-control', 'disabled' => $edicion]) }}
                             </div>
                         </div>
 						
 						<!-- Lugar expedicion documento -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Lugar expedición documento</label>
+                            <label for="task-name" class="col-sm-3 control-label">Lugar Expedición Documento</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('lugarExpDocumento',null,['class'=>'form-control']) }}
+								{{ 	Form::text('lugarExpDocumento',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -67,7 +68,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Nombres</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('nombres',null,['class'=>'form-control']) }}
+								{{ 	Form::text('nombres',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -76,16 +77,16 @@
                             <label for="task-name" class="col-sm-3 control-label">Apellidos</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('apellidos',null,['class'=>'form-control']) }}
+								{{ 	Form::text('apellidos',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
 						<!-- Telefono -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Telefono</label>
+                            <label for="task-name" class="col-sm-3 control-label">Teléfono</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('telefono',null,['class'=>'form-control']) }}
+								{{ 	Form::text('telefono',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -94,7 +95,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Celular</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('celular',null,['class'=>'form-control']) }}
+								{{ 	Form::text('celular',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -103,16 +104,16 @@
                             <label for="task-name" class="col-sm-3 control-label">Email</label>
 
                             <div class="col-sm-6">
-								{{  Form::email('email', null, ['class'=>'form-control']) }}
+								{{  Form::email('email', null, ['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
 						<!-- email -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Fecha nacimiento</label>
+                            <label for="task-name" class="col-sm-3 control-label">Fecha de Nacimiento</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaNacimiento', $inscripcionPregrado->fechaNacimiento == null ? null : $inscripcionPregrado->fechaNacimiento->format('Y-m-d'), ['class'=>'form-control']) }}
+								{{ Form::date('fechaNacimiento', $inscripcionPregrado->fechaNacimiento == null ? null : $inscripcionPregrado->fechaNacimiento->format('Y-m-d'), ['class'=>'form-control', 'disabled' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -121,37 +122,37 @@
                             <label for="task-name" class="col-sm-3 control-label">Género</label>
 
                             <div class="col-sm-6">
-							{{Form::select('genero', $listadoGeneros, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('genero', $listadoGeneros, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
                             </div>
                         </div>
 						
 						<!-- Grupo étnico -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Grupo étnico</label>
+                            <label for="task-name" class="col-sm-3 control-label">Grupo Étnico</label>
 
                             <div class="col-sm-6">
-								{{Form::select('grupoEtnico', $listadoTipoEtnia, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+								{{Form::select('grupoEtnico', $listadoTipoEtnia, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'readonly' => $edicion])}}
 							</div>
                         </div>
 						
 						<!-- Tipo educacion -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Tipo de educación</label>
+                            <label for="task-name" class="col-sm-3 control-label">Tipo de Educación</label>
 
                             <div class="col-sm-6">
 							{{Form::select('tipoEdu', ['1' => 'Pregrado',
 														  '2' => 'Postgrado',
 														  '3' => 'Educación continuada'
-														  ], null, ['class'=>'form-control'])}}
+														  ], null, ['class'=>'form-control', 'readonly' => $edicion])}}
                             </div>
                         </div>
 						
 						<!-- Tipo educacion -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Estado civil</label>
+                            <label for="task-name" class="col-sm-3 control-label">Estado Civil</label>
 
                             <div class="col-sm-6">
-							{{Form::select('estCivil', $listadoEstadosCiviles, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('estCivil', $listadoEstadosCiviles, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'readonly' => $edicion])}}
                             </div>
                         </div>
 						
@@ -160,7 +161,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Procedencia</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('procedencia',null,['class'=>'form-control']) }}
+								{{ 	Form::text('procedencia',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -173,7 +174,7 @@
 														'2' => 'Ser pilo paga',
 														'3' => 'Icetex',
 														'4' => 'Otro'
-														], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+														], null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 						
@@ -192,13 +193,13 @@
                             <label for="task-name" class="col-sm-3 control-label">Programa</label>
 
                             <div class="col-sm-6">
-								{{Form::select('programa', $progs, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+								{{Form::select('programa', $progs, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
                             </div>
                         </div>
 						
 						<!-- Terminos y Condiciones -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Terminos y Condiciones</label>
+                            <label for="task-name" class="col-sm-3 control-label">Términos y Condiciones</label>
 
                             <div class="col-sm-6">
 							  {{ Form::radio('termYCond', '1', null) }} Acepto <br/>
@@ -209,7 +210,7 @@
 <!-- Inicio Subseccion ubicacion ----------------------------------------------------------------------  -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							¿Donde vives?
+							¿Dónde vives?
 						</div>
 						<br/>
 						<!-- Direccion -->
@@ -217,7 +218,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Dirección</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('direccion',null,['class'=>'form-control']) }}
+								{{ 	Form::text('direccion',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -226,7 +227,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Departamento</label>
 
                             <div class="col-sm-6">
-							{{Form::select('departamento', $deptos, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('departamento', $deptos, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							
 							</div>
                         </div>
@@ -236,7 +237,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudad', $ciudades, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('ciudad', $ciudades, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'readonly' => $edicion])}}
 							</div>
                         </div>
 						
@@ -245,7 +246,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Municipio</label>
 
                             <div class="col-sm-6">
-							{{Form::select('municipio', $centrosPoblados, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('municipio', $centrosPoblados, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'readonly' => $edicion])}}
 							</div>
                         </div>
 						
@@ -330,7 +331,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Barrio</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('barrio',null,['class'=>'form-control']) }}
+								{{ 	Form::text('barrio',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -345,7 +346,7 @@
 														'4' => '4',
 														'5' => '5',
 														'6' => '6'
-													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							
 							</div>
                         </div>
@@ -365,7 +366,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Nombres</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('nombresReferencia',null,['class'=>'form-control']) }}
+								{{ 	Form::text('nombresReferencia',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -374,7 +375,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Apellidos</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('apellidosReferencia',null,['class'=>'form-control']) }}
+								{{ 	Form::text('apellidosReferencia',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -383,16 +384,16 @@
                             <label for="task-name" class="col-sm-3 control-label">Dirección</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('direccionReferencia',null,['class'=>'form-control']) }}
+								{{ 	Form::text('direccionReferencia',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
 						<!-- Telefono Referencia-->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Telefono</label>
+                            <label for="task-name" class="col-sm-3 control-label">Teléfono</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('telefonoReferencia',null,['class'=>'form-control']) }}
+								{{ 	Form::text('telefonoReferencia',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -401,7 +402,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Celular</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('celularReferencia',null,['class'=>'form-control']) }}
+								{{ 	Form::text('celularReferencia',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -410,7 +411,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Email</label>
 
                             <div class="col-sm-6">
-								{{  Form::email('emailReferencia', null, ['class'=>'form-control']) }}
+								{{  Form::email('emailReferencia', null, ['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -419,7 +420,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Parentesco</label>
 
                             <div class="col-sm-6">
-							{{Form::select('parentescoRef', $listadoTipoParentesco, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('parentescoRef', $listadoTipoParentesco, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 					</div>	
@@ -428,17 +429,17 @@
 <!-- Inicio subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
 					<div class="panel panel-default" id="panelSecundaria" name="panelSecundaria">	
 						<div class="panel-heading">
-							¿Donde estudiaste la secundaria?
+							¿En dónde estudiaste la secundaria?
 						</div>
 						<br/>
 						<!-- Tipo de Colegio -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Tipo de colegio</label>
+                            <label for="task-name" class="col-sm-3 control-label">Tipo de Colegio</label>
 
                             <div class="col-sm-6">
 							{{Form::select('tipoDeColegio', ['1' => 'Privado',
 														     '2' => 'Público'
-													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 						
@@ -447,7 +448,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Colegio</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('colegio',null,['class'=>'form-control']) }}
+								{{ 	Form::text('colegio',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -456,7 +457,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadColegio', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('ciudadColegio', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 						
@@ -465,7 +466,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Barrio</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('barrioColegio',null,['class'=>'form-control']) }}
+								{{ 	Form::text('barrioColegio',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -476,7 +477,7 @@
                             <div class="col-sm-6">
 							{{Form::select('jornadaColegio', ['AM' => 'Mañana',
 														     'PM' => 'Tarde'
-													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+													   ], null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							
 							</div>
                         </div>
@@ -486,7 +487,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Código ICFES</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('codigoIcfesColegio',null,['class'=>'form-control']) }}
+								{{ 	Form::text('codigoIcfesColegio',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -495,7 +496,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Año ICFES</label>
 
                             <div class="col-sm-6">
-								{{  Form::number('anioIcfesColegio', 2000, ['class'=>'form-control']) }}
+								{{  Form::number('anioIcfesColegio', null, ['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 					</div>	
@@ -521,7 +522,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Título</label>
 
                             <div class="col-sm-6">
-							{{ 	Form::text('tituloHomologacion',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste']) }}
+							{{ 	Form::text('tituloHomologacion',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste', 'readonly' => $edicion]) }}
 							</div>
                         </div>
 						
@@ -530,7 +531,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Institución</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('instHomologacion',null,['class'=>'form-control']) }}
+								{{ 	Form::text('instHomologacion',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -539,16 +540,16 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 						
 						<!-- Fecha finalización -->
 						<div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Fecha finalización</label>
+                            <label for="task-name" class="col-sm-3 control-label">Fecha Finalización</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaFinHomologacion', $inscripcionPregrado->fechaFinHomologacion == null ? null : $inscripcionPregrado->fechaFinHomologacion->format('Y-m-d'), ['class'=>'form-control']) }}
+								{{ Form::date('fechaFinHomologacion', $inscripcionPregrado->fechaFinHomologacion == null ? null : $inscripcionPregrado->fechaFinHomologacion->format('Y-m-d'), ['class'=>'form-control', 'disabled' => $edicion]) }}
                             </div>
                         </div>
 					</div>	
@@ -564,7 +565,7 @@
                             
 							<label for="task-name" class="col-sm-3 control-label">Programa</label>
 							<div class="col-sm-6">	  
-							{{ 	Form::text('programaPregrado',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste']) }}
+							{{ 	Form::text('programaPregrado',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -573,7 +574,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Título</label>
 
                             <div class="col-sm-6">
-							{{ 	Form::text('tituloPregrado',null,['class'=>'form-control', 'placeholder'=>'El titulo como aparece en tu diploma']) }}
+							{{ 	Form::text('tituloPregrado',null,['class'=>'form-control', 'placeholder'=>'El titulo como aparece en tu diploma', 'readonly' => $edicion]) }}
 							</div>
                         </div>
 						
@@ -582,7 +583,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Universidad</label>
 
                             <div class="col-sm-6">
-								{{ 	Form::text('universidadPregado',null,['class'=>'form-control']) }}
+								{{ 	Form::text('universidadPregado',null,['class'=>'form-control', 'readonly' => $edicion]) }}
                             </div>
                         </div>
 						
@@ -591,16 +592,16 @@
                             <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
 
                             <div class="col-sm-6">
-							{{Form::select('ciudadPregrado', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...'])}}
+							{{Form::select('ciudadPregrado', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 						
 						<!-- Fecha finalización -->
 						<div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Fecha finalización</label>
+                            <label for="task-name" class="col-sm-3 control-label">Fecha Finalización</label>
 
                             <div class="col-sm-6">
-								{{ Form::date('fechaFinPregrado', $inscripcionPregrado->fechaFinPregrado == null ? null : $inscripcionPregrado->fechaFinPregrado->format('Y-m-d'), ['class'=>'form-control']) }}
+								{{ Form::date('fechaFinPregrado', $inscripcionPregrado->fechaFinPregrado == null ? null : $inscripcionPregrado->fechaFinPregrado->format('Y-m-d'), ['class'=>'form-control', 'disabled' => $edicion]) }}
                             </div>
                         </div>
 					</div>
@@ -652,7 +653,7 @@
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
                                 </button>
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
                             </div>
                         </div>
                     {{ Form::close() }}

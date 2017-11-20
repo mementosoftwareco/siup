@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Persona;
 use App\Inscripcion;
+use App\User;
 use App\ProcesoAdmision;
 use App\UbicacionesGeograficas;
 use App\RefsPersonalFamiliar;
@@ -134,6 +135,19 @@ class InscripcionController extends Controller
      */
     public function index(Request $request, ProcesoAdmision $procesoAdmon)
     {
+		$user = new User;
+		$perfil = $user->obtenerNombrePerfil();
+
+		if ( $perfil === 'Operador' || $perfil === 'Call Center' || $perfil === 'Comercial'){
+         $edicion=false;
+		 $breadcrumb='formularioInscripcion';
+	 	}
+		if ( $perfil === 'Líder Comercial' ){
+         $edicion=true;
+		 $breadcrumb='validacionFormularioInscripcion';
+		}
+		
+		
 		$inscripcionPregrado = new InscripcionPregrado;
 		$idInscripcion = $procesoAdmon -> id_inscripcion;
 		$inscripcion =Inscripcion::findOrFail($idInscripcion);
@@ -237,7 +251,7 @@ class InscripcionController extends Controller
 		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		
-		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb'));
         
     }
 	

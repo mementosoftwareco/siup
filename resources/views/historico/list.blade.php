@@ -27,7 +27,7 @@
 								<i class="fa fa-btn fa-search"></i>Buscar
 							</button>
 							
-							 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+							 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
 							 
 					 </div>					
 				</form>
@@ -91,7 +91,7 @@
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-edit"></i>Ver Histórico
+													<i class="fa fa-btn fa-history"></i>Ver Histórico
 												</button>
 											</form>
 										</td>

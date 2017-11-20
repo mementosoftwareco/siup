@@ -85,36 +85,37 @@
 									   <!-- Continuar inscripción Button -->
 									   
 									   <td>
-									   <form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
+											<form action="{{url('inscripcion/' . $procesoAdmon->id_proceso_admon)}}" method="GET">
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-view"></i>Inscripción
+													<i class="fa fa-btn fa-search-plus"></i>Inscripción
 												</button>
 											</form>
-											<br>
+										</td>
+										<td>
 											<form action="{{url('prepararCargaDocumentos').'/'. urlencode($procesoAdmon->id_proceso_admon) }}" method="GET">
 													{{ csrf_field() }}
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-upload"></i>Documentos
+													<i class="fa fa-btn fa-search-plus"></i>Documentos
 												</button>
 											</form>
-											
+										</td>	
 										
 										
 										
 											
-											<br>
+										<td>
 											<form action="{{url('mostrarHistorico/' . $procesoAdmon->id_proceso_admon)}}" method="POST" target="_blank">
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-view"></i>Histórico
+													<i class="fa fa-btn fa-history"></i>Histórico
 												</button>
 											</form>
 										</td>
 										
-										<td>
+									
 										
 										
 										<?php if($procesoAdmon->estadoProceso->id_estado==EstadosProcesoAdmisionEnum::Inscrito) {?>
@@ -128,10 +129,10 @@
 												   data-id="{{ $procesoAdmon->id_proceso_admon }}"
 												   data-nombre_programa="{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}"
 												   data-target="#aprobarModal">
-												  <i class="fa fa-btn fa-edit"></i>Aprobar
+												  <i class="fa fa-btn fa-check"></i>Aprobar
 												</button>
-											<br>
-											<br>
+											</td>
+											<td>
 												<button 
 												   type="button" 
 												   class="btn btn-danger" 
@@ -139,7 +140,7 @@
 												   data-id="{{ $procesoAdmon->id_proceso_admon }}"
 												   data-nombre_programa="{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}"
 												   data-target="#rechazarModal">
-												  <i class="fa fa-btn fa-edit"></i>Rechazar
+												  <i class="fa fa-btn fa-close"></i>Rechazar
 												</button>
 											</td>
 											

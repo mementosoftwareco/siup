@@ -107,8 +107,8 @@ Route::group(['middleware' => ['web']], function () {
 
 		//Rutas para lider
 
-	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos')->middleware('auth');
-	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index')->middleware('auth');
+	Route::get('/lc.inscripcion.list/', 'LiderComercialController@listProcesos')->name('lc.inscripcion.list')->middleware('auth');
+	Route::get('/lc.inscripcion/{procesoAdmon}', 'LiderComercialController@index')->name('lc.inscripcion')->middleware('auth');
 	Route::get('/lc.buscarAspirante/', 'LiderComercialController@buscarAspirante')->name('lc.buscarAspirante')->middleware('auth');
 	Route::post('/lc.aprobar.proceso/', 'LiderComercialController@aprobarProceso')->name('lc.aprobar.proceso')->middleware('auth');
 	Route::post('/lc.rechazar.proceso/', 'LiderComercialController@rechazarProceso')->name('lc.rechazar.proceso')->middleware('auth');

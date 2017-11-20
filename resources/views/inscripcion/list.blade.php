@@ -7,7 +7,7 @@
         
 		<div class="col-sm-offset-0 col-sm-22">
             <div class="panel panel-default">
-			{!! Breadcrumbs::render('formularioInscripcion') !!}
+			{!! Breadcrumbs::render('inscripcionesPendientes') !!}
                 <div class="panel-heading">
                     Buscar Aspirante
                 </div>
@@ -30,7 +30,7 @@
 								<i class="fa fa-btn fa-search"></i>Buscar
 							</button>
 							
-							 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+							 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
 							 
 					 </div>					
 				</form>
@@ -90,7 +90,7 @@
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger" >
-													<i class="fa fa-btn fa"></i>Histórico
+													<i class="fa fa-btn fa-history"></i>Histórico
 												</button>
 											</form>
 										</td>
@@ -104,7 +104,7 @@
 													{{ csrf_field() }}
 
 													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-edit"></i>Asignar
+														<i class="fa fa-btn fa-download"></i>Asignar
 													</button>
 												</form>
 											</td>
@@ -143,7 +143,7 @@
 													{{ csrf_field() }}
 
 													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-upload"></i>Enviar a Validación
+														<i class="fa fa-calendar-check-o"></i>Enviar a Validación
 													</button>
 												</form>
 											</td>

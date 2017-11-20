@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Perfil;
+use App\Persona;
+use App\Inscripcion;
 use View;
 use Validator;
 use Session;
@@ -34,10 +36,12 @@ class HistoricoController extends Controller
 	{
 		
 		$historicos =  HistoricosProcesoAdmision::where('id_proceso_admon', '=', $idProceso)->orderBy('CREATED_AT', 'DESC')->get();
-		
+		$proceso = ProcesoAdmision::findOrFail($idProceso);
+		$persona = Persona::findOrFail($proceso -> id_persona);		
+		$inscripcion =Inscripcion::findOrFail($proceso -> id_inscripcion);
 		
 		return View::make('historico.detail')
-			->with('historicos', $historicos);
+			->with('historicos', $historicos)->with('persona', $persona)->with('inscripcion', $inscripcion);
 	}
 	
 	
