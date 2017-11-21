@@ -22,6 +22,7 @@ use App\Municipio;
 use App\CentroPoblado;
 use App\SiupProgramas;
 use App\VParametros;
+use App\Convenio;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
@@ -251,8 +252,9 @@ class InscripcionController extends Controller
 		$listadoNivelEdu = VParametros::where('tabla', '=', 'NIVEL_EDUCATIVO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoConvenios = Convenio::where('estado', '=', 'S')->orderBy('nombre')->pluck('nombre', 'codigo');
 		
-		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb', 'listadoConvenios'));
         
     }
 	
