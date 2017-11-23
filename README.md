@@ -427,3 +427,7 @@ drop table convenios;
 
 ALTER TABLE INSCRIPCIONES  
 MODIFY (ID_CONVENIO VARCHAR(10) );
+
+--Actualizaciones por validacion de codigo icfes
+ALTER TABLE EDUCACIONES  
+MODIFY (COD_ICFES_INST VARCHAR2(14 BYTE) );
