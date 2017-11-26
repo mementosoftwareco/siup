@@ -147,7 +147,7 @@
 
 													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
 												
-														<i class="fa fa-calendar-check-o"></i>Enviar a Validación
+														<i class="fa fa-btn fa-calendar-check-o"></i>Enviar a Validación
 													</button>
 												</form>
 											</td>

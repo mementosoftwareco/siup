@@ -14,6 +14,7 @@ use App\DocumentoTipoProceso;
 use App\TipoDocumento;
 use App\Persona;
 use App\Inscripcion;
+use App\User;
 use File;
 
 
@@ -118,7 +119,7 @@ class DocumentosController extends Controller
 		$inscripcion =Inscripcion::findOrFail($proceso -> id_inscripcion);
 
 		return View::make('documentos.index')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon)
-			->with('persona', $persona)->with('inscripcion', $inscripcion), ->with('breadcrumb', $breadcrumb)->with('edicion', $edicion);
+			->with('persona', $persona)->with('inscripcion', $inscripcion) ->with('breadcrumb', $breadcrumb)->with('edicion', $edicion);
 	}	
 	
 	public function mostrarDocumento($idCiphered)

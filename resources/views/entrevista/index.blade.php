@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('layouts.entrevista')
 
 @section('content')
 
@@ -7,7 +7,7 @@
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Proceso admisión IBERO - Cuestionario admisión
+                    Cuestionario 
                 </div>
 
                 <div class="panel-body">
@@ -27,7 +27,7 @@
 						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
-                             {{ Form::label('Tipo de identificación', null, ['class' => 'col-sm-3 control-label']) }}
+                             {{ Form::label('Tipo de Identificación', null, ['class' => 'col-sm-3 control-label']) }}
 							
 
                             <div class="col-sm-6">
@@ -38,7 +38,7 @@
 						<!-- Numero de identificacion -->
                         <div class="form-group">
                             
-							{{ Form::label('Número de identificación', null, ['class' => 'col-sm-3 control-label']) }}
+							{{ Form::label('Número de Identificación', null, ['class' => 'col-sm-3 control-label']) }}
 
                             <div class="col-sm-6">
                                 
@@ -48,7 +48,7 @@
 						
 						<!-- fecha expedicion documento -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Fecha expedición documento</label>
+                            <label for="task-name" class="col-sm-3 control-label">Fecha de Expedición del Documento</label>
 
                             <div class="col-sm-6">
 								{{ Form::date('fechaExpDocumento', \Carbon\Carbon::now(), ['class'=>'form-control', 'disabled']) }}
@@ -112,7 +112,7 @@
 						
 						<!-- Terminos y Condiciones -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Políticas de privacidad</label>
+                            <label for="task-name" class="col-sm-3 control-label">Política de Privacidad</label>
 
                             <div class="col-sm-6">
 							  {{ Form::radio('aceptaPoliticasPriv', '1', null) }} Acepto <br/>
@@ -869,7 +869,7 @@ El aspirante recibirá una de las siguientes notificaciones:
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Completar el cuestionario
                                 </button>
-								 <button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>
+								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
                             </div>
                         </div>
                     {{ Form::close() }}

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="col-sm-offset-0 col-sm-12">
-            
+            {!! Breadcrumbs::render('entrevistasPendientes') !!}
 
             <!-- Current Procesos admision -->
             @if (count($procesosAdmon) > 0)
@@ -50,7 +50,7 @@
 												{{ csrf_field() }}
 
 												<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-													<i class="fa fa-btn fa-edit"></i>Histórico
+													<i class="fa fa-btn fa-history"></i>Histórico
 												</button>
 											</form>
 										</td>
@@ -61,7 +61,7 @@
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
-                                                    <i class="fa fa-btn fa-edit"></i>Evaluar
+                                                    <i class="fa fa-btn fa-search-plus"></i>Evaluar
                                                 </button>
                                             </form>
                                         </td>

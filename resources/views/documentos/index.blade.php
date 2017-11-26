@@ -4,7 +4,7 @@
     <div class="container">
         <div class="col-sm-offset-0 col-sm-12">
           
-			{!! Breadcrumbs::render('$breadcrumb', $idProceso) !!}
+			{!! Breadcrumbs::render($breadcrumb, $idProceso) !!}
 			
 			 <!-- Current Tasks -->
             @if (count($documentosRequeridos) > 0)
@@ -55,38 +55,42 @@
 												
 												<td class="table-text"><div>{{ $documentoRequerido->documento->fecha_creacion }}</div></td>
 												
+												
 												<?php $nombre = 'file'.$documentoRequerido->id;?>
 												
-												
+												@if ($edicion)
 												 <td class="table-text"><div>
-													<?php echo 
-														"<input disabled= \"".$edicion."\"    type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
+													<?php echo 	
+														"<input disabled= \"true\"    type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
 														
 														
-													?>
-												 
-												 
-												
+													?>											
 												</div>	</td>
-												
-												
-											
-										
+												@endif
+												@if (!$edicion)
+												 <td class="table-text"><div>
+													<?php echo 	
+														"<input  type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
+														
+														
+													?>											
+												</div>	</td>
+												@endif
 											</tr>
 										@endforeach
 										
 									</tbody>
 								</table>
 								
-							
-                            <div class="col-sm-offset-3 col-sm-6">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-upload"></i>Cargar Documentos
-                                </button>
-								
-								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
-                            </div>
-					
+							@if (!$edicion)
+								<div class="col-sm-offset-3 col-sm-6">
+									<button type="submit" class="btn btn-default">
+										<i class="fa fa-btn fa-upload"></i>Cargar Documentos
+									</button>
+									
+									 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
+								</div>
+							@endif
                            
                     
 								

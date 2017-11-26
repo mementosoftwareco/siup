@@ -648,14 +648,19 @@
 <!-- Final subsección homologación desde otra institución ----------------------------------------------------------------------  -->						
 
                         <!-- inscripcion Button -->
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-6">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
-                                </button>
-								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
-                            </div>
-                        </div>
+                        
+						@if (!$edicion)
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<button type="submit" class="btn btn-default">
+										<i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
+									</button>
+									 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
+								</div>
+							</div>
+						@endif
+						
+						
                     {{ Form::close() }}
                 </div>
             </div>
