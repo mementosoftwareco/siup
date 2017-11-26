@@ -170,11 +170,7 @@
                             <label for="task-name" class="col-sm-3 control-label">Convenio</label>
 
                             <div class="col-sm-6">
-							{{Form::select('convenio', ['1' => 'No aplica',
-														'2' => 'Ser pilo paga',
-														'3' => 'Icetex',
-														'4' => 'Otro'
-														], null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
+							{{Form::select('convenio', $listadoConvenios, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
 							</div>
                         </div>
 						
@@ -321,6 +317,37 @@
 								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
 								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
 								//console.log("entro a con nombre programa: " + nombreProgramaVar);
+							});
+							
+							$('select[name="tipoEdu"]').on('change', function(){
+								var tipoEduId = $(this).val();
+								if(tipoEduId) {
+									console.log("Se filtraran los programas por el tipo " + tipoEduId);
+									$.ajax({
+										url: '/ajax-programa/'+tipoEduId,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="programa"]').empty();
+											$.each(data, function(key, value){
+
+												$('select[name="programa"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+								} else {
+									$('select[name="programa"]').empty();
+								}
+
 							});
 
 						});

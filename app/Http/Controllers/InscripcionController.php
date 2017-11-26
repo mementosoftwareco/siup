@@ -22,6 +22,7 @@ use App\Municipio;
 use App\CentroPoblado;
 use App\SiupProgramas;
 use App\VParametros;
+use App\Convenio;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
@@ -251,8 +252,9 @@ class InscripcionController extends Controller
 		$listadoNivelEdu = VParametros::where('tabla', '=', 'NIVEL_EDUCATIVO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		$listadoConvenios = Convenio::where('estado', '=', 'S')->orderBy('nombre')->pluck('nombre', 'codigo');
 		
-		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb', 'listadoConvenios'));
         
     }
 	
@@ -325,12 +327,21 @@ class InscripcionController extends Controller
 				'ciudadColegio' => 'required|max:10',
 				'barrioColegio' => 'required|max:100',
 				'jornadaColegio' => 'required|max:10',
-				'codigoIcfesColegio' => 'required|max:20',
 				'anioIcfesColegio' => 'required|max:4',
-				
-				
 			]);
-		
+			if($request->anioIcfesColegio >= 2000){
+				$this->validate($request, [				
+					'codigoIcfesColegio' => ['required','max:14','regex:"AC[0-9]{4}[1-2]{1}[0-9]{7}|VG[0-9]{4}[1-2]{1}[0-9]{7}"'],
+				]);
+			}
+			
+			if($request->anioIcfesColegio < 2000){
+				$this->validate($request, [				
+					'codigoIcfesColegio' => ['required','max:12','regex:"AC[0-9]{2}[1-2]{1}[0-9]{7}|VG[0-9]{2}[1-2]{1}[0-9]{7}"'],
+				]);
+			}
+			
+					
 			if($request->homologacion == 1){
 				$this->validate($request, [
 				//Homologacion desde otra institucion

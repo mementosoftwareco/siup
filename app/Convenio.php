@@ -8,5 +8,9 @@ class Convenio extends Model
 {
     protected $primaryKey = 'id_convenio';
 	//
-	protected $table = 'convenios';
+	protected $table = 'convenios_banner';
+	
+	public $incrementing = false;
+	
+	protected $dates = ['fecha'];
 }
