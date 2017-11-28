@@ -178,10 +178,12 @@ class EntrevistaController extends Controller
 	
 	
 	
-	 public function aprobarEntrevista(Request $request,  $idProcesoAdmon)
+	public function aprobarEntrevista(Request $request)
     {
+		$idProcesoAdmon = $request->idProceso;
+		$comentarios = $request->comentariosAprobacion;
 		
-		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::ValidadoFacultad, 'Entrevista Aprobada por Facultad', $idProcesoAdmon);
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::ValidadoFacultad, 'Entrevista Aprobada por Facultad: '.$comentarios, $idProcesoAdmon);
 		
 		$historicos = HistoricosProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmon)->get();
 		$validadoComercial = false;
@@ -206,6 +208,16 @@ class EntrevistaController extends Controller
 		return redirect('/menu');
 			
 		
+    }
+	
+	public function rechazarEntrevista(Request $request)
+    {
+		$idProcesoAdmon = $request->idProcesoR;
+		$comentarios = $request->comentariosRechazo;
+		
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::RechazadoPorEntrevista, 'Entrevista rechazada por Facultad: '.$comentarios, $idProcesoAdmon);
+		
+		return redirect('/menu');
     }
 	
 	

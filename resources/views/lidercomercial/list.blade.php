@@ -182,7 +182,7 @@
 						<div class="modal fade" id="historicoModal" 
 							 tabindex="-1" role="dialog" 
 							 aria-labelledby="historicoLabel">
-					</div>
+						</div>
 						
 						<div class="modal fade" id="aprobarModal" 
 							 tabindex="-1" role="dialog" 
