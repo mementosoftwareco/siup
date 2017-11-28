@@ -100,7 +100,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/entrevista/{procesoAdmon}', 'EntrevistaController@indexCiphered');
 	Route::get('/ver.entrevista/{procesoAdmon}', 'EntrevistaController@index')->middleware('auth');
 	Route::post('/evaluarEntrevista/{procesoAdmon}', 'EntrevistaController@evaluarEntrevista')->name('evaluarEntrevista')->middleware('auth');
-	Route::post('/aprobarEntrevista/{procesoAdmon}', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista')->middleware('auth');
+	Route::post('/aprobarEntrevista', 'EntrevistaController@aprobarEntrevista')->name('aprobarEntrevista')->middleware('auth');
+	Route::post('/rechazarEntrevista', 'EntrevistaController@rechazarEntrevista')->name('rechazarEntrevista')->middleware('auth');
 	Route::post('/entrevista/{procesoAdmon}', 'EntrevistaController@store')->name('entrevista');
 
 	Route::get('/listarEntrevistas/', 'EntrevistaController@listarEntrevistas')->name('listarEntrevistas')->middleware('auth');

@@ -827,18 +827,150 @@
 
                        
                     {{ Form::close() }}
-                </div>
-				<td>
-							<form action="{{url('aprobarEntrevista/' . $entrevistaViewModel->idProcesoAdmision)}}" method="POST">
-								{{ csrf_field() }}
-
-								<button type="submit" id="edit-process-{{ $entrevistaViewModel->idProcesoAdmision }}" class="btn btn-danger">
-									<i class="fa fa-btn fa-upload"></i>Aprobar
-								</button>
-							</form>
-						</td>
+                </div class="col-sm-offset-3 col-sm-6">
 				
+				
+					<td>
+						<button 
+						   type="button" 
+						   class="btn btn-danger" 
+						   data-toggle="modal"
+						   data-id="{{ $entrevistaViewModel->idProcesoAdmision }}"
+						   data-nombre_aspirante="{{ $entrevistaViewModel->nombres == null ? 'viene nulo' : $entrevistaViewModel->nombres }}"
+						   data-target="#aprobarModal">
+						  <i class="fa fa-btn fa-check"></i>Aprobar
+						</button>
+					</td>
+					<td>
+						<button 
+						   type="button" 
+						   class="btn btn-danger" 
+						   data-toggle="modal"
+						   data-id="{{ $entrevistaViewModel->idProcesoAdmision }}"
+						   data-nombre_aspirante="{{ $entrevistaViewModel->nombres == null ? 'viene nulo' : $entrevistaViewModel->nombres }}"
+						   data-target="#rechazarModal">
+						  <i class="fa fa-btn fa-close"></i>Rechazar
+						</button>
+					</td>
             </div>
+			
+			<script>
+				$(function() {
+					$('#aprobarModal').on("show.bs.modal", function (e) {
+						 $("#fav-aspirante").html($(e.relatedTarget).data('nombre_aspirante'));
+						 $("#idProceso").val($(e.relatedTarget).data('id'));
+					});
+				});
+				
+				$(function() {
+					$('#rechazarModal').on("show.bs.modal", function (e) {
+						 $("#fav-aspirante-r").html($(e.relatedTarget).data('nombre_aspirante'));
+						 $("#idProcesoR").val($(e.relatedTarget).data('id'));
+					});
+				});
+			</script>
+			
+			<div class="modal fade" id="aprobarModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="aprobarModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" 
+								  data-dismiss="modal" 
+								  aria-label="Close">
+								  <span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" 
+								id="aprobarModalLabel">Vas a aprobar la entrevista</h4>
+							  </div>
+							  <div class="modal-body">
+								<p>
+								Por favor agrega un comentario para la aprobación de la entrevista asociada al aspirante:
+								<b><span id="fav-aspirante">Aspirante</span></b> 
+								
+								</p>
+							  </div>
+							  <div class="modal-footer">
+							  
+							  <form action="{{url('aprobarEntrevista/')}}" method="POST">
+													{{ csrf_field() }}
+													
+									{{ Form::hidden('idProceso', null,  array('id' => 'idProceso')) }}
+									<div class="form-group">
+										<div class="col-sm-6">
+											<input type="text" name="comentariosAprobacion" id="comentariosAprobacion" class="form-control" value="">
+										</div>
+									</div>
+									<br>
+									<br>
+									<br>
+									<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-6">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>   
+									<span class="pull-right">
+										<button type="submit" id="edit-process-btn" class="btn btn-danger">
+											<i class="fa fa-btn fa-edit"></i>Aprobar
+										</button>
+									</span>
+									</div>
+									</div>
+								</form>
+								
+							  </div>
+							</div>
+						  </div>
+						</div>
+						
+						<div class="modal fade" id="rechazarModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="rechazarModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" 
+								  data-dismiss="modal" 
+								  aria-label="Close">
+								  <span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" 
+								id="rechazarModalLabel">Vas a rechazar la entrevista</h4>
+							  </div>
+							  <div class="modal-body">
+								<p>
+								Por favor agrega un comentario para la aprobación de la entrevista asociada al aspirante:
+								<b><span id="fav-aspirante-r">Aspirante</span></b> 
+								
+								</p>
+							  </div>
+							  <div class="modal-footer">
+							  
+							  <form action="{{url('rechazarEntrevista/')}}" method="POST">
+													{{ csrf_field() }}
+													
+									{{ Form::hidden('idProcesoR', null,  array('id' => 'idProcesoR')) }}
+									<div class="form-group">
+										<div class="col-sm-6">
+											<input type="text" name="comentariosRechazo" id="comentariosRechazo" class="form-control" value="">
+										</div>
+									</div>
+									<br>
+									<br>
+									<br>
+									<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-6">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>   
+									<span class="pull-right">
+										<button type="submit" id="edit-process-btn" class="btn btn-danger">
+											<i class="fa fa-btn fa-edit"></i>Rechazar
+										</button>
+									</span>
+									</div>
+									</div>
+								</form>
+								
+							  </div>
+							</div>
+						  </div>
+						</div>
             
         </div>
     </div>
