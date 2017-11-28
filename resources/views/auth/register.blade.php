@@ -90,7 +90,8 @@
                             <thead>
                            		<th>Nombre</th>
 								<th>Email</th>		
-								<th>Perfil</th>									
+								<th>Perfil</th>			
+								<th>Estado</th>									
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody>
@@ -100,7 +101,7 @@
 										
 										<td class="table-text"><div>{{ $user->email }}</div></td>
 										<td class="table-text"><div>{{ $user->perfil->nombre }}</div></td>
-										
+										<td class="table-text"><div>{{ $user->state }}</div></td>
 										<td class="table-text"><div><a href="{{route('editarRegistro' , ['id' =>$user->id ]) }}">Editar</a></div></td>
 										
 										<!--<td class="table-text"><div><a href="{{route('prepararEliminarRegistro' , ['id' =>$user->id ]) }}">Eliminar</a></div></td>-->

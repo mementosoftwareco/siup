@@ -1,5 +1,5 @@
 
-@extends('layouts.entrevista')
+@extends('layouts.external')
 
 @section('content')
 

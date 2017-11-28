@@ -27,7 +27,7 @@
 
                             <div class="col-sm-6">
 							{{Form::select('state', ['ACT' => 'Activo',
-														  'INACT' => 'Inactivo'
+														  'INA' => 'Inactivo'
 														  ], null, ['class'=>'form-control'])}}
                             </div>
                         </div>

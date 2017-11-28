@@ -70,19 +70,23 @@ class DocumentosController extends Controller
 	public function prepararCargaDocumentosBackEnd($idProceso){
 		
 		$user = new User;
+			
 		$perfil = $user->obtenerNombrePerfil();
+		
+		if($perfil != null){
 
-		if ( $perfil === 'Operador' || $perfil === 'Call Center' || $perfil === 'Comercial'){
-         $edicion=false;
-		 $breadcrumb='cargaDocumentos';
-	 	}
-		if ( $perfil === 'Líder Comercial' ){
-         $edicion=true;
-		 $breadcrumb='validacionCargaDocumentos';
+			if ( $perfil === 'Operador' || $perfil === 'Call Center' || $perfil === 'Comercial'){
+			 $edicion=false;
+			 $breadcrumb='cargaDocumentos';
+			}
+			if ( $perfil === 'Líder Comercial' ){
+			 $edicion=true;
+			 $breadcrumb='validacionCargaDocumentos';
+			}
+		} else {
+			$breadcrumb='vacio'		;	
+			$edicion=false;
 		}
-		
-		
-		
 		
 		
 		$proceso = ProcesoAdmision::find($idProceso);
@@ -118,7 +122,11 @@ class DocumentosController extends Controller
 		$persona = Persona::findOrFail($proceso -> id_persona);		
 		$inscripcion =Inscripcion::findOrFail($proceso -> id_inscripcion);
 
-		return View::make('documentos.index')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon)
+		if($perfil!=null)
+			return View::make('documentos.index')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon)
+			->with('persona', $persona)->with('inscripcion', $inscripcion) ->with('breadcrumb', $breadcrumb)->with('edicion', $edicion);
+		else
+			return View::make('documentos.indexP')->with('documentosRequeridos', $documentosRequeridos)->with('idProceso', $proceso->id_proceso_admon)
 			->with('persona', $persona)->with('inscripcion', $inscripcion) ->with('breadcrumb', $breadcrumb)->with('edicion', $edicion);
 	}	
 	
