@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Persona;
 use App\Inscripcion;
 use App\ProcesoAdmision;
+use App\Modalidad;
 use App\EstadosProcesoAdmisionEnum;
 use App\SiupProgramas;
 use App\VParametros;
@@ -137,10 +138,11 @@ class PreinscripcionController extends Controller
 		$inscripcion->telefono = $request->telefono;
 		$inscripcion->celular = $request->celular;
 		$inscripcion->email = $request->email;
-		//$inscripcion->id_modalidad = $request->modalidad;
 		$inscripcion->id_programa = $request->programa;
 		$inscripcion->nombre_programa = $request->nombrePrograma;
 		$inscripcion->acepta_terms_cond = $request->termYCond;
+		$programaSeleccionado = SiupProgramas::where('cod_programa', '=', $inscripcion->id_programa )->first();
+		$inscripcion->id_modalidad = $programaSeleccionado->modalidad;
 		$inscripcion->save();
 		
 		//Guardando la información del proceso de admision
