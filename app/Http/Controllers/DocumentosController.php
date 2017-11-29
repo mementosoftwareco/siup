@@ -83,6 +83,10 @@ class DocumentosController extends Controller
 			 $edicion=true;
 			 $breadcrumb='validacionCargaDocumentos';
 			}
+			if ( $perfil === 'Admisiones' ){
+			 $edicion=true;
+			 $breadcrumb='validacionCargaDocumentosAdmision';
+			}
 		} else {
 			$breadcrumb='vacio'		;	
 			$edicion=false;

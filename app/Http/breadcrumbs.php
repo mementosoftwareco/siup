@@ -113,7 +113,7 @@ Breadcrumbs::register('validacionFormularioInscripcion', function($breadcrumbs, 
 
 Breadcrumbs::register('validacionCargaDocumentos', function($breadcrumbs,  $idProceso)
 {
-    $breadcrumbs->parent('validacionComercial');
+    $breadcrumbs->parent('validacionInscripcionesAspirantes');
     $breadcrumbs->push('Validaci&oacute;n de Documentos', route('prepararCargaDocumentos', $idProceso));
 });
 
@@ -151,9 +151,33 @@ Breadcrumbs::register('entrevistasPendientes', function($breadcrumbs)
 });
 
 
+////////////////////Gestión Admisiones////////////////////////////
+
+Breadcrumbs::register('admision', function($breadcrumbs)
+{
+    $breadcrumbs->push('Gesti&oacute;n Admisi&oacute;n', route('menu'));
+});
 
 
 
+Breadcrumbs::register('admisionesPendientes', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admision');
+    $breadcrumbs->push('Aspirantes Pendientes', route('listarAspirantes'));
+});
+
+Breadcrumbs::register('validacionFormularioInscripcionAdmision', function($breadcrumbs,  $inscripcionPregrado)
+{
+    $breadcrumbs->parent('admisionesPendientes');
+    $breadcrumbs->push('Validaci&oacute;n Formulario de Inscripci&oacute;n', route('lc.inscripcion', $inscripcionPregrado->idProcesoAdmision));
+});
+
+
+Breadcrumbs::register('validacionCargaDocumentosAdmision', function($breadcrumbs,  $idProceso)
+{
+    $breadcrumbs->parent('admisionesPendientes');
+    $breadcrumbs->push('Validaci&oacute;n de Documentos', route('prepararCargaDocumentos', $idProceso));
+});
 
 
 
