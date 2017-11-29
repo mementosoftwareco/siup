@@ -34,6 +34,7 @@ class PreinscripcionController extends Controller
 			$tipoPrograma = 'EDUCACION CONTINUA';
 		}
 		$progs = SiupProgramas::where('activo', '=', 'Y')->where('tipo_programa', '=', $tipoPrograma)->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+		$progs[null] = 'Seleccione...';
 		return Response::json($progs);
     }
 	

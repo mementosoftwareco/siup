@@ -97,14 +97,12 @@ class InscripcionController extends Controller
 
 	
 	
-	public function enviarValidacionComercial($idProcesoAdmision)
+	public function enviarValidacionComercial(Request $request)
     {
-		
-		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial, 'Enviado a Validación de Líder Comercial', $idProcesoAdmision);
-		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteEntrevista, 'Enviado Formulario de Entrevista a Estudiante', $idProcesoAdmision);
-		
-		
-		
+		$idProcesoAdmision = $request->idProceso;
+		$comentariosValidacion = $request->comentariosValidacion;
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteValidaciónComercial, 'Enviado a Validación de Líder Comercial: '.$comentariosValidacion, $idProcesoAdmision);
+		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::InscritoPendienteEntrevista, 'Enviado Formulario de Entrevista a Estudiante: '.$comentariosValidacion, $idProcesoAdmision);
 		
 		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmision)->get()->first();
 		$procesoAdmon->id_estado=EstadosProcesoAdmisionEnum::Inscrito;
@@ -261,12 +259,14 @@ class InscripcionController extends Controller
 	public function ajaxDeptoCiudad($id){
 		
 		$ciudades = Municipio::where('codigo_depto', '=', $id)->orderBy('nombre')->pluck('nombre', 'codigo');
-		return Response::json($ciudades);
+		$ciudades[1] = 'Seleccione...';
+		return Response::json($ciudades );
     }
 	
 	public function ajaxCiudadMunicipio($id){
 		
 		$municipios = CentroPoblado::where('codigo_municipio', '=', $id)->orderBy('nombre')->pluck('nombre', 'codigo');
+		$municipios[1] = 'Seleccione...';
 		return Response::json($municipios);
     }
 	
