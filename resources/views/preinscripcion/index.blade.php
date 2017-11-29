@@ -2,7 +2,7 @@
 
 <script> 
 function abrir(url) { 
-open(url,'','top=300,left=300,width=500,height=200') ; 
+open(url,'','top=300,left=300,width=500,height=200, resizable=0') ; 
 } 
 </script> 
 

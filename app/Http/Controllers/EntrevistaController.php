@@ -205,7 +205,7 @@ class EntrevistaController extends Controller
 			
 		}
 		
-		return redirect('/menu');
+		return redirect('/listarEntrevistas');
 			
 		
     }
@@ -217,7 +217,11 @@ class EntrevistaController extends Controller
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::RechazadoPorEntrevista, 'Entrevista rechazada por Facultad: '.$comentarios, $idProcesoAdmon);
 		
-		return redirect('/menu');
+		$procesoAdmon = ProcesoAdmision::where('id_proceso_admon', '=', $idProcesoAdmon)->get()->first();
+		$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::PreInscrito;
+		$procesoAdmon->save();
+			
+		return redirect('/listarEntrevistas');
     }
 	
 	

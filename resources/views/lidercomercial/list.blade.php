@@ -6,6 +6,8 @@
     <div class="container">
         
 		<div class="col-sm-offset-0 col-sm-22">
+			{!! Breadcrumbs::render('validacionInscripcionesAspirantes') !!}
+		
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Buscar Aspirante

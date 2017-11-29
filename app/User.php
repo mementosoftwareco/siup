@@ -62,8 +62,11 @@ class User extends Authenticatable
 		//$usuario = Usuario::where( 'id_user' , '=' , $id )->get()->first();
 		//$rol = Rol::where( 'id_usuario' , '=' , $id )->get()->first();
 		//echo $rol->id;
-		$perfil = Perfil::where('id', '=' , Auth::user()->id_perfil)->get()->first();		
-		return $perfil -> nombre;
+		if(Auth::user()!= null){
+			$perfil = Perfil::where('id', '=' , Auth::user()->id_perfil)->get()->first();
+			return $perfil -> nombre;			
+		} else 
+			return null;
 	}
 	
 	

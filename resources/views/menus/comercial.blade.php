@@ -5,7 +5,7 @@
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Menú
+                    Gestión Comercial
                 </div>
 
                 <div class="panel-body">
@@ -18,8 +18,8 @@
                         
                              <!--<a href="{{ url('/preinscripcion') }}">Preinscribir Estudiante</a>	-->						
                         
-													 <br><a href="{{ url('/inscripcion.list') }}">Inscribir Estudiante</a>
-							<br><a href="{{ url('/cargarMisProcesosAdmision') }}">Ver Histórico de Inscripciones</a>
+							<br><a href="{{ url('/inscripcion.list') }}">Completar Inscripciones de Aspirantes</a>
+							<br><a href="{{ url('/cargarMisProcesosAdmision') }}">Ver Histórico de Procesos</a>
 						
 					
 

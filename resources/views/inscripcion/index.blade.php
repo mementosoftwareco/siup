@@ -1,6 +1,12 @@
 
 @extends('layouts.app')
 
+<script> 
+function abrir(url) { 
+open(url,'','top=300,left=300,width=500,height=200, resizable=0') ; 
+} 
+</script> 
+
 @section('content')
 
     <div class="container">
@@ -195,7 +201,8 @@
 						
 						<!-- Terminos y Condiciones -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Términos y Condiciones</label>
+                            <!--<label for="task-name" class="col-sm-3 control-label">Términos y Condiciones</label>-->
+							<a href="javascript:abrir('terminos')" class="col-sm-3 control-label">Términos y Condiciones</a> 
 
                             <div class="col-sm-6">
 							  {{ Form::radio('termYCond', '1', null) }} Acepto <br/>
@@ -675,14 +682,19 @@
 <!-- Final subsección homologación desde otra institución ----------------------------------------------------------------------  -->						
 
                         <!-- inscripcion Button -->
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-6">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
-                                </button>
-								 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
-                            </div>
-                        </div>
+                        
+						@if (!$edicion)
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<button type="submit" class="btn btn-default">
+										<i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
+									</button>
+									 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
+								</div>
+							</div>
+						@endif
+						
+						
                     {{ Form::close() }}
                 </div>
             </div>

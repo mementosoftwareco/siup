@@ -146,6 +146,10 @@ class InscripcionController extends Controller
          $edicion=true;
 		 $breadcrumb='validacionFormularioInscripcion';
 		}
+		if ( $perfil === 'Admisiones' ){
+         $edicion=true;
+		 $breadcrumb='validacionFormularioInscripcionAdmision';
+		}
 		
 		
 		$inscripcionPregrado = new InscripcionPregrado;
