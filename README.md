@@ -468,3 +468,41 @@ insert into modalidades (id_modalidad, nombre, descripcion) values ('VIRTUAL','V
 insert into modalidades (id_modalidad, nombre, descripcion) values ('DISTANCIA','DISTANCIA','DISTANCIA');
 commit;
 
+--Actualizacion 2017-11-29 por actualziacion de secuencias:
+--------------------------------------------------------------
+create or replace
+procedure reset_seq( p_seq_name in varchar2 )
+is
+    l_val number;
+begin
+    execute immediate
+    'select ' || p_seq_name || '.nextval from dual' INTO l_val;
+
+    execute immediate
+    'alter sequence ' || p_seq_name || ' increment by -' || l_val || 
+                                                          ' minvalue 0';
+
+    execute immediate
+    'select ' || p_seq_name || '.nextval from dual' INTO l_val;
+
+    execute immediate
+    'alter sequence ' || p_seq_name || ' increment by 1 minvalue 0';
+end;
+
+exec reset_seq( 'CONVENIOS_ID_CONVENIO_SEQ' );
+exec reset_seq( 'DETALLE_ENTREVISTAS_ID_DETALLE' );
+exec reset_seq( 'DOCUMENTOS_ID_DOCUMENTO_SEQ' );
+exec reset_seq( 'DOCUMENTOS_TIPO_PROCESO_SEQ' );
+exec reset_seq( 'EDUCACIONES_ID_EDUCACION_SEQ' );
+exec reset_seq( 'ENTREVISTAS_ID_ENTREVISTA_SEQ' );
+exec reset_seq( 'ESTADOS_CIVIL_ID_ESTADO_CIVIL_' );
+exec reset_seq( 'ESTADOS_VALIDACION_ID_ESTADO_S' );
+exec reset_seq( 'GRUPOS_ETNICOS_ID_GRUPO_ETNICO' );
+exec reset_seq( 'HISTORICO_PROCESO_ID_SEQ' );
+exec reset_seq( 'HOMOLOGACIONES_ID_HOMOLOGACION' );
+exec reset_seq( 'INSCRIPCIONES_ID_INSCRIPCION_S' );
+exec reset_seq( 'MODALIDADES_ID_MODALIDAD_SEQ' );
+exec reset_seq( 'PERFILES_ID_SEQ' );
+exec reset_seq( 'PROCESOS_ADMISION_ID_PROCESO_A' );
+exec reset_seq( 'REFS_PERSONAL_FAMILIAR_ID_REFE' );
+exec reset_seq( 'UBICACIONES_GEOGRAFICAS_ID_UBI' );

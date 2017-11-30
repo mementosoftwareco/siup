@@ -390,8 +390,9 @@ class InscripcionController extends Controller
 		$inscripcion->telefono = $request->telefono;
 		$inscripcion->celular = $request->celular;
 		$inscripcion->email = $request->email;
-		$inscripcion->id_modalidad = $request->modalidad;
 		$inscripcion->id_programa = $request->programa;
+		$programaSeleccionado = SiupProgramas::where('cod_programa', '=', $inscripcion->id_programa )->first();
+		$inscripcion->id_modalidad = $programaSeleccionado->modalidad;
 		$inscripcion->nombre_programa = $request->nombrePrograma;
 		$inscripcion->acepta_terms_cond = $request->termYCond;
 		$inscripcion->procedencia = $request->procedencia;
