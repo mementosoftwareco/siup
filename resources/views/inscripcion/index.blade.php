@@ -185,8 +185,9 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
                             <label for="task-name" class="col-sm-3 control-label">Modalidad</label>
 
                             <div class="col-sm-6">
-							  {{ Form::radio('modalidad', '1', null) }} Presencial <br/>
-							  {{ Form::radio('modalidad', '2', null) }} Virtual <br/>
+							  {{ Form::radio('modalidad', 'PRESENCIAL', null) }} Presencial <br/>
+							  {{ Form::radio('modalidad', 'VIRTUAL', null) }} Virtual <br/>
+							  {{ Form::radio('modalidad', 'DISTANCIA', null) }} Distancia <br/>
 							</div>
                         </div>
 						

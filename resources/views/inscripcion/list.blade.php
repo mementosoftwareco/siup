@@ -142,14 +142,16 @@
 											
 											
 											<td>
-												<form action="{{url('enviarValidacionComercial/' . $procesoAdmon->id_proceso_admon)}}" method="POST">
-													{{ csrf_field() }}
-
-													<button type="submit" id="edit-process-{{ $procesoAdmon->id_proceso_admon }}" class="btn btn-danger">
 												
-														<i class="fa fa-btn fa-calendar-check-o"></i>Enviar a Validación
-													</button>
-												</form>
+												<button 
+												   type="button" 
+												   class="btn btn-danger" 
+												   data-toggle="modal"
+												   data-id="{{ $procesoAdmon->id_proceso_admon }}"
+												   data-nombre_programa="{{ $procesoAdmon->inscripcion == null ? 'viene nulo' : $procesoAdmon->inscripcion->nombre_programa }}"
+												   data-target="#enviarValModal">
+												  <i class="fa fa-calendar-check-o"></i>Enviar a Validación
+												</button>
 											</td>
 											
 											
@@ -177,6 +179,68 @@
 							 tabindex="-1" role="dialog" 
 							 aria-labelledby="historicoLabel">
 					</div>
+					
+					<script>
+							$(function() {
+								$('#enviarValModal').on("show.bs.modal", function (e) {
+									 $("#fav-programa").html($(e.relatedTarget).data('nombre_programa'));
+									 $("#idProceso").val($(e.relatedTarget).data('id'));
+								});
+							});
+							
+							
+						</script>
+						
+						<div class="modal fade" id="enviarValModal" 
+							 tabindex="-1" role="dialog" 
+							 aria-labelledby="aprobarModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" 
+								  data-dismiss="modal" 
+								  aria-label="Close">
+								  <span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" 
+								id="aprobarModalLabel">Vas a enviar a validación esta inscripción
+									<b><span id="fav-programa">Programa</span></b> 
+								</h4>
+							  </div>
+							  <div class="modal-body">
+								<p>
+								Por favor agrega un comentario para el envío a validación de esta inscripción
+								</p>
+							  </div>
+							  <div class="modal-footer">
+							  
+							  <form action="{{url('enviarValidacionComercial/')}}" method="POST">
+													{{ csrf_field() }}
+													
+									{{ Form::hidden('idProceso', null,  array('id' => 'idProceso')) }}
+									<div class="form-group">
+										<div class="col-sm-6">
+											<input type="text" name="comentariosValidacion" id="comentariosValidacion" class="form-control" value="">
+										</div>
+									</div>
+									<br>
+									<br>
+									<br>
+									<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-6">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>   
+									<span class="pull-right">
+										<button type="submit" id="edit-process-btn" class="btn btn-danger">
+											<i class="fa fa-btn fa-edit"></i>Enviar
+										</button>
+									</span>
+									</div>
+									</div>
+								</form>
+								
+							  </div>
+							</div>
+						  </div>
+						</div>
 					
                 </div>
             @endif
