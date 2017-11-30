@@ -66,7 +66,7 @@ class AdmisionesController extends Controller
 		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::Admitido;	
 		$procesoAdmon->save();
 		
-		return redirect('/listarAspirantes');
+		return redirect('/listarAspirantes/');
 			
 		
     }

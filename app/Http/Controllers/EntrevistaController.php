@@ -55,9 +55,12 @@ class EntrevistaController extends Controller
 				if($historicos[$j]->id_estado == EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista){
 					$pendienteValidacionEntrevista = true;
 				}
+				if($historicos[$j]->id_estado == EstadosProcesoAdmisionEnum::ValidadoFacultad){
+					$validadoFacultad = true;
+				}
 			}
 			
-			if($pendienteValidacionEntrevista == true){
+			if($pendienteValidacionEntrevista == true && $validadoFacultad != true){
 				array_push($procesos, $procesoAdmon);
 			}
 		}

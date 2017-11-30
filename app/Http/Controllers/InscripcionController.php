@@ -496,7 +496,8 @@ class InscripcionController extends Controller
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion, 'Edición de formulario de inscripción', $procesoAdmon->id_proceso_admon);
 				
-        return redirect('/menu');
+        //return redirect('/menu');
+		 return redirect('/inscripcion.list/');
     }
 	
 	public function enviarCorreoCuestionario(Inscripcion $inscripcion, ProcesoAdmision $procesoAdmon, Persona $persona)

@@ -15,8 +15,8 @@
                    
 
                         <!-- Task Name -->
-						<li><a href="{{ url('/nuevoPerfil') }}">Crear Nuevo Perfil</a></li>
-                       <li><a href="{{ url('/nuevoRegistro') }}">Registrar Nuevo Usuario</a></li>						
+						<li><a href="{{ url('/nuevoPerfil') }}">Administrar Perfiles</a></li>
+                       <li><a href="{{ url('/nuevoRegistro') }}">Administrar Usuarios</a></li>						
 					   
 
                       
