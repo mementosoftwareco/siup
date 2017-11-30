@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Persona;
 use App\Inscripcion;
 use App\ProcesoAdmision;
-use App\Modalidad;
 use App\EstadosProcesoAdmisionEnum;
 use App\SiupProgramas;
 use App\VParametros;

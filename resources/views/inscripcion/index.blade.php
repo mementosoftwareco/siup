@@ -3,7 +3,7 @@
 
 <script> 
 function abrir(url) { 
-open(url,'','top=300,left=300,width=500,height=200, resizable=0') ; 
+	window.open(url,'','top=300,left=300,width=500,height=200, resizable=0'); 
 } 
 </script> 
 
@@ -203,7 +203,7 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 						<!-- Terminos y Condiciones -->
                         <div class="form-group">
                             <!--<label for="task-name" class="col-sm-3 control-label">Términos y Condiciones</label>-->
-							<a href="javascript:abrir('terminos')" class="col-sm-3 control-label">Términos y Condiciones</a> 
+							<a href="javascript:abrir('/terminos')" class="col-sm-3 control-label">Términos y Condiciones</a> 
 
                             <div class="col-sm-6">
 							  {{ Form::radio('termYCond', '1', null) }} Acepto <br/>
