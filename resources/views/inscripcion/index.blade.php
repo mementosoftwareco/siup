@@ -530,7 +530,7 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
                             <label for="task-name" class="col-sm-3 control-label">Año ICFES</label>
 
                             <div class="col-sm-6">
-								{{  Form::number('anioIcfesColegio', null, ['class'=>'form-control', 'readonly' => $edicion]) }}
+								{{  Form::number('anioIcfesColegio', null, ['class'=>'form-control', 'placeholder'=>'Año del examen ICFES o Pruebas SABER','readonly' => $edicion]) }}
                             </div>
                         </div>
 					</div>	
