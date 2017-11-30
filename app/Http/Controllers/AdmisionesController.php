@@ -56,8 +56,9 @@ class AdmisionesController extends Controller
 	
 
 	
-	 public function admitirAspirante(Request $request,  $idProcesoAdmon)
+	 public function admitirAspirante(Request $request)
     {
+		$idProcesoAdmon = $request->idProceso;
 		$comentarios = $request->comentariosAprobacion;
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::Admitido, $comentarios, $idProcesoAdmon);
@@ -66,15 +67,16 @@ class AdmisionesController extends Controller
 		$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::Admitido;	
 		$procesoAdmon->save();
 		
-		return redirect('/listarAspirantes/');
+		return redirect('/listarAspirantes');
 			
 		
     }
 	
 	
 	
-	 public function rechazarAspirante(Request $request,  $idProcesoAdmon)
+	 public function rechazarAspirante(Request $request)
     {
+		$idProcesoAdmon = $request->idProceso;
 		$comentarios = $request->comentariosAprobacion;
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::RechazadoPorAdmision, $comentarios, $idProcesoAdmon);

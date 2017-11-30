@@ -117,7 +117,7 @@ Route::group(['middleware' => ['web']], function () {
 	
 	
 	//Rutas para admisiones
-	Route::post('/admitirAspirante/{procesoAdmon}', 'AdmisionesController@admitirAspirante')->name('admitirAspirante')->middleware('auth');
+	Route::post('/admitirAspirante', 'AdmisionesController@admitirAspirante')->name('admitirAspirante')->middleware('auth');
 	Route::get('/listarAspirantes/', 'AdmisionesController@listarAspirantes')->name('listarAspirantes')->middleware('auth');
 	Route::auth();
 });
