@@ -311,7 +311,10 @@ class EntrevistaController extends Controller
 		//$procesoAdmon->id_estado = EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista;
         $procesoAdmon->save();
 		
-        return redirect('/home');
+        //return redirect('/home');
+		
+		return View::make('entrevista.confirmation');
+		
     }
 	
 	private function guardarDetalleEntrevista($idEntrevista, $idPregunta, $nombreCampo, Request $request){

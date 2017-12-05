@@ -165,6 +165,7 @@ class DocumentosController extends Controller
 	
 	public function cargarDocumentos(Request $request)
 	{
+			
 		$idProceso = Input::get('idProceso');			
 		//echo 'idProceso'.($idProceso);		
 		$proceso = ProcesoAdmision::find($idProceso);
@@ -209,8 +210,23 @@ class DocumentosController extends Controller
 		
 		
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscritoDocumentos, 'Carga de Documentos', $proceso->id_proceso_admon);
+		
+		
+		
+		
+		
+		$user = new User;
+			
+		$perfil = $user->obtenerNombrePerfil();
+		
+		if($perfil != null){
+			return $this->prepararCargaDocumentos($idProceso)	;
+			
+		} else {
+			return View::make('documentos.confirmation');
+		}
 
-		return $this->prepararCargaDocumentos($idProceso)	;
+		
 		
 	}
 	
