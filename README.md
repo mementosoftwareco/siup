@@ -506,3 +506,12 @@ exec reset_seq( 'PERFILES_ID_SEQ' );
 exec reset_seq( 'PROCESOS_ADMISION_ID_PROCESO_A' );
 exec reset_seq( 'REFS_PERSONAL_FAMILIAR_ID_REFE' );
 exec reset_seq( 'UBICACIONES_GEOGRAFICAS_ID_UBI' );
+
+
+
+
+
+--Actualizacion 2017-12_04 por actualziacion de documentos:
+--------------------------------------------------------------
+ALTER TABLE TIPOS_DOCUMENTO ADD TAMANO_MAX VARCHAR(100) NULL ;  COMMIT;
+ALTER TABLE TIPOS_DOCUMENTO ADD FORMATO_REQ VARCHAR(100) NULL ;  COMMIT;

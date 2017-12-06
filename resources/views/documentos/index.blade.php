@@ -29,6 +29,8 @@
 									<th>Estado</th>
 									<th>Nombre</th>
 									<th>Fecha Cargue</th>
+									<th>Tamaño Máx</th>
+									<th>Formato Requerido</th>
 									
 									<th>&nbsp;</th>
 								</thead>
@@ -51,17 +53,19 @@
 												
 												<td class="table-text"><div><a href="{{ route('mostrarDocumento', ['id' =>urlencode(encrypt($documentoRequerido->documento->id_documento))]) }}">{{ $documentoRequerido->documento->nombre }}</a></div></td>
 												
-	
-												
+													
 												<td class="table-text"><div>{{ $documentoRequerido->documento->fecha_creacion }}</div></td>
 												
+												<td class="table-text"><div>{{ $documentoRequerido->tipoDocumento->tamano_max }}</div></td>
+												
+												<td class="table-text"><div>{{ $documentoRequerido->tipoDocumento->formato_req }}</div></td>
 												
 												<?php $nombre = 'file'.$documentoRequerido->id;?>
 												
 												@if ($edicion)
 												 <td class="table-text"><div>
 													<?php echo 	
-														"<input disabled= \"true\"    type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
+														"<input size=\"3072\" accept=\".pdf\" disabled= \"true\"    type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
 														
 														
 													?>											
@@ -70,7 +74,7 @@
 												@if (!$edicion)
 												 <td class="table-text"><div>
 													<?php echo 	
-														"<input  type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
+														"<input  size=\"3072\" accept=\".pdf\" type=\"file\" name=\"".$nombre."\" id=\"".$nombre."\" class=\"form-control\" value=\"{{ old('".$nombre."') }}\"";
 														
 														
 													?>											

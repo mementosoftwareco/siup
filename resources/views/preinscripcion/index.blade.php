@@ -9,9 +9,15 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
-		{!! Breadcrumbs::render('preinscripcion') !!}
-            <div class="panel panel-default">
-                <div class="panel-heading">
+		<!--{!! Breadcrumbs::render('preinscripcion') !!}-->
+            
+			<div class="form-group">
+                            Bienvenid@ al proceso de inscripción a programas de pregrado, postgrado y educación continuada de la Corporación Universitaria Iberoamericana
+             </div>
+			
+			<div class="panel panel-default">
+			
+               <div class="panel-heading">
                     Pre-inscribete en la Iberoamericana
                 </div>
 
@@ -24,6 +30,11 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
                         {{ csrf_field() }}
 						
 						{{ Form::hidden('nombrePrograma') }} 
+						
+						
+						
+						
+						
 
                         <!-- Tipo de identificacion -->
                         <div class="form-group">

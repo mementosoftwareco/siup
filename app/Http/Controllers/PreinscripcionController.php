@@ -75,9 +75,9 @@ class PreinscripcionController extends Controller
 			'numeroIdentificacion' => 'required|max:50',
 			'nombres' => 'required|max:100',
 			'apellidos' => 'required|max:100',
-			'telefono' => 'required|max:50',
-			'celular' => 'required|max:50',
-			'email' => 'required|max:100',
+			'telefono' => 'numeric|required',
+			'celular' => 'numeric|required',
+			'email' => 'email|required|max:100',
 			'tipoEdu' => 'required|max:10',
 			'programa' => 'required|max:10',
 			'termYCond' => 'required|max:10',
@@ -156,7 +156,8 @@ class PreinscripcionController extends Controller
 				
 		$this->enviarCorreoBienvenida($inscripcion, $persona, $proceso);
 		
-        return redirect('/');
+        //return redirect('/');
+		return redirect('/confirmacion');
     }
 	
 	

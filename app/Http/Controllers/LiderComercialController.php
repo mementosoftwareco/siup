@@ -92,7 +92,7 @@ class LiderComercialController extends Controller
 		$procesoAdmon = ProcesoAdmision::findOrFail($idProcesoAdmision);
 		
 		if($validadoFacultad == true){
-			HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::Validado, 'Estudiante con validación comercial y de facultad', $idProcesoAdmon);
+			HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::Validado, 'Estudiante con validación comercial y de facultad', $idProcesoAdmision);
 			$procesoAdmon ->id_estado = EstadosProcesoAdmisionEnum::Validado;
 			$procesoAdmon->save();
 			

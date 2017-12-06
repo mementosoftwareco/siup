@@ -101,7 +101,11 @@
 													<i class="fa fa-btn fa-search-plus"></i>Documentos
 												</button>
 											</form>
-										</td>										
+										</td>	
+									
+
+
+										
 										<td>
 											
 											<button 
