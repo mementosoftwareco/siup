@@ -262,7 +262,7 @@ function abrir(url) {
 								if(countryId) {
 									console.log("entro a log");
 									$.ajax({
-										url: '/ajax-ciudad/'+countryId,
+										url: "{{ URL::to('ajax-ciudad') }}"+'/'+countryId,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
@@ -294,7 +294,7 @@ function abrir(url) {
 								var ciudadId = $(this).val();
 								if(ciudadId) {
 									$.ajax({
-										url: '/ajax-municipio/'+ciudadId,
+										url: "{{ URL::to('ajax-municipio') }}"+'/'+ciudadId,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
@@ -332,7 +332,7 @@ function abrir(url) {
 								if(tipoEduId) {
 									console.log("Se filtraran los programas por el tipo " + tipoEduId);
 									$.ajax({
-										url: '/ajax-programa/'+tipoEduId,
+										url: "{{ URL::to('ajax-programa') }}"+'/'+tipoEduId,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
