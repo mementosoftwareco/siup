@@ -51,6 +51,7 @@ class EntrevistaController extends Controller
 			$procesoAdmon = $procesosAdmon[$i];
 			$historicos = HistoricosProcesoAdmision::where('id_proceso_admon', '=', $procesoAdmon->id_proceso_admon)->get();
 			$pendienteValidacionEntrevista = false;
+			$validadoFacultad = false;
 			for( $j=0; $j<sizeof($historicos); $j++){
 				if($historicos[$j]->id_estado == EstadosProcesoAdmisionEnum::PendienteValidacionEntrevista){
 					$pendienteValidacionEntrevista = true;
