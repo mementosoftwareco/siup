@@ -332,7 +332,7 @@ function abrir(url) {
 								if(tipoEduId) {
 									console.log("Se filtraran los programas por el tipo " + tipoEduId);
 									$.ajax({
-										url: "{{ URL::to('ajax-programa') }}"+'/'+tipoEduId,
+										url: "{{ URL::to('ajax-programa') }}" + '/' +tipoEduId,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
