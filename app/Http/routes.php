@@ -22,11 +22,16 @@
 |
 */
 
+
+
+
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
         return view('welcome');
     })->name('/')->middleware('guest');
+	
+
 
 	/*
 	// Authentication Routes...
@@ -52,10 +57,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/prepararEliminarPerfil/{id}', ['uses' =>'PerfilController@prepararEliminarPerfil']) ->name('prepararEliminarPerfil')->middleware('auth');
 	Route::post('/eliminarPerfil/{id}', ['uses' =>'PerfilController@eliminarPerfil']) ->name('eliminarPerfil')->middleware('auth');
 
-	
-   /* Route::get('/tasks', 'TaskController@index');
-    Route::post('/task', 'TaskController@store');
-    Route::delete('/task/{task}', 'TaskController@destroy');*/
+
 	
 	Route::get('/preinscripcion', 'PreinscripcionController@index')->name('preinscripcion');
 	Route::get('/terminos', 'PreinscripcionController@terms')->name('terminos');
@@ -121,6 +123,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/listarAspirantes/', 'AdmisionesController@listarAspirantes')->name('listarAspirantes')->middleware('auth');
 	
 	Route::get('/confirmacion/', 'ConfirmacionController@enviar')->name('confirmacion');
+	
+	
+	
 	
 	
 	Route::auth();

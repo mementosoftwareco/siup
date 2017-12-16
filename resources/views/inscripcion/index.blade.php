@@ -24,6 +24,9 @@ function abrir(url) {
                     <!-- New inscripcion Form -->
                     {{ Form::model($inscripcionPregrado, array('route' => ['inscripcion',$inscripcionPregrado->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
 
+					
+						{{ csrf_field() }}
+					
 						{{ Form::hidden('idUbicacion') }}
 						{{ Form::hidden('idReferencia') }}
 						{{ Form::hidden('idEducacion') }}

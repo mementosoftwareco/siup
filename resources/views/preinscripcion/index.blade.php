@@ -27,7 +27,7 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 
                     <!-- New Preinscripcion Form -->
                     <form action="{{ url('preinscripcion') }}" method="POST" class="form-horizontal">
-                        {{ csrf_field() }}
+            
 						
 						{{ Form::hidden('nombrePrograma') }} 
 						

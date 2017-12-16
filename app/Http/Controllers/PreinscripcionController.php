@@ -18,6 +18,7 @@ use App\HistoricosProcesoAdmision;
 use Auth;
 use Validator;
 use Response;
+use Yajra\Pdo\Oci8\Exceptions\Oci8Exception;
 
 
 class PreinscripcionController extends Controller
@@ -47,10 +48,13 @@ class PreinscripcionController extends Controller
      */
     public function index(Request $request)
     {
-        $progs = SiupProgramas::where('activo', '=', 'Y')->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
-		$tiposDocId = VParametros::where('tabla', '=', 'TIPO_DE_IDENTIFICACION')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+        
+			$progs = SiupProgramas::where('activo', '=', 'Y')->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+			$tiposDocId = VParametros::where('tabla', '=', 'TIPO_DE_IDENTIFICACION')->orderBy('descripcion')->pluck('descripcion', 'codigo');
+		
 		
 		return view('preinscripcion.index')->with(compact('progs', 'tiposDocId'));
+		
     }
 	
 	

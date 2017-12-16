@@ -17,6 +17,7 @@
                     <!-- New inscripcion Form -->
                     {{ Form::model($entrevistaViewModel, array('route' => ['entrevista',$entrevistaViewModel->idProcesoAdmision], 'method' => 'post', 'class' => 'form-horizontal') ) }}
 
+						{{ csrf_field() }}
 						
 						<br/>
 						Respetado Aspirante Bienvenido, estamos interesados en conocer su motivación e interés por hacer parte de la familia Iberoamericana, por lo anterior lo invitamos a responder el cuestionario que se presenta a continuación. 
