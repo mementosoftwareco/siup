@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Yajra\Pdo\Oci8\Exceptions\Oci8Exception;
 use ErrorException;
+use Illuminate\session\TokenMismatchException;
 
 class Handler extends ExceptionHandler
 {
@@ -56,6 +57,12 @@ class Handler extends ExceptionHandler
 		if ($e instanceof ErrorException) {
            
             return response()->view('errors.system', [], 503);
+        }
+		
+		
+		if ($e instanceof TokenMismatchException) {
+           
+            return response()->view('errors.session', [], 503);
         }
 		
 		

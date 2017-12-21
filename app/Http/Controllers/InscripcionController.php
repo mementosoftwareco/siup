@@ -282,92 +282,94 @@ class InscripcionController extends Controller
      */
     public function store(Request $request, ProcesoAdmision $procesoAdmon)
     {
-        
-		$this->validate($request, [
-            'tipoIdentificacion' => 'required|max:10',
-			'numeroIdentificacion' => 'required|max:50',
-			'fechaExpDocumento' => 'required|max:10',
-			'lugarExpDocumento' => 'required|max:100',
-			'nombres' => 'required|max:100',
-			'apellidos' => 'required|max:100',
-			'telefono' => 'numeric|required',
-			'celular' => 'numeric|required',
-			'email' => 'email|required|max:100',
-			//'fechaNacimiento' => 'required|max:10',
-			'genero' => 'required|max:10',
-			'grupoEtnico' => 'required|max:10',
-			'tipoEdu' => 'required|max:10',
-			'modalidad' => 'required|max:10',
-			'programa' => 'required|max:10',
-			'estCivil' => 'required|max:10',
-			'procedencia' => 'required|max:50',
-			'convenio' => 'required|max:10',
-			'termYCond' => 'accepted',
-			//Campos ubicacion
-			'direccion' => 'required|max:300',
-			'departamento' => 'required|max:50',
-			'ciudad' => 'required|max:10',
-			
-			//'municipio' => 'required|max:10',
-			'barrio' => 'required|max:200',
-			'estrato' => 'required|max:10',
-			//Campos referencia personal
-			'nombresReferencia' => 'required|max:200',
-			'apellidosReferencia' => 'required|max:200',
-			'direccionReferencia' => 'required|max:300',
-			'telefonoReferencia' => 'numeric|required',
-			'celularReferencia' => 'numeric|required',
-			'emailReferencia' => 'email|required|max:50',
-			'parentescoRef' => 'required|max:50',
-			
-        ]);
 		
-		//validando formulario de pregrado
-		if($request->tipoEdu == 1){
+        if($request->validacion == 'true'){
 			$this->validate($request, [
-				//informacion estudios de secundaria
-				'tipoDeColegio' => 'required|max:10',
-				'colegio' => 'required|max:200',
-				'ciudadColegio' => 'required|max:10',
-				'barrioColegio' => 'required|max:100',
-				'jornadaColegio' => 'required|max:10',
-				'anioIcfesColegio' => 'required|max:4',
+				'tipoIdentificacion' => 'required|max:10',
+				'numeroIdentificacion' => 'required|max:50',
+				'fechaExpDocumento' => 'required|max:10',
+				'lugarExpDocumento' => 'required|max:100',
+				'nombres' => 'required|max:100',
+				'apellidos' => 'required|max:100',
+				'telefono' => 'numeric|required',
+				'celular' => 'numeric|required',
+				'email' => 'email|required|max:100',
+				//'fechaNacimiento' => 'required|max:10',
+				'genero' => 'required|max:10',
+				'grupoEtnico' => 'required|max:10',
+				'tipoEdu' => 'required|max:10',
+				'modalidad' => 'required|max:10',
+				'programa' => 'required|max:10',
+				'estCivil' => 'required|max:10',
+				'procedencia' => 'required|max:50',
+				'convenio' => 'required|max:10',
+				'termYCond' => 'accepted',
+				//Campos ubicacion
+				'direccion' => 'required|max:300',
+				'departamento' => 'required|max:50',
+				'ciudad' => 'required|max:10',
+				
+				//'municipio' => 'required|max:10',
+				'barrio' => 'required|max:200',
+				'estrato' => 'required|max:10',
+				//Campos referencia personal
+				'nombresReferencia' => 'required|max:200',
+				'apellidosReferencia' => 'required|max:200',
+				'direccionReferencia' => 'required|max:300',
+				'telefonoReferencia' => 'numeric|required',
+				'celularReferencia' => 'numeric|required',
+				'emailReferencia' => 'email|required|max:50',
+				'parentescoRef' => 'required|max:50',
+				
 			]);
-			if($request->anioIcfesColegio >= 2000){
-				$this->validate($request, [				
-					'codigoIcfesColegio' => ['required','max:14','regex:"AC[0-9]{4}[1-2]{1}[0-9]{7}|VG[0-9]{4}[1-2]{1}[0-9]{7}"'],
-				]);
-			}
 			
-			if($request->anioIcfesColegio < 2000){
-				$this->validate($request, [				
-					'codigoIcfesColegio' => ['required','max:12','regex:"AC[0-9]{2}[1-2]{1}[0-9]{7}|VG[0-9]{2}[1-2]{1}[0-9]{7}"'],
-				]);
-			}
-			
-					
-			if($request->homologacion == 1){
+			//validando formulario de pregrado
+			if($request->tipoEdu == 1){
 				$this->validate($request, [
-				//Homologacion desde otra institucion
-				'homologacion' => 'required|max:200',
-				'tituloHomologacion' => 'required|max:200',
-				'instHomologacion' => 'required|max:200',
-				'ciudadHomologacion' => 'required|max:10',
-				'fechaFinHomologacion' => 'required|max:10',
+					//informacion estudios de secundaria
+					'tipoDeColegio' => 'required|max:10',
+					'colegio' => 'required|max:200',
+					'ciudadColegio' => 'required|max:10',
+					'barrioColegio' => 'required|max:100',
+					'jornadaColegio' => 'required|max:10',
+					'anioIcfesColegio' => 'required|max:4',
 				]);
+				if($request->anioIcfesColegio >= 2000){
+					$this->validate($request, [				
+						'codigoIcfesColegio' => ['required','max:14','regex:"AC[0-9]{4}[1-2]{1}[0-9]{7}|VG[0-9]{4}[1-2]{1}[0-9]{7}"'],
+					]);
+				}
+				
+				if($request->anioIcfesColegio < 2000){
+					$this->validate($request, [				
+						'codigoIcfesColegio' => ['required','max:12','regex:"AC[0-9]{2}[1-2]{1}[0-9]{7}|VG[0-9]{2}[1-2]{1}[0-9]{7}"'],
+					]);
+				}
+				
+						
+				if($request->homologacion == 1){
+					$this->validate($request, [
+					//Homologacion desde otra institucion
+					'homologacion' => 'required|max:200',
+					'tituloHomologacion' => 'required|max:200',
+					'instHomologacion' => 'required|max:200',
+					'ciudadHomologacion' => 'required|max:10',
+					'fechaFinHomologacion' => 'required|max:10',
+					]);
+				}
 			}
-		}
-		
-		//validando formulario de postgrado
-		if($request->tipoEdu == 2){
-			$this->validate($request, [
-				//informacion estudios de secundaria
-				'programaPregrado' => 'required|max:400',
-				'tituloPregrado' => 'required|max:200',
-				'universidadPregado' => 'required|max:300',
-				'ciudadPregrado' => 'required|max:200',
-				'fechaFinPregrado' => 'required|max:10',
-				]);			
+			
+			//validando formulario de postgrado
+			if($request->tipoEdu == 2){
+				$this->validate($request, [
+					//informacion estudios de secundaria
+					'programaPregrado' => 'required|max:400',
+					'tituloPregrado' => 'required|max:200',
+					'universidadPregado' => 'required|max:300',
+					'ciudadPregrado' => 'required|max:200',
+					'fechaFinPregrado' => 'required|max:10',
+					]);			
+			}
 		}
 		
 		$idInscripcion = $procesoAdmon -> id_inscripcion;
@@ -498,7 +500,9 @@ class InscripcionController extends Controller
 		HistoricosProcesoAdmision::storeHistoricoProceso(EstadosProcesoAdmisionEnum::PreInscritoFormularioInscripcion, 'Edición de formulario de inscripción', $procesoAdmon->id_proceso_admon);
 				
         //return redirect('/menu');
+	
 		 return redirect('/inscripcion.list/');
+	
     }
 	
 	public function enviarCorreoCuestionario(Inscripcion $inscripcion, ProcesoAdmision $procesoAdmon, Persona $persona)

@@ -32,6 +32,7 @@ function abrir(url) {
 						{{ Form::hidden('idEducacion') }}
 						{{ Form::hidden('idHomologacion') }}
 						{{ Form::hidden('nombrePrograma') }}
+						<input type="hidden" name="validacion" id="validacion"  />  
 						
                         <!-- Tipo de identificacion -->
                         <div class="form-group">
@@ -688,14 +689,24 @@ function abrir(url) {
                         <!-- inscripcion Button -->
                         
 						@if (!$edicion)
+							
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-6">
-									<button type="submit" class="btn btn-default">
+									<button type="submit" class="btn btn-default" onclick="document.getElementById('validacion').value = 'false'"  >
+										<i class="fa fa-btn fa-plus"></i>Guardar
+									</button>
+									 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<button type="submit" class="btn btn-default" onclick="document.getElementById('validacion').value = 'true'" >
 										<i class="fa fa-btn fa-plus"></i>Completar mi Inscripción
 									</button>
 									 <!--<button type="submit" class="btn btn-default"><a href="{{ route('menu') }}">Cancelar</a></button>-->
 								</div>
 							</div>
+							
 						@endif
 						
 						
