@@ -260,13 +260,21 @@ function abrir(url) {
 						
 						<script>
 						$(document).ready(function() {
-
-							$('select[name="departamento"]').on('change', function(){
-								var countryId = $(this).val();
-								if(countryId) {
-									console.log("entro a log");
-									$.ajax({
-										url: "{{ URL::to('ajax-ciudad') }}"+'/'+countryId,
+							
+							var oldCountryID = '{{old('departamento', '-1')}}';
+							var oldCityID = '{{old('ciudad', '-1')}}';
+							var oldMunicipalityID = '{{old('municipio', '-1')}}';
+							
+							if(oldCountryID != '-1'){
+								cityUpdate(oldCountryID);
+							}
+							if(oldCityID != '-1'){
+								municipalityUpdate(oldCityID);
+							}
+							
+							function cityUpdate(countryId2Load) {
+								$.ajax({
+										url: "{{ URL::to('ajax-ciudad') }}"+'/'+countryId2Load,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
@@ -283,22 +291,20 @@ function abrir(url) {
 												$('select[name="ciudad"]').append('<option value="'+ key +'">' + value + '</option>');
 
 											});
+											
+											if (oldCityID != '-1') {
+												$('select[name="ciudad"]').val(oldCityID).prop('selected', true);
+											}
 										},
 										complete: function(){
 											$('#loader').css("visibility", "hidden");
 										}
 									});
-								} else {
-									$('select[name="ciudad"]').empty();
-								}
-
-							});
+							}
 							
-							$('select[name="ciudad"]').on('change', function(){
-								var ciudadId = $(this).val();
-								if(ciudadId) {
-									$.ajax({
-										url: "{{ URL::to('ajax-municipio') }}"+'/'+ciudadId,
+							function municipalityUpdate(cityId2Load) {
+								$.ajax({
+										url: "{{ URL::to('ajax-municipio') }}"+'/'+cityId2Load,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
@@ -314,11 +320,32 @@ function abrir(url) {
 												$('select[name="municipio"]').append('<option value="'+ key +'">' + value + '</option>');
 
 											});
+											
+											if (oldMunicipalityID != '-1') {
+												$('select[name="municipio"]').val(oldMunicipalityID).prop('selected', true);
+											}
 										},
 										complete: function(){
 											$('#loader').css("visibility", "hidden");
 										}
 									});
+							}
+
+							$('select[name="departamento"]').on('change', function(){
+								var countryId = $(this).val();
+								if(countryId) {
+									console.log("entro a log");
+									cityUpdate(countryId);
+								} else {
+									$('select[name="ciudad"]').empty();
+								}
+
+							});
+							
+							$('select[name="ciudad"]').on('change', function(){
+								var ciudadId = $(this).val();
+								if(ciudadId) {
+									municipalityUpdate(ciudadId);
 								} else {
 									$('select[name="municipio"]').empty();
 								}

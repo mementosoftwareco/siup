@@ -6,8 +6,6 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 } 
 </script> 
 
-
-
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
@@ -29,8 +27,8 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 
                     <!-- New Preinscripcion Form -->
                     <form action="{{ url('preinscripcion') }}" method="POST" class="form-horizontal">
+						{{ csrf_field() }}
 						
-						{!! csrf_field()!!}
 						
 						{{ Form::hidden('nombrePrograma') }} 
 						
