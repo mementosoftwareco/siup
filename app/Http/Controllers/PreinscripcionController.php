@@ -39,6 +39,21 @@ class PreinscripcionController extends Controller
 		return Response::json($progs);
     }
 	
+	public function ajaxProgramaPorModalidad($idModalidad, $idTipoPrograma){
+		$tipoPrograma = '';
+		if($idTipoPrograma == 1){
+			$tipoPrograma = 'PREGRADO';
+		}elseif($idTipoPrograma == 2){
+			$tipoPrograma = 'POSTGRADO';
+		}
+		elseif($idTipoPrograma == 3){
+			$tipoPrograma = 'EDUCACION CONTINUA';
+		}
+		$progs = SiupProgramas::where('activo', '=', 'Y')->where('tipo_programa', '=', $tipoPrograma)->where('modalidad', '=', $idModalidad)->orderBy('desc_programa')->pluck('desc_programa', 'cod_programa');
+		$progs[null] = 'Seleccione...';
+		return Response::json($progs);
+    }
+	
 	//
 	/**
      * Display the preinscripcion page

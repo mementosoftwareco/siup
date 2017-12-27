@@ -358,12 +358,31 @@ function abrir(url) {
 								//console.log("entro a con nombre programa: " + nombreProgramaVar);
 							});
 							
+							$('input[type=radio][name=modalidad]').on('change', function(){
+								var modalidadId = $(this).val();
+								if(modalidadId) {
+									var tipoEduId = $('select[name="tipoEdu"]').val();
+									console.log("Se filtraran los programas por la modalidad " + modalidadId + " el tipo de educacion: " + tipoEduId);
+									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId);
+								} else {
+									$('select[name="programa"]').empty();
+								}
+							});
+							
 							$('select[name="tipoEdu"]').on('change', function(){
 								var tipoEduId = $(this).val();
+								var modalidadId = $('input[type=radio][name=modalidad]:checked').val();
 								if(tipoEduId) {
-									console.log("Se filtraran los programas por el tipo " + tipoEduId);
-									$.ajax({
-										url: "{{ URL::to('ajax-programa') }}" + '/' +tipoEduId,
+									console.log("Se filtraran los programas por el tipo " + tipoEduId + " y la modalidad " + modalidadId);
+									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId)
+								} else {
+									$('select[name="programa"]').empty();
+								}
+
+							});
+							function filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId) {
+								$.ajax({
+										url: "{{ URL::to('ajax-programa-modalidad') }}" + '/' +modalidadId+ '/' +tipoEduId,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
@@ -383,11 +402,7 @@ function abrir(url) {
 											$('#loader').css("visibility", "hidden");
 										}
 									});
-								} else {
-									$('select[name="programa"]').empty();
-								}
-
-							});
+							}
 
 						});
 						</script>

@@ -395,7 +395,7 @@ class InscripcionController extends Controller
 		$inscripcion->id_programa = $request->programa;
 		$programaSeleccionado = SiupProgramas::where('cod_programa', '=', $inscripcion->id_programa )->first();
 		$inscripcion->id_modalidad = $programaSeleccionado->modalidad;
-		$inscripcion->nombre_programa = $request->programa;
+		$inscripcion->nombre_programa = $request->nombrePrograma;
 		$inscripcion->acepta_terms_cond = $request->termYCond;
 		$inscripcion->procedencia = $request->procedencia;
 		$inscripcion->id_estado_civil = $request->estCivil;
