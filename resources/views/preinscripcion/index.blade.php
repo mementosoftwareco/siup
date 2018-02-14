@@ -105,13 +105,23 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
                             <label for="task-name" class="col-sm-3 control-label">Tipo de Educación</label>
 
                             <div class="col-sm-6">
-							  <input type="radio" name="tipoEdu" value="1" > Pregrado <br/>
-							  <input type="radio" name="tipoEdu" value="2"> Postgrado <br/>
-							  <input type="radio" name="tipoEdu" value="3"> Educación continuada
+							{{Form::select('tipoEdu', ['1' => 'Pregrado',
+														  '2' => 'Postgrado',
+														  '3' => 'Educación continuada'
+														  ], null, ['class'=>'form-control'])}}
                             </div>
                         </div>
 						
-						
+						<!-- Modalidad -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Modalidad</label>
+
+                            <div class="col-sm-6">
+							  {{ Form::radio('modalidad', 'PRESENCIAL', null) }} Presencial <br/>
+							  {{ Form::radio('modalidad', 'VIRTUAL', null) }} Virtual <br/>
+							  {{ Form::radio('modalidad', 'DISTANCIA', null) }} Distancia <br/>
+							</div>
+                        </div>
 						
 						<!-- Programa -->
                         <div class="form-group">
@@ -159,12 +169,13 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 						
 						<script>
 						$(document).ready(function() {
-							
+							/*
 							$('select[name="programa"]').on('change', function(){
 								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
 								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
 								//console.log("entro a con nombre programa: " + nombreProgramaVar);
 							});
+							*/
 							
 							$(':input[type="submit"]').prop('disabled', true);
 							
@@ -179,6 +190,7 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 								}
 							});
 							
+							/*
 							$("input[name='tipoEdu']:radio").change(function(){
 								var tipoEduId = $(this).val();
 								if(tipoEduId) {
@@ -209,6 +221,59 @@ open(url,'','top=300,left=300,width=500,height=200, resizable=0') ;
 								}
 
 							});
+							*/
+							
+							$('select[name="programa"]').on('change', function(){
+								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
+								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
+								//console.log("entro a con nombre programa: " + nombreProgramaVar);
+							});
+							
+							$('input[type=radio][name=modalidad]').on('change', function(){
+								var modalidadId = $(this).val();
+								if(modalidadId) {
+									var tipoEduId = $('select[name="tipoEdu"]').val();
+									console.log("Se filtraran los programas por la modalidad " + modalidadId + " el tipo de educacion: " + tipoEduId);
+									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId);
+								} else {
+									$('select[name="programa"]').empty();
+								}
+							});
+							
+							$('select[name="tipoEdu"]').on('change', function(){
+								var tipoEduId = $(this).val();
+								var modalidadId = $('input[type=radio][name=modalidad]:checked').val();
+								if(tipoEduId) {
+									console.log("Se filtraran los programas por el tipo " + tipoEduId + " y la modalidad " + modalidadId);
+									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId)
+								} else {
+									$('select[name="programa"]').empty();
+								}
+
+							});
+							function filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId) {
+								$.ajax({
+										url: "{{ URL::to('ajax-programa-modalidad') }}" + '/' +modalidadId+ '/' +tipoEduId,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="programa"]').empty();
+											$.each(data, function(key, value){
+
+												$('select[name="programa"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+							}
 
 						});
 						</script>
