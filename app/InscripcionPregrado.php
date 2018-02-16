@@ -27,6 +27,8 @@ class InscripcionPregrado extends Model
 	public $modalidad;
 	public $programa;
 	public $nombrePrograma;
+	public $jornada;
+	public $periodo;
 	public $estCivil;
 	public $procedencia;
 	public $convenio;

@@ -1,0 +1,32 @@
+create table periodos (
+id_periodo numeric (10,0) primary key,
+fecha_inicial_inscripcion timestamp,
+fecha_final_inscripcion timestamp,
+cod_periodo varchar(100),
+fecha_inicial_hom timestamp,
+fecha_final_hom timestamp
+);
+
+create table periodos_programas(
+id_periodo_programa numeric (10,0) primary key,
+cod_programa varchar2 (4),
+id_periodo numeric (10,0)
+);
+
+alter table periodos_programas add constraint  fk_periodo_programa foreign key (id_periodo) references periodos(id_periodo);
+
+create table jornadas (
+id_jornada numeric (10,0) primary key,
+nombre varchar(100)
+);
+
+create table jornadas_programas(
+id_jornada_programa numeric (10,0) primary key,
+cod_programa varchar2 (4),
+id_jornada numeric (10,0)
+);
+
+alter table jornadas_programas add constraint  fk_jornada_programa foreign key (id_jornada) references jornadas(id_jornada);
+
+alter table inscripciones add id_periodo_programa numeric(10,0);
+alter table inscripciones add id_jornada_programa numeric(10,0);

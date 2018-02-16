@@ -64,6 +64,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/preinscripcion', 'PreinscripcionController@store');
 	Route::get('ajax-programa/{idTipoPrograma}', 'PreinscripcionController@ajaxPrograma');
 	Route::get('ajax-programa-modalidad/{idModalidad}/{idTipoPrograma}', 'PreinscripcionController@ajaxProgramaPorModalidad');
+	Route::get('ajax-periodo/{codPrograma}', 'InscripcionController@ajaxPeriodo');
+	Route::get('ajax-jornada/{codPrograma}', 'InscripcionController@ajaxJornada');
 	
 	Route::get('/inscripcion.list/', 'InscripcionController@listProcesos')->name('inscripcion.list')->middleware('auth');
 	Route::get('/inscripcion/{procesoAdmon}', 'InscripcionController@index')->middleware('auth');

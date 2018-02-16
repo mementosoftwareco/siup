@@ -204,6 +204,22 @@ function abrir(url) {
                             </div>
                         </div>
 						
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Periodo</label>
+
+                            <div class="col-sm-6">
+								{{Form::select('periodo', $periodos, null, ['class'=>'form-control', 'disabled' => $edicion])}}
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Jornada</label>
+
+                            <div class="col-sm-6">
+								{{Form::select('jornada', $jornadas, null, ['class'=>'form-control', 'disabled' => $edicion])}}
+                            </div>
+                        </div>
+						
 						<!-- Terminos y Condiciones -->
                         <div class="form-group">
                             <!--<label for="task-name" class="col-sm-3 control-label">Términos y Condiciones</label>-->
@@ -355,7 +371,15 @@ function abrir(url) {
 							$('select[name="programa"]').on('change', function(){
 								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
 								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
-								//console.log("entro a con nombre programa: " + nombreProgramaVar);
+								var codPrograma = $(this).val();
+								if(codPrograma) {
+									console.log("Se filtraran los los periodos por el programa " + codPrograma);
+									filtrarPeriodoPorPrograma(codPrograma);
+									filtrarJornadaPorPrograma(codPrograma);
+								} else {
+									$('select[name="periodo"]').empty();
+									$('select[name="jornada"]').empty();
+								}
 							});
 							
 							$('input[type=radio][name=modalidad]').on('change', function(){
@@ -364,8 +388,12 @@ function abrir(url) {
 									var tipoEduId = $('select[name="tipoEdu"]').val();
 									console.log("Se filtraran los programas por la modalidad " + modalidadId + " el tipo de educacion: " + tipoEduId);
 									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId);
+									$('select[name="periodo"]').empty();
+									$('select[name="jornada"]').empty();
 								} else {
 									$('select[name="programa"]').empty();
+									$('select[name="periodo"]').empty();
+									$('select[name="jornada"]').empty();
 								}
 							});
 							
@@ -374,9 +402,13 @@ function abrir(url) {
 								var modalidadId = $('input[type=radio][name=modalidad]:checked').val();
 								if(tipoEduId) {
 									console.log("Se filtraran los programas por el tipo " + tipoEduId + " y la modalidad " + modalidadId);
-									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId)
+									filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId);
+									$('select[name="periodo"]').empty();
+									$('select[name="jornada"]').empty();
 								} else {
 									$('select[name="programa"]').empty();
+									$('select[name="periodo"]').empty();
+									$('select[name="jornada"]').empty();
 								}
 
 							});
@@ -395,6 +427,54 @@ function abrir(url) {
 											$.each(data, function(key, value){
 
 												$('select[name="programa"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+							}
+							
+							function filtrarPeriodoPorPrograma(codPrograma) {
+								$.ajax({
+										url: "{{ URL::to('ajax-periodo') }}" + '/' +codPrograma,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="periodo"]').empty();
+											$.each(data, function(key, value){
+
+												$('select[name="periodo"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+							}
+							
+							function filtrarJornadaPorPrograma(codPrograma) {
+								$.ajax({
+										url: "{{ URL::to('ajax-jornada') }}" + '/' +codPrograma,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="jornada"]').empty();
+											$.each(data, function(key, value){
+
+												$('select[name="jornada"]').append('<option value="'+ key +'">' + value + '</option>');
 
 											});
 										},

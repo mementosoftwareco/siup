@@ -21,12 +21,17 @@ use App\Departamento;
 use App\Municipio;
 use App\CentroPoblado;
 use App\SiupProgramas;
+use App\Periodo;
+use App\PeriodoPrograma;
+use App\Jornada;
+use App\JornadaPrograma;
 use App\VParametros;
 use App\Convenio;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
 use Mail;
+use DB;
 use Response;
 use Illuminate\Support\Facades\Input;
 
@@ -175,6 +180,8 @@ class InscripcionController extends Controller
 		$inscripcionPregrado->email = $inscripcion->email;
 		$inscripcionPregrado->modalidad = $inscripcion->id_modalidad;
 		$inscripcionPregrado->programa = $inscripcion->id_programa;
+		$inscripcionPregrado->periodo = $inscripcion->id_periodo_programa;
+		$inscripcionPregrado->jornada = $inscripcion->id_jornada_programa;
 		$inscripcionPregrado->termYCond = $inscripcion->acepta_terms_cond;
 		$inscripcionPregrado->procedencia = $inscripcion->procedencia;
 		$inscripcionPregrado->estCivil = $inscripcion->id_estado_civil;
@@ -255,8 +262,10 @@ class InscripcionController extends Controller
 		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoConvenios = Convenio::where('estado', '=', 'S')->orderBy('nombre')->pluck('nombre', 'codigo');
+		$periodos = $this->obtenerPeriodosPorPrograma($inscripcion->id_programa);
+		$jornadas = $this->obtenerJornadasPorPrograma($inscripcion->id_programa);
 		
-		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb', 'listadoConvenios'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'periodos', 'jornadas', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb', 'listadoConvenios'));
         
     }
 	
@@ -273,6 +282,38 @@ class InscripcionController extends Controller
 		$municipios[1] = 'Seleccione...';
 		return Response::json($municipios);
     }
+	
+	public function ajaxPeriodo($codPrograma){
+		$periodos = $this->obtenerPeriodosPorPrograma($codPrograma);
+		return Response::json($periodos);
+    }
+	
+	private function obtenerPeriodosPorPrograma($codPrograma){
+		$dt = Carbon::now();
+		$periodos = DB::table('periodos_programas')
+            ->join('periodos', 'periodos_programas.id_periodo', '=', 'periodos.id_periodo')
+            ->select('periodos_programas.id_periodo_programa','periodos_programas.cod_programa','periodos.cod_periodo', 'periodos.fecha_inicial_inscripcion', 'periodos.fecha_final_inscripcion')
+			->where('cod_programa', '=', $codPrograma)->where('fecha_inicial_inscripcion', '<=', $dt)->where('fecha_final_inscripcion', '>=', $dt)->orderBy('id_periodo_programa')->pluck('cod_periodo', 'id_periodo_programa');
+		$periodos[null] = 'Seleccione...';
+		
+		return $periodos;
+	}
+	
+	public function ajaxJornada($codPrograma){
+		$jornadas = $this->obtenerJornadasPorPrograma($codPrograma);
+		return Response::json($jornadas);
+    }
+	
+	private function obtenerJornadasPorPrograma($codPrograma){
+		$dt = Carbon::now();
+		$jornadas = DB::table('jornadas_programas')
+            ->join('jornadas', 'jornadas_programas.id_jornada', '=', 'jornadas.id_jornada')
+            ->select('jornadas_programas.id_jornada_programa','jornadas_programas.cod_programa','jornadas.nombre')
+			->where('cod_programa', '=', $codPrograma)->orderBy('id_jornada_programa')->pluck('nombre', 'id_jornada_programa');
+		$jornadas[null] = 'Seleccione...';
+		
+		return $jornadas;
+	}
 	
 	/**
      * Create a preinscripcion.
@@ -300,6 +341,8 @@ class InscripcionController extends Controller
 				'tipoEdu' => 'required|max:10',
 				'modalidad' => 'required|max:10',
 				'programa' => 'required|max:10',
+				'periodo' => 'required|max:10',
+				'jornada' => 'required|max:10',
 				'estCivil' => 'required|max:10',
 				'procedencia' => 'required|max:50',
 				'convenio' => 'required|max:10',
@@ -396,6 +439,9 @@ class InscripcionController extends Controller
 		$programaSeleccionado = SiupProgramas::where('cod_programa', '=', $inscripcion->id_programa )->first();
 		$inscripcion->id_modalidad = $programaSeleccionado->modalidad;
 		$inscripcion->nombre_programa = $request->nombrePrograma;
+		$inscripcion->id_periodo_programa = $request->periodo;
+		$inscripcion->id_jornada_programa = $request->jornada;
+		$inscripcion->acepta_terms_cond = $request->termYCond;
 		$inscripcion->acepta_terms_cond = $request->termYCond;
 		$inscripcion->procedencia = $request->procedencia;
 		$inscripcion->id_estado_civil = $request->estCivil;
