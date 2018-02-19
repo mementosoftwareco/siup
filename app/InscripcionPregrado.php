@@ -31,6 +31,7 @@ class InscripcionPregrado extends Model
 	public $periodo;
 	public $estCivil;
 	public $procedencia;
+	public $nodo;
 	public $convenio;
 	public $termYCond;
 	//Campos ubicacion
@@ -61,7 +62,7 @@ class InscripcionPregrado extends Model
 	public $anioIcfesColegio;
 	//Homologacion desde otra institucion
 	public $idHomologacion;
-	public $homologacion;
+	public $homologacion = 0;
 	public $tituloHomologacion;
 	public $instHomologacion;
 	public $ciudadHomologacion;

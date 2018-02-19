@@ -175,6 +175,15 @@ function abrir(url) {
                             </div>
                         </div>
 						
+						<!-- Nodo -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Nodo</label>
+
+                            <div class="col-sm-6">
+							{{Form::select('nodo', $listadoNodos, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
+							</div>
+                        </div>
+						
 						<!-- Convenio -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Convenio</label>
@@ -230,6 +239,60 @@ function abrir(url) {
 							  {{ Form::radio('termYCond', '0', null) }} No acepto  <br/>
 							</div>
                         </div>
+					
+<!-- Inicio subsección homologación desde otra institución ----------------------------------------------------------------------  -->
+					<div class="panel panel-default" id="panelHomologacion" name="panelHomologacion">	
+						<div class="panel-heading">
+							¿Vienes de otra U?
+						</div>
+						<br/>
+						<!-- Homologado -->
+						<div class="form-group">
+                            
+							<label for="task-name" class="col-sm-3 control-label">Homologación</label>
+							<div class="col-sm-6">	  
+								  {{ Form::checkbox('homologacion', '1', null) }}
+                            </div>
+                        </div>
+						
+						<!-- Titulo -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Título</label>
+
+                            <div class="col-sm-6">
+							{{ 	Form::text('tituloHomologacion',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste', 'readonly' => $edicion]) }}
+							</div>
+                        </div>
+						
+						<!-- Institución -->
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Institución</label>
+
+                            <div class="col-sm-6">
+								{{ 	Form::text('instHomologacion',null,['class'=>'form-control', 'readonly' => $edicion]) }}
+                            </div>
+                        </div>
+						
+						<!-- Ciudad -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
+
+                            <div class="col-sm-6">
+							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
+							</div>
+                        </div>
+						
+						<!-- Fecha finalización -->
+						<div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Fecha Finalización</label>
+
+                            <div class="col-sm-6">
+								{{ Form::date('fechaFinHomologacion', $inscripcionPregrado->fechaFinHomologacion == null ? null : $inscripcionPregrado->fechaFinHomologacion->format('Y-m-d'), ['class'=>'form-control', 'disabled' => $edicion]) }}
+                            </div>
+                        </div>
+					</div>	
+					
+<!-- Fin seccion de homologacion ----------------------------------------------------------------------  -->
 					
 <!-- Inicio Subseccion ubicacion ----------------------------------------------------------------------  -->
 					<div class="panel panel-default">
@@ -346,6 +409,10 @@ function abrir(url) {
 										}
 									});
 							}
+							
+							 $('input[name="homologacion"]').on('change', function(){
+								filtrarPeriodoYJornadaPorPrograma();
+							});
 
 							$('select[name="departamento"]').on('change', function(){
 								var countryId = $(this).val();
@@ -368,18 +435,18 @@ function abrir(url) {
 
 							});
 							
-							$('select[name="programa"]').on('change', function(){
-								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
-								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
-								var codPrograma = $(this).val();
-								if(codPrograma) {
-									console.log("Se filtraran los los periodos por el programa " + codPrograma);
-									filtrarPeriodoPorPrograma(codPrograma);
-									filtrarJornadaPorPrograma(codPrograma);
+							$('select[name="nodo"]').on('change', function(){
+								var idNodo = $(this).val();
+								if(idNodo) {
+									filtrarConvenioPorNodo(idNodo);
 								} else {
-									$('select[name="periodo"]').empty();
-									$('select[name="jornada"]').empty();
+									$('select[name="convenio"]').empty();
 								}
+
+							});
+							
+							$('select[name="programa"]').on('change', function(){
+								filtrarPeriodoYJornadaPorPrograma();
 							});
 							
 							$('input[type=radio][name=modalidad]').on('change', function(){
@@ -412,6 +479,22 @@ function abrir(url) {
 								}
 
 							});
+							
+							function filtrarPeriodoYJornadaPorPrograma(){
+								var nombreProgramaVar = $('select[name="programa"] option:selected').text();
+								$('input[name="nombrePrograma"]').val(nombreProgramaVar);
+								var codPrograma = $('select[name="programa"] option:selected').val();
+								var isHomologacion = $('input[name="homologacion"]').prop('checked') == true ? 1 : 0;
+								if(codPrograma) {
+									console.log("Se filtraran los los periodos por el programa " + codPrograma);
+									filtrarPeriodoPorPrograma(codPrograma, isHomologacion);
+									filtrarJornadaPorPrograma(codPrograma);
+								} else {
+									$('select[name="periodo"]').empty();
+									$('select[name="jornada"]').empty();
+								}
+							}
+							
 							function filtrarProgramaPorTipoEduYModalidad(modalidadId, tipoEduId) {
 								$.ajax({
 										url: "{{ URL::to('ajax-programa-modalidad') }}" + '/' +modalidadId+ '/' +tipoEduId,
@@ -436,9 +519,10 @@ function abrir(url) {
 									});
 							}
 							
-							function filtrarPeriodoPorPrograma(codPrograma) {
+							function filtrarPeriodoPorPrograma(codPrograma, isHomologacion) {
+								
 								$.ajax({
-										url: "{{ URL::to('ajax-periodo') }}" + '/' +codPrograma,
+										url: "{{ URL::to('ajax-periodo') }}" + '/' + codPrograma + '/' + isHomologacion,
 										type:"GET",
 										dataType:"json",
 										beforeSend: function(){
@@ -483,8 +567,33 @@ function abrir(url) {
 										}
 									});
 							}
+							
+							function filtrarConvenioPorNodo(idNodo) {
+								$.ajax({
+										url: "{{ URL::to('ajax-convenio') }}" + '/' +idNodo,
+										type:"GET",
+										dataType:"json",
+										beforeSend: function(){
+											$('#loader').css("visibility", "visible");
+										},
+
+										success:function(data) {
+
+											$('select[name="convenio"]').empty();
+											$.each(data, function(key, value){
+
+												$('select[name="convenio"]').append('<option value="'+ key +'">' + value + '</option>');
+
+											});
+										},
+										complete: function(){
+											$('#loader').css("visibility", "hidden");
+										}
+									});
+							}
 
 						});
+						
 						</script>
 						
 						<!-- Barrio -->
@@ -661,61 +770,11 @@ function abrir(url) {
                             </div>
                         </div>
 					</div>	
-<!-- Inicio subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
+<!-- Fin subsección información de estudios de secundaria ----------------------------------------------------------------------  -->
 
-<!-- Inicio subsección homologación desde otra institución ----------------------------------------------------------------------  -->
-					<div class="panel panel-default" id="panelHomologacion" name="panelHomologacion">	
-						<div class="panel-heading">
-							¿Vienes de otra U?
-						</div>
-						<br/>
-						<!-- Homologado -->
-						<div class="form-group">
-                            
-							<label for="task-name" class="col-sm-3 control-label">Homologación</label>
-							<div class="col-sm-6">	  
-								  {{ Form::checkbox('homologacion', '1', null) }}
-                            </div>
-                        </div>
-						
-						<!-- Titulo -->
-                        <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Título</label>
 
-                            <div class="col-sm-6">
-							{{ 	Form::text('tituloHomologacion',null,['class'=>'form-control', 'placeholder'=>'Nombre de la carrera que estudiaste', 'readonly' => $edicion]) }}
-							</div>
-                        </div>
-						
-						<!-- Institución -->
-						<div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Institución</label>
 
-                            <div class="col-sm-6">
-								{{ 	Form::text('instHomologacion',null,['class'=>'form-control', 'readonly' => $edicion]) }}
-                            </div>
-                        </div>
-						
-						<!-- Ciudad -->
-                        <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Ciudad</label>
-
-                            <div class="col-sm-6">
-							{{Form::select('ciudadHomologacion', $ciudadesTotal, null, ['class'=>'form-control','placeholder' => 'Seleccione...', 'disabled' => $edicion])}}
-							</div>
-                        </div>
-						
-						<!-- Fecha finalización -->
-						<div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Fecha Finalización</label>
-
-                            <div class="col-sm-6">
-								{{ Form::date('fechaFinHomologacion', $inscripcionPregrado->fechaFinHomologacion == null ? null : $inscripcionPregrado->fechaFinHomologacion->format('Y-m-d'), ['class'=>'form-control', 'disabled' => $edicion]) }}
-                            </div>
-                        </div>
-					</div>	
-
-<!-- Inicio subsección homologación desde otra institución ----------------------------------------------------------------------  -->
+<!-- Inicio subsección Pregrado ----------------------------------------------------------------------  -->
 					<div class="panel panel-default" id="panelPregrado" name="panelPregrado">	
 						<div class="panel-heading">
 							Dínos de tu pregrado

@@ -27,6 +27,7 @@ use App\Jornada;
 use App\JornadaPrograma;
 use App\VParametros;
 use App\Convenio;
+use App\Nodo;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
@@ -186,6 +187,7 @@ class InscripcionController extends Controller
 		$inscripcionPregrado->procedencia = $inscripcion->procedencia;
 		$inscripcionPregrado->estCivil = $inscripcion->id_estado_civil;
 		$inscripcionPregrado->grupoEtnico = $inscripcion->id_grupo_etnico;
+		$inscripcionPregrado->nodo = $inscripcion->id_nodo;
 		$inscripcionPregrado->convenio = $inscripcion->id_convenio;
 		
 		$ubicacionGeografica = UbicacionesGeograficas::where('id_inscripcion', '=', $idInscripcion)->first();
@@ -261,11 +263,12 @@ class InscripcionController extends Controller
 		$listadoNivelEdu = VParametros::where('tabla', '=', 'NIVEL_EDUCATIVO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
-		$listadoConvenios = Convenio::where('estado', '=', 'S')->orderBy('nombre')->pluck('nombre', 'codigo');
-		$periodos = $this->obtenerPeriodosPorPrograma($inscripcion->id_programa);
+		$listadoNodos = Nodo::where('1', '=', '1')->orderBy('nombre')->pluck('nombre', 'id_nodo');
+		$listadoConvenios = $this->obtenerConveniosPorNodo($inscripcion->id_nodo);
+		$periodos = $this->obtenerPeriodosPorPrograma($inscripcion->id_programa, $inscripcionPregrado->homologacion);
 		$jornadas = $this->obtenerJornadasPorPrograma($inscripcion->id_programa);
 		
-		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'periodos', 'jornadas', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb', 'listadoConvenios'));
+		return View::make('inscripcion.index')->with(compact('inscripcionPregrado', 'deptos', 'ciudades', 'centrosPoblados', 'ciudadesTotal', 'progs', 'periodos', 'jornadas', 'tiposDocId', 'listadoEstadosCiviles', 'listadoGeneros', 'listadoNivelEdu', 'listadoTipoEtnia', 'listadoTipoParentesco', 'edicion', 'breadcrumb', 'listadoNodos','listadoConvenios'));
         
     }
 	
@@ -283,17 +286,30 @@ class InscripcionController extends Controller
 		return Response::json($municipios);
     }
 	
-	public function ajaxPeriodo($codPrograma){
-		$periodos = $this->obtenerPeriodosPorPrograma($codPrograma);
+	public function ajaxPeriodo($codPrograma, $isHomologacion){
+		$periodos = $this->obtenerPeriodosPorPrograma($codPrograma, $isHomologacion);
 		return Response::json($periodos);
     }
 	
-	private function obtenerPeriodosPorPrograma($codPrograma){
+	public function ajaxConvenio($idNodo){
+		$listadoConvenios = $this->obtenerConveniosPorNodo($idNodo);
+		return Response::json($listadoConvenios);
+    }
+	
+	private function obtenerConveniosPorNodo($idNodo){
+		$listadoConvenios = Convenio::where('estado', '=', 'S')->where('id_nodo', '=', $idNodo)->orderBy('nombre')->pluck('nombre', 'codigo');
+		$listadoConvenios[null] = 'Seleccione...';
+		return $listadoConvenios;
+	}
+	
+	private function obtenerPeriodosPorPrograma($codPrograma, $isHomologacion){
 		$dt = Carbon::now();
+		$nombreColumnafechaInicial = $isHomologacion == 1 ? 'fecha_inicial_hom' : 'fecha_inicial_inscripcion';
+		$nombreColumnafechaFinal = $isHomologacion == 1 ? 'fecha_final_hom' : 'fecha_final_inscripcion';
 		$periodos = DB::table('periodos_programas')
             ->join('periodos', 'periodos_programas.id_periodo', '=', 'periodos.id_periodo')
-            ->select('periodos_programas.id_periodo_programa','periodos_programas.cod_programa','periodos.cod_periodo', 'periodos.fecha_inicial_inscripcion', 'periodos.fecha_final_inscripcion')
-			->where('cod_programa', '=', $codPrograma)->where('fecha_inicial_inscripcion', '<=', $dt)->where('fecha_final_inscripcion', '>=', $dt)->orderBy('id_periodo_programa')->pluck('cod_periodo', 'id_periodo_programa');
+            ->select('periodos_programas.id_periodo_programa','periodos_programas.cod_programa','periodos.cod_periodo', 'periodos.'.$nombreColumnafechaInicial, 'periodos.'.$nombreColumnafechaFinal)
+			->where('cod_programa', '=', $codPrograma)->where($nombreColumnafechaInicial, '<=', $dt)->where($nombreColumnafechaFinal, '>=', $dt)->orderBy('id_periodo_programa')->pluck('cod_periodo', 'id_periodo_programa');
 		$periodos[null] = 'Seleccione...';
 		
 		return $periodos;
@@ -346,6 +362,7 @@ class InscripcionController extends Controller
 				'estCivil' => 'required|max:10',
 				'procedencia' => 'required|max:50',
 				'convenio' => 'required|max:10',
+				'nodo' => 'required|max:10',
 				'termYCond' => 'accepted',
 				//Campos ubicacion
 				'direccion' => 'required|max:300',
@@ -446,6 +463,7 @@ class InscripcionController extends Controller
 		$inscripcion->procedencia = $request->procedencia;
 		$inscripcion->id_estado_civil = $request->estCivil;
 		$inscripcion->id_grupo_etnico = $request->grupoEtnico;
+		$inscripcion->id_nodo = $request->nodo;
 		$inscripcion->id_convenio = $request->convenio;
 		$inscripcion->save();
 		

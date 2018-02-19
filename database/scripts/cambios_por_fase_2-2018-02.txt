@@ -30,3 +30,15 @@ alter table jornadas_programas add constraint  fk_jornada_programa foreign key (
 
 alter table inscripciones add id_periodo_programa numeric(10,0);
 alter table inscripciones add id_jornada_programa numeric(10,0);
+alter table inscripciones add id_nodo numeric(10,0);
+
+alter table inscripciones add constraint fk_inscripciones_nodos foreign key (id_nodo) references nodos(id_nodo);
+
+create table nodos (
+id_nodo numeric (10,0) primary key,
+nombre varchar(100),
+descripcion varchar(100)
+);
+
+alter table convenios_banner add id_nodo numeric(10,0);
+alter table convenios_banner add constraint fk_convenios_nodos foreign key (id_nodo) references nodos(id_nodo);
