@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Perfil;
 use App\Usuario;
 use App\User;
+use App\Nodo;
+use App\Convenio;
+use App\Facultad;
+use App\Http\Controllers\InscripcionController;
 use View;
 use Validator;
 use Session;
@@ -25,10 +29,15 @@ class RegistroController extends Controller
 	{
 		$users = User::all();
 		$perfiles = Perfil::lists('nombre','id');
-	
+		$listadoNodos = Nodo::where('1', '=', '1')->orderBy('nombre')->pluck('nombre', 'id_nodo');
+		$listadoFacultades = Facultad::where('1', '=', '1')->orderBy('nombre')->pluck('nombre', 'id_facultad');
+		$listadoConvenios = [];
 		return View::make('auth.register')
 			->with('users', $users)
-			->with('perfiles', $perfiles);
+			->with('perfiles', $perfiles)
+			->with('listadoNodos', $listadoNodos)
+			->with('listadoConvenios', $listadoConvenios)
+			->with('listadoFacultades', $listadoFacultades);
 			
 	}
 
@@ -95,7 +104,8 @@ class RegistroController extends Controller
 		// read more on validation at http://laravel.com/docs/validation
 		$rules = array(
 			'name'       => 'required',
-			'email'      => 'required'
+			'email'      => 'required',
+			'perfil'      => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -107,6 +117,21 @@ class RegistroController extends Controller
 				
 		}
 		
+		//Si el perfil es de operador == 2, callcenter == 3 o comercial == 4, se debe validar que se seleccione nodo y convenio
+		if($request->perfil == 2 || $request->perfil == 3 || $request->perfil == 4){
+			$this->validate($request, [
+			'nodo' => 'required|max:10',
+			'convenio' => 'required|max:10',
+			]);
+		}
+		
+		//Si el perfil es de facultad == 42
+		if($request->perfil == 42){
+			$this->validate($request, [
+			'facultad' => 'required|max:10',
+			]);
+		}
+		
 			
 		$id_user = User::create([
 		'name' => Input::get('name'),
@@ -114,7 +139,9 @@ class RegistroController extends Controller
 		'password' => bcrypt(Str::random(10)),
 		'state' => 'ACT',
 		'id_perfil' => Input::get('perfil'),
-		
+		'id_nodo' => Input::get('nodo'),
+		'id_convenio' => Input::get('convenio'),
+		'id_facultad' => Input::get('facultad'),
 		]);
 		
 		

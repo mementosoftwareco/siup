@@ -26,6 +26,13 @@ cod_programa varchar2 (4),
 id_jornada numeric (10,0)
 );
 
+create table facultades (
+id_facultad numeric (10,0) primary key,
+cod_facultad varchar(20),
+nombre varchar(100),
+descripcion varchar(100)
+);
+
 alter table jornadas_programas add constraint  fk_jornada_programa foreign key (id_jornada) references jornadas(id_jornada);
 
 alter table inscripciones add id_periodo_programa numeric(10,0);
@@ -42,3 +49,10 @@ descripcion varchar(100)
 
 alter table convenios_banner add id_nodo numeric(10,0);
 alter table convenios_banner add constraint fk_convenios_nodos foreign key (id_nodo) references nodos(id_nodo);
+
+alter table users add id_nodo numeric(10,0);
+alter table users add id_convenio varchar(2);
+alter table users add id_facultad numeric(10,0);
+
+alter table users add constraint fk_users_nodos foreign key (id_nodo) references nodos(id_nodo);
+alter table users add constraint fk_users_facultades foreign key (id_facultad) references facultades(id_facultad);

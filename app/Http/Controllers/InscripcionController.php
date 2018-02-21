@@ -296,7 +296,7 @@ class InscripcionController extends Controller
 		return Response::json($listadoConvenios);
     }
 	
-	private function obtenerConveniosPorNodo($idNodo){
+	public function obtenerConveniosPorNodo($idNodo){
 		$listadoConvenios = Convenio::where('estado', '=', 'S')->where('id_nodo', '=', $idNodo)->orderBy('nombre')->pluck('nombre', 'codigo');
 		$listadoConvenios[null] = 'Seleccione...';
 		return $listadoConvenios;

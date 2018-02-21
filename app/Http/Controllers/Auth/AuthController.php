@@ -69,6 +69,8 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
 			'state' => 'ACT',
 			'id_perfil'  => $data['id_perfil'],
+			'id_nodo'  => $data['id_nodo'],
+			'id_convenio'  => $data['id_convenio'],
         ]);
     }
 	
