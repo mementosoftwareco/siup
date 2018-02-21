@@ -88,8 +88,8 @@
 						<script>
 						$(document).ready(function() {
 							
-							var idPerfilG = $('select[name="perfil"]').val();
-							if(idPerfilG && (idPerfilG == 2 || idPerfilG == 3 || idPerfilG == 4 ) ) {
+							var idPerfilG = $('select[name="perfil"] option:selected').text();
+							if(idPerfilG && (idPerfilG == 'Operador' || idPerfilG == 'Call Center' || idPerfilG == 'Comercial' ) ) {
 								$('div[name="divNodo"]').show();
 								$('div[name="divConvenio"]').show();
 							} else {
@@ -97,15 +97,15 @@
 								$('div[name="divConvenio"]').hide();
 							}
 							
-							if(idPerfilG && idPerfilG == 42 ) {
+							if(idPerfilG && idPerfilG == 'Facultad' ) {
 								$('div[name="divFacultad"]').show();
 							} else {
 								$('div[name="divFacultad"]').hide();
 							}
 							
 							$('select[name="perfil"]').on('change', function(){
-								var idPerfil = $(this).val();
-								if(idPerfil && (idPerfil == 2 || idPerfil == 3 || idPerfil == 4 ) ) {
+								var idPerfil = $('select[name="perfil"] option:selected').text();
+								if(idPerfil && (idPerfil == 'Operador' || idPerfil == 'Call Center' || idPerfil == 'Comercial' ) ) {
 									$('div[name="divNodo"]').show();
 									$('div[name="divConvenio"]').show();
 								} else {
@@ -113,7 +113,7 @@
 									$('div[name="divConvenio"]').hide();
 								}
 								
-								if(idPerfil && idPerfil == 42 ) {
+								if(idPerfil && idPerfil == 'Facultad' ) {
 									$('div[name="divFacultad"]').show();
 								} else {
 									$('div[name="divFacultad"]').hide();
