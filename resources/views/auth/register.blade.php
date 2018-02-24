@@ -89,7 +89,7 @@
 						$(document).ready(function() {
 							
 							var idPerfilG = $('select[name="perfil"] option:selected').text();
-							if(idPerfilG && (idPerfilG == 'Operador' || idPerfilG == 'Call Center' || idPerfilG == 'Comercial' ) ) {
+							if(idPerfilG && (idPerfilG == 'Operador') ) {
 								$('div[name="divNodo"]').show();
 								$('div[name="divConvenio"]').show();
 							} else {
@@ -105,7 +105,7 @@
 							
 							$('select[name="perfil"]').on('change', function(){
 								var idPerfil = $('select[name="perfil"] option:selected').text();
-								if(idPerfil && (idPerfil == 'Operador' || idPerfil == 'Call Center' || idPerfil == 'Comercial' ) ) {
+								if(idPerfil && (idPerfil == 'Operador') ) {
 									$('div[name="divNodo"]').show();
 									$('div[name="divConvenio"]').show();
 								} else {

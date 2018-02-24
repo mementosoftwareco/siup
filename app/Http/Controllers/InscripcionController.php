@@ -72,8 +72,6 @@ class InscripcionController extends Controller
 		$identificacion = Input::get('identificacion');		
 		$procesosAdmon = ProcesoAdmision::where('id_persona', '=', $identificacion)->get();
 		
-		
-		
         return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon, 
         ]);
@@ -121,8 +119,6 @@ class InscripcionController extends Controller
 		$persona = Persona::findOrFail($procesoAdmon -> id_persona);
 		$this->enviarCorreoCuestionario($inscripcion, $procesoAdmon, $persona);
 		
-	
-		
         return view('inscripcion.list', [
             'procesosAdmon' => $procesosAdmon,
         ]);
@@ -143,6 +139,10 @@ class InscripcionController extends Controller
     {
 		$user = new User;
 		$perfil = $user->obtenerNombrePerfil();
+		$usuarioEsOperador = false;
+		if ( $perfil === 'Operador'){
+			$usuarioEsOperador = true;
+		}
 
 		if ( $perfil === 'Operador' || $perfil === 'Call Center' || $perfil === 'Comercial'){
          $edicion=false;
@@ -263,7 +263,11 @@ class InscripcionController extends Controller
 		$listadoNivelEdu = VParametros::where('tabla', '=', 'NIVEL_EDUCATIVO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoEtnia = VParametros::where('tabla', '=', 'TIPO_DE_ETNIA')->orderBy('descripcion')->pluck('descripcion', 'codigo');
 		$listadoTipoParentesco = VParametros::where('tabla', '=', 'TIPO_PARENTESCO')->orderBy('descripcion')->pluck('descripcion', 'codigo');
-		$listadoNodos = Nodo::where('1', '=', '1')->orderBy('nombre')->pluck('nombre', 'id_nodo');
+		if($usuarioEsOperador){
+			$listadoNodos = Nodo::where('id_nodo', '=', Auth::user()->id_nodo)->orderBy('nombre')->pluck('nombre', 'id_nodo');
+		}else{
+			$listadoNodos = Nodo::where('1', '=', '1')->orderBy('nombre')->pluck('nombre', 'id_nodo');
+		}
 		$listadoConvenios = $this->obtenerConveniosPorNodo($inscripcion->id_nodo);
 		$periodos = $this->obtenerPeriodosPorPrograma($inscripcion->id_programa, $inscripcionPregrado->homologacion);
 		$jornadas = $this->obtenerJornadasPorPrograma($inscripcion->id_programa);
@@ -297,7 +301,15 @@ class InscripcionController extends Controller
     }
 	
 	public function obtenerConveniosPorNodo($idNodo){
-		$listadoConvenios = Convenio::where('estado', '=', 'S')->where('id_nodo', '=', $idNodo)->orderBy('nombre')->pluck('nombre', 'codigo');
+		$user = new User;
+		$perfil = $user->obtenerNombrePerfil();
+		
+		if ( $perfil === 'Operador'){
+			$listadoConvenios = Convenio::where('estado', '=', 'S')->where('id_nodo', '=', Auth::user()->id_nodo)->where('codigo', '=', Auth::user()->id_convenio)->orderBy('nombre')->pluck('nombre', 'codigo');
+		}else{
+			$listadoConvenios = Convenio::where('estado', '=', 'S')->where('id_nodo', '=', $idNodo)->orderBy('nombre')->pluck('nombre', 'codigo');
+		}
+		
 		$listadoConvenios[null] = 'Seleccione...';
 		return $listadoConvenios;
 	}

@@ -118,7 +118,7 @@ class RegistroController extends Controller
 		}
 		
 		//Si el perfil es de operador == 2, callcenter == 3 o comercial == 4, se debe validar que se seleccione nodo y convenio
-		if($request->perfil == 2 || $request->perfil == 3 || $request->perfil == 4){
+		if($request->perfil == 2){
 			$this->validate($request, [
 			'nodo' => 'required|max:10',
 			'convenio' => 'required|max:10',
