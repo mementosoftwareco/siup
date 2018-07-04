@@ -1,14 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
-    <div class="container">
-        
-		
-				
-				
-				
-				
-
+    <br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">
             <!-- Current Procesos admision -->
             @if (count($historicos) > 0)
                 <div class="panel panel-default">
@@ -67,4 +62,3 @@
             @endif
         </div>
     </div>
-@endsection

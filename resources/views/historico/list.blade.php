@@ -176,7 +176,7 @@
 												   class="btn btn-danger" 
 												   data-toggle="modal"												   
 												   data-ruta-historico="{{ url('mostrarHistoricoGet/' . $proceso->id_proceso_admon) }}"
-												   data-target="#historicoModal">
+												   data-target="#historicoModal_1">
 												  <i class="fa fa-btn fa-history"></i>Ver Histórico
 											</button>
 										</td>
@@ -188,15 +188,15 @@
 					
 					<script>
 							$(function() {
-								$('#historicoModal').on("show.bs.modal", function (e) {
+								$('#historicoModal_1').on("show.bs.modal", function (e) {
 									 
-									 $("#historicoModal").load($(e.relatedTarget).data('ruta-historico'));
+									 $("#historicoModal_1").load($(e.relatedTarget).data('ruta-historico'));
 									 
 								});
 							});
 					</script>
 					
-					<div class="modal fade" id="historicoModal" 
+					<div class="modal fade" id="historicoModal_1" 
 							 tabindex="-1" role="dialog" 
 							 aria-labelledby="historicoLabel">
 					</div>
